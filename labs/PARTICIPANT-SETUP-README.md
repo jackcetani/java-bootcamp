@@ -129,7 +129,7 @@ Course lab guides live in the bootcamp GitHub clone under `labs/` — not inside
 
 | Account | When needed | Action |
 | ------- | ----------- | ------- |
-| GitHub | Week 1+ | Create account; practice clone/push |
+| GitHub | Week 1+ | Create account; set `git config` with your GitHub **noreply email** (Settings → Emails) so `git push` is not blocked (GH007) |
 | GitHub Copilot | Week 2 (Labs 10–12+) | Active subscription on the same GitHub user VS Code uses |
 | GitHub Actions | Week 5 (Labs 43–44, 51) | Enabled on your CRM repo |
 | GHCR | Week 5+ | Push/pull images per instructor guidance |

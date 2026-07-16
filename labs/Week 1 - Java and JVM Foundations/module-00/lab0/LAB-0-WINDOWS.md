@@ -154,13 +154,23 @@ Hello Java Bootcamp!
 
 ### Step 10 — GitHub + git identity
 
+1. Create or sign in at [github.com](https://github.com).
+2. Set Git to your **display name** and your GitHub **noreply email** (recommended — avoids push errors if your personal email is private on GitHub).
+
+**Find your noreply email:** GitHub → **Settings** → **Emails** → enable **Keep my email addresses private** → copy the address shown, e.g. `{id}+{username}@users.noreply.github.com`.
+
 ```powershell
 git config --global user.name "Your Name"
-git config --global user.email "you@example.com"
+git config --global user.email "12345678+yourusername@users.noreply.github.com"
 git config --global --list
+git --version
 ```
 
-Create/sign in at [github.com](https://github.com).
+**Expected:** `user.name` and `user.email` appear in the list; `git --version` shows **2.x**.
+
+**If push fails with GH007 (“private email address”):** your commit used a personal `@gmail.com` (or similar) address. Re-run Step 10 with the **noreply** email from GitHub Settings → Emails, or disable “Block command line pushes that expose my email” on that same page.
+
+**Do not commit** personal verification screenshots from `labs/screenshots/` — keep those local only.
 
 ---
 
