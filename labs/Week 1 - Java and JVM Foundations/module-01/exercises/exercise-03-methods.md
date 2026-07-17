@@ -31,8 +31,6 @@ javac Methods.java
 java Methods
 ```
 
-Then commit/push **after Lab 1 Step 0** (see [EXERCISES-INDEX.md](EXERCISES-INDEX.md)).
-
 ## Expected result
 
 Method results print; you can explain stack frames for the calls.

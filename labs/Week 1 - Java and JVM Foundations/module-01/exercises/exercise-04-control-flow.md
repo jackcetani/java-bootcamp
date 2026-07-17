@@ -33,8 +33,6 @@ javac ControlFlow.java
 java ControlFlow
 ```
 
-Then commit/push **after Lab 1 Step 0** (see [EXERCISES-INDEX.md](EXERCISES-INDEX.md)).
-
 ## Expected result
 
 All four control structures run and print clear output.

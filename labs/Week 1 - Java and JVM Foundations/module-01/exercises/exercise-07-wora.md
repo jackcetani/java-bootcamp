@@ -24,7 +24,6 @@ java Person
 ```
 
 - Write 2–3 sentences: source vs bytecode vs JVM (save as `notes/wora-notes.md` or similar under the workspace)
-- Commit/push **after Lab 1 Step 0** (see [EXERCISES-INDEX.md](EXERCISES-INDEX.md))
 
 ## Expected result
 

@@ -14,8 +14,8 @@ Full course rule: [Which file do I open?](../../_PARTICIPANT-FILE-GUIDE.md)
 | A | After Lab 0 is done | Stay in IntelliJ with `java-bootcamp` open |
 | B | After Module 1 **slides** | [`exercises/EXERCISES-INDEX.md`](exercises/EXERCISES-INDEX.md) → then `exercise-01` … `exercise-07` **in order** |
 | C | Before the graded lab | **One** OS how-to: [`lab1/LAB-1-WINDOWS.md`](lab1/LAB-1-WINDOWS.md) **or** [`lab1/LAB-1-MACOS.md`](lab1/LAB-1-MACOS.md) |
-| D | Main lab | [`lab1/LAB-1-GUIDE.md`](lab1/LAB-1-GUIDE.md) — Step 0 (personal GitHub repo) → Steps 1–12 |
-| E | Done | Mark Pass/Fail in your notes; commit/push as Step 12 says |
+| D | Main lab | [`lab1/LAB-1-GUIDE.md`](lab1/LAB-1-GUIDE.md) — follow every Step in that guide |
+| E | Done | Mark Pass/Fail in your notes |
 
 ---
 

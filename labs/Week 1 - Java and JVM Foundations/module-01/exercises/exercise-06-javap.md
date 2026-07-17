@@ -25,10 +25,8 @@ cd ~/java-bootcamp/examples/module-01-exercises
 javap -c -v Person
 ```
 
-- Save text or a local screenshot under `notes/screenshots/` (do **not** commit screenshots)
+- Save text or a local screenshot under `notes/screenshots/` (keep screenshots on your laptop only)
 - List three of: `ldc`, `invokevirtual`, `return`, `aload`, `istore`
-
-Then commit any written notes under `examples/` or `notes/` (not screenshots) **after Lab 1 Step 0** (see [EXERCISES-INDEX.md](EXERCISES-INDEX.md)).
 
 ## Expected result
 

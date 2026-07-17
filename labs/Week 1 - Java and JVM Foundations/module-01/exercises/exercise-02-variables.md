@@ -59,8 +59,6 @@ java Variables
 
 **Expected:** Six lines print (age, population, price, enrolled, grade, name) with no errors.
 
-Then commit/push **after Lab 1 Step 0** (see [EXERCISES-INDEX.md](EXERCISES-INDEX.md)).
-
 ## Expected result
 
 All declared values print without compile/runtime errors.

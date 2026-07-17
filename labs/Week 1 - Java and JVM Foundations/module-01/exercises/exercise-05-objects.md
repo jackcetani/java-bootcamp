@@ -33,8 +33,6 @@ javac Person.java
 java Person
 ```
 
-Then commit/push **after Lab 1 Step 0** (see [EXERCISES-INDEX.md](EXERCISES-INDEX.md)).
-
 ## Expected result
 
 Object prints; fields live on the heap and the reference on the stack.
