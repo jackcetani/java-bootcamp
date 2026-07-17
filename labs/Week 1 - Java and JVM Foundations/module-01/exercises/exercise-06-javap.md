@@ -12,7 +12,7 @@ Disassemble `Person` (or `Hello`) with `javap` and note three bytecode instructi
 | Piece | Easy meaning |
 | ----- | ------------ |
 | `javap` | Read a `.class` file and show its structure |
-| `-c` | Include bytecode for each method |
+| `-c` | Include bytecode for each method (**use this**) |
 | `-v` | Optional advanced detail; skip for this beginner exercise |
 | `Person` | Class name to inspect (must already be compiled) |
 
@@ -36,53 +36,94 @@ cd ~/java-bootcamp/examples/module-01-exercises
 javap -c Person
 ```
 
-Use `-c` first because it shows only the useful method instructions. Your output is split into three readable sections:
+**Verified (Windows) — your output has three sections.** Read them like chapters of a short story.
 
-| Section | What your Java did |
-| ------- | ------------------ |
-| `Person(String, int)` | Constructor saved `name` and `age` |
-| `display()` | Read the fields, joined the text, and printed it |
-| `main(String[])` | Created `new Person("Aman", 21)` and called `display()` |
+### Chapter 1 — Constructor `Person(String, int)`
 
-### Read only `main` first
+Matches your Java:
 
-Your `main` bytecode tells this simple story:
+```java
+public Person(String name, int age) {
+    this.name = name;
+    this.age = age;
+}
+```
 
 | Bytecode | Plain English |
 | -------- | ------------- |
-| `new Person` | Make space for a new Person |
-| `ldc "Aman"` | Use the text `Aman` |
-| `bipush 21` | Use the number `21` |
-| `invokespecial Person."<init>"` | Run the constructor |
-| `astore_1` | Save the new Person in variable `person` |
+| `aload_0` | Pick up **this** (the new object) |
+| `invokespecial Object."<init>"` | Call Object’s empty constructor first (every class does this) |
+| `aload_0` / `aload_1` / `putfield name` | Put the **name** parameter into the object’s `name` field |
+| `aload_0` / `iload_2` / `putfield age` | Put the **age** number into the object’s `age` field |
+| `return` | Constructor finished |
+
+**One sentence:** The constructor stores `"Aman"` and `21` inside the new Person.
+
+### Chapter 2 — Method `display()`
+
+Matches your Java:
+
+```java
+public void display() {
+    System.out.println(name + " is " + age + " years old");
+}
+```
+
+| Bytecode | Plain English |
+| -------- | ------------- |
+| `getstatic System.out` | Pick up the console printer |
+| `aload_0` / `getfield name` | Read this Person’s `name` |
+| `aload_0` / `getfield age` | Read this Person’s `age` |
+| `invokedynamic … makeConcat…` | Join them into one sentence (modern Java’s way to do `name + " is " + age + …`) |
+| `invokevirtual println` | Print that sentence |
+| `return` | Done |
+
+**One sentence:** `display` reads the fields, builds the sentence, and prints it.
+
+### Chapter 3 — Method `main` (start here if you feel lost)
+
+Matches your Java:
+
+```java
+Person person = new Person("Aman", 21);
+person.display();
+```
+
+| Bytecode | Plain English |
+| -------- | ------------- |
+| `new Person` | Make space for a new Person object |
+| `dup` | Keep an extra copy of that object (needed for the constructor call) |
+| `ldc "Aman"` | Put the text **Aman** on the table |
+| `bipush 21` | Put the number **21** on the table |
+| `invokespecial "<init>"` | Run the constructor with those values |
+| `astore_1` | Save the finished Person in variable `person` |
 | `aload_1` | Pick up `person` again |
 | `invokevirtual display` | Call `person.display()` |
 | `return` | Finish `main` |
 
-**One sentence:** The JVM creates a Person with `Aman` and `21`, saves it, calls `display`, and finishes.
+**One sentence:** Create Person(Aman, 21) → save it → call display → stop.
 
-You do **not** need to understand the constant pool or descriptors yet.
+### What you can ignore for now
 
-**Optional advanced output:** `javap -c -v Person` also shows the constant pool, version, flags, descriptors, checksums, and bootstrap methods. That is why your output was very long.
+- Numbers like `#7`, `#13`, `#33` — just labels inside the class file
+- Types like `Ljava/lang/String;` — “this is a String”
+- `invokedynamic` details — “join text for printing”
+- `javap -c -v` constant pool / checksums — advanced; not needed here
 
-- Save text or a local screenshot under `notes/screenshots/` (keep screenshots on your laptop only)
-- Explain three of: `new`, `ldc`, `invokevirtual`, `aload`, `return`
-
-### Quick opcode meanings (plain words)
-
-**Picture the JVM putting items on a table, then acting on them.**
+### Three opcodes to remember
 
 | Opcode | Everyday meaning |
 | ------ | ---------------- |
-| `ldc` | Put a value (text or number) on the table |
-| `getstatic` | Pick up a shared tool like the printer (`System.out`) |
-| `invokevirtual` | Do an action with what's on the table (e.g. print) |
-| `aload` / `aload_0` | Put an object you already have on the table |
 | `new` | Create a new object |
-| `return` | Done — step away |
+| `ldc` | Put a constant value (like `"Aman"`) on the table |
+| `invokevirtual` | Call a method (like `display` or `println`) |
+| `aload` / `aload_0` | Put an object you already have on the table |
+| `return` | Done |
 
-You do **not** need to memorize these. The point: `javac` turns your Java into small steps, and the **JVM runs the steps**, not your `.java` file. Full walkthrough: [Exercise 1 Step 4](exercise-01-hello-world.md).
+You do **not** need to memorize every line. The point: **`javac` turned your Java into small JVM steps, and `java` runs those steps.**
 
+- Save text or a local screenshot under `notes/screenshots/` (keep screenshots on your laptop only)
+- Explain three of: `new`, `ldc`, `invokevirtual`, `aload`, `return`
 
 ## Expected result
 
