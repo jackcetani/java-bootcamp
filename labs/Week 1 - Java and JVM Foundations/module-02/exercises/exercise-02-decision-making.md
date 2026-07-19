@@ -3,6 +3,8 @@
 **Module 2** · Pre-lab practice · then open [`../lab2/LAB-2-GUIDE.md`](../lab2/LAB-2-GUIDE.md)  
 **Folder:** `examples/module-02-exercises/` ([setup](EXERCISES-INDEX.md))
 
+![Java Decisions: if/else-if versus switch](../../../lab_diagrams/mod02-ex02-decision-making.png)
+
 > **New for Module 2:** `if` / `else if` / `else` and `switch` — the two ways Java picks a path.
 
 ## Goal

@@ -3,6 +3,8 @@
 **Module 4** · Pre-lab practice · then open [`../lab4/LAB-4-GUIDE.md`](../lab4/LAB-4-GUIDE.md)  
 **Folder:** `examples/module-04-exercises/` ([setup](EXERCISES-INDEX.md))
 
+![Object References and Garbage-Collection Eligibility](../../../lab_diagrams/mod04-ex02-object-lifecycle.png)
+
 ## Goal
 
 Create one object with two references. Remove references one at a time and explain when the object becomes **eligible** for garbage collection.

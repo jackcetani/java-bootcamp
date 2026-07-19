@@ -3,7 +3,7 @@
 **Module 1** · Pre-lab practice · then open [`../../lab1/LAB-1-GUIDE.md`](../lab1/LAB-1-GUIDE.md)  
 **Folder:** `examples/module-01-exercises/` ([setup](EXERCISES-INDEX.md))
 
-![From Java Source to JVM Bytecode: Person.class](../../../lab_diagrams/mod01-ex06-javap-bytecode.png)
+![Inspecting Person Bytecode with javap](../../../lab_diagrams/mod01-ex08-javap-bytecode.png)
 
 ## Goal
 

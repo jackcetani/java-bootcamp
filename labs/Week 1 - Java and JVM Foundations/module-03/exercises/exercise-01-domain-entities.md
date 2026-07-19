@@ -3,6 +3,8 @@
 **Module 3** · Pre-lab practice · then open [`../lab3/LAB-3-GUIDE.md`](../lab3/LAB-3-GUIDE.md)  
 **Folder:** `examples/module-03-exercises/` ([setup](EXERCISES-INDEX.md))
 
+![Banking Domain Entities and Responsibilities](../../../lab_diagrams/mod03-ex01-domain-entities.png)
+
 > **Design before code:** Lab 3 is a banking system. First translate the business description into objects with focused responsibilities.
 
 ## Goal

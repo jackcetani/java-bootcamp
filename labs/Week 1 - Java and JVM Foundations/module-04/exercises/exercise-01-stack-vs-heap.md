@@ -3,6 +3,8 @@
 **Module 4** · Pre-lab practice · then open [`../lab4/LAB-4-GUIDE.md`](../lab4/LAB-4-GUIDE.md)  
 **Folder:** `examples/module-04-exercises/` ([setup](EXERCISES-INDEX.md))
 
+![Thread Stack Frames Referencing an Object on the Heap](../../../lab_diagrams/mod04-ex01-stack-vs-heap.png)
+
 ## Goal
 
 Create `StackHeapDemo.java`, run it, then trace which values belong to method stack frames and which object lives on the heap.

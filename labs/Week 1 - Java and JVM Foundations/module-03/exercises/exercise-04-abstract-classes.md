@@ -3,6 +3,8 @@
 **Module 3** · Pre-lab practice · then open [`../lab3/LAB-3-GUIDE.md`](../lab3/LAB-3-GUIDE.md)  
 **Folder:** `examples/module-03-exercises/` ([setup](EXERCISES-INDEX.md))
 
+![Abstract Classes and Concrete Subclasses](../../../lab_diagrams/mod03-ex04-abstract-classes.png)
+
 > **Builds on Exercise 3:** `SavingsAccount` and `CurrentAccount` already override behavior — now make the parent itself impossible to instantiate directly.
 
 ## Goal

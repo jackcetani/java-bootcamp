@@ -3,6 +3,8 @@
 **Module 3** · Pre-lab practice · then open [`../lab3/LAB-3-GUIDE.md`](../lab3/LAB-3-GUIDE.md)  
 **Folder:** `examples/module-03-exercises/` ([setup](EXERCISES-INDEX.md))
 
+![Printable Interface Implemented by Customer](../../../lab_diagrams/mod03-ex05-interface.png)
+
 > **New design idea:** Inheritance says what an object **is**; an interface states a capability an object promises to provide.
 
 ## Goal

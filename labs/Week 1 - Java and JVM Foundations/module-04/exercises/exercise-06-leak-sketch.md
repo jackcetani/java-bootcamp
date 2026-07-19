@@ -3,6 +3,8 @@
 **Module 4** · Pre-lab practice · then open [`../lab4/LAB-4-GUIDE.md`](../lab4/LAB-4-GUIDE.md)  
 **Folder:** `examples/module-04-exercises/` ([setup](EXERCISES-INDEX.md))
 
+![Retained References Before and After Clearing a Static Cache](../../../lab_diagrams/mod04-ex06-retained-references.png)
+
 > **Safety:** This bounded demo retains about 10 MB of payload, then clears it. Do not turn it into an unbounded loop and do not attempt to crash the JVM.
 
 ## Goal

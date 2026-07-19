@@ -3,6 +3,8 @@
 **Module 4** · Pre-lab practice · then open [`../lab4/LAB-4-GUIDE.md`](../lab4/LAB-4-GUIDE.md)  
 **Folder:** `examples/module-04-exercises/` ([setup](EXERCISES-INDEX.md))
 
+![Selecting ZGC and Comparing Its Log with G1](../../../lab_diagrams/mod04-ex05-zgc.png)
+
 > **Reuse Exercise 3:** No new Java file is needed. Run `GcObserve` again with ZGC selected instead of G1.
 
 ## Goal

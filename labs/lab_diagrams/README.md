@@ -9,12 +9,13 @@ Exercise guides: [`module-01/exercises/`](../Week%201%20-%20Java%20and%20JVM%20F
 | File | Exercise |
 | ---- | -------- |
 | [`mod01-ex01-hello-world.png`](mod01-ex01-hello-world.png) | Exercise 1 — Hello World |
-| [`mod01-ex02-variables.png`](mod01-ex02-variables.png) | Exercise 2 — Variables and Data Types |
-| [`mod01-ex03-methods.png`](mod01-ex03-methods.png) | Exercise 3 — Methods and Parameters |
-| [`mod01-ex04-control-flow.png`](mod01-ex04-control-flow.png) | Exercise 4 — Control Flow |
-| [`mod01-ex05-objects-person.png`](mod01-ex05-objects-person.png) | Exercise 5 — Objects and Classes |
-| [`mod01-ex06-javap-bytecode.png`](mod01-ex06-javap-bytecode.png) | Exercise 6 — Inspect Bytecode |
-| [`mod01-ex07-wora.png`](mod01-ex07-wora.png) | Exercise 7 — Platform Independence (WORA) |
+| [`mod01-ex02-wora.png`](mod01-ex02-wora.png) | Exercise 2 — Platform Independence (WORA) |
+| [`mod01-ex03-control-flow.png`](mod01-ex03-control-flow.png) | Exercise 3 — Control Flow |
+| [`mod01-ex04-class-loading.png`](mod01-ex04-class-loading.png) | Exercise 4 — Watch Class Loading |
+| [`mod01-ex05-variables.png`](mod01-ex05-variables.png) | Exercise 5 — Variables and Data Types |
+| [`mod01-ex06-methods.png`](mod01-ex06-methods.png) | Exercise 6 — Methods and Parameters |
+| [`mod01-ex07-objects.png`](mod01-ex07-objects.png) | Exercise 7 — Objects and Classes |
+| [`mod01-ex08-javap-bytecode.png`](mod01-ex08-javap-bytecode.png) | Exercise 8 — Inspect Bytecode |
 
 ## Module 2 — Java Syntax and Core Constructs
 
@@ -23,6 +24,9 @@ Exercise guides: [`module-02/exercises/`](../Week%201%20-%20Java%20and%20JVM%20F
 | File | Exercise |
 | ---- | -------- |
 | [`mod02-ex01-calculator.png`](mod02-ex01-calculator.png) | Exercise 1 — Calculations |
+| [`mod02-ex02-decision-making.png`](mod02-ex02-decision-making.png) | Exercise 2 — Decision Making |
+| [`mod02-ex03-loops.png`](mod02-ex03-loops.png) | Exercise 3 — Loops |
+| [`mod02-ex04-methods.png`](mod02-ex04-methods.png) | Exercise 4 — Methods |
 | [`mod02-ex05-personal-details.png`](mod02-ex05-personal-details.png) | Exercise 5 — Personal Details |
 | [`mod02-ex06-product-info.png`](mod02-ex06-product-info.png) | Exercise 6 — Product Information |
 | [`mod02-ex07-circle-area.png`](mod02-ex07-circle-area.png) | Exercise 7 — Area of Circle |
@@ -35,4 +39,24 @@ Exercise guides: [`module-03/exercises/`](../Week%201%20-%20Java%20and%20JVM%20F
 
 | File | Exercise |
 | ---- | -------- |
+| [`mod03-ex01-domain-entities.png`](mod03-ex01-domain-entities.png) | Exercise 1 — Identify Domain Entities |
+| [`mod03-ex02-encapsulation.png`](mod03-ex02-encapsulation.png) | Exercise 2 — Encapsulation Practice |
+| [`mod03-ex03-inheritance-polymorphism.svg`](mod03-ex03-inheritance-polymorphism.svg) | Exercise 3 — Inheritance and Polymorphism |
+| [`mod03-ex04-abstract-classes.png`](mod03-ex04-abstract-classes.png) | Exercise 4 — Abstract Classes |
+| [`mod03-ex05-interface.png`](mod03-ex05-interface.png) | Exercise 5 — Interface Practice |
+| [`mod03-ex06-solid-srp.svg`](mod03-ex06-solid-srp.svg) | Exercise 6 — SOLID Spot-Check: SRP |
+| [`mod03-ex07-solid-principles.png`](mod03-ex07-solid-principles.png) | Exercise 7 — SOLID Beyond SRP |
 | [`mod03-ex08-uml-mini.png`](mod03-ex08-uml-mini.png) | Exercise 8 — Mini UML |
+
+## Module 4 — Memory Management and Garbage Collection
+
+Exercise guides: [`module-04/exercises/`](../Week%201%20-%20Java%20and%20JVM%20Foundations/module-04/exercises/)
+
+| File | Exercise |
+| ---- | -------- |
+| [`mod04-ex01-stack-vs-heap.png`](mod04-ex01-stack-vs-heap.png) | Exercise 1 — Stack vs Heap Basics |
+| [`mod04-ex02-object-lifecycle.png`](mod04-ex02-object-lifecycle.png) | Exercise 2 — Object Lifecycle |
+| [`mod04-ex03-gc-observe.png`](mod04-ex03-gc-observe.png) | Exercise 3 — Garbage Collection in Action |
+| [`mod04-ex05-zgc.png`](mod04-ex05-zgc.png) | Exercise 5 — ZGC Flag |
+| [`mod04-ex06-retained-references.png`](mod04-ex06-retained-references.png) | Exercise 6 — Retention Sketch |
+| [`mod04-ex07-string-vs-builder.png`](mod04-ex07-string-vs-builder.png) | Exercise 7 — String vs StringBuilder |

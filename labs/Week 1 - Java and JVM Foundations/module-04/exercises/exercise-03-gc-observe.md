@@ -3,6 +3,8 @@
 **Module 4** · Pre-lab practice · then open [`../lab4/LAB-4-GUIDE.md`](../lab4/LAB-4-GUIDE.md)  
 **Folder:** `examples/module-04-exercises/` ([setup](EXERCISES-INDEX.md))
 
+![Temporary Allocations Reclaimed by Garbage Collection](../../../lab_diagrams/mod04-ex03-gc-observe.png)
+
 > **Safe bounded experiment:** The program allocates temporary batches and completes under a 64 MB heap. Do not increase the batch size to force an OOM.
 
 ## Goal

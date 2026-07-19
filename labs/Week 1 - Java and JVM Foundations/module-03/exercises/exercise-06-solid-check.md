@@ -3,6 +3,8 @@
 **Module 3** · Pre-lab practice · then open [`../lab3/LAB-3-GUIDE.md`](../lab3/LAB-3-GUIDE.md)  
 **Folder:** `examples/module-03-exercises/` ([setup](EXERCISES-INDEX.md))
 
+![Single Responsibility Principle Refactoring](../../../lab_diagrams/mod03-ex06-solid-srp.svg)
+
 > **Focused scope:** SOLID has five principles. This warm-up practices only **S — Single Responsibility Principle (SRP)** before Lab 3 separates model, service, and menu responsibilities.
 
 ## Goal

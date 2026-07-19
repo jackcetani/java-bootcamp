@@ -3,7 +3,7 @@
 **Module 1** · Pre-lab practice · then open [`../../lab1/LAB-1-GUIDE.md`](../lab1/LAB-1-GUIDE.md)  
 **Folder:** `examples/module-01-exercises/` ([setup](EXERCISES-INDEX.md))
 
-![Java Variables and Data Types](../../../lab_diagrams/mod01-ex02-variables.png)
+![Java Variables, Primitive Values, and Reference Types](../../../lab_diagrams/mod01-ex05-variables.png)
 
 ## Goal
 

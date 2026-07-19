@@ -3,6 +3,8 @@
 **Module 2** · Pre-lab practice · then open [`../lab2/LAB-2-GUIDE.md`](../lab2/LAB-2-GUIDE.md)  
 **Folder:** `examples/module-02-exercises/` ([setup](EXERCISES-INDEX.md))
 
+![Java Loops: for, while, and do-while](../../../lab_diagrams/mod02-ex03-loops.png)
+
 > **New for Module 2:** `for`, `while`, and `do-while` — Java's three ways to repeat.
 
 ## Goal

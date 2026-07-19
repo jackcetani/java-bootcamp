@@ -3,7 +3,7 @@
 **Module 1** · Pre-lab practice · then open [`../../lab1/LAB-1-GUIDE.md`](../lab1/LAB-1-GUIDE.md)  
 **Folder:** `examples/module-01-exercises/` ([setup](EXERCISES-INDEX.md))
 
-![Java Methods: Parameters and Return Values](../../../lab_diagrams/mod01-ex03-methods.png)
+![Java Method Calls, Parameters, and Return Values](../../../lab_diagrams/mod01-ex06-methods.png)
 
 ## Goal
 

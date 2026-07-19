@@ -3,6 +3,8 @@
 **Module 2** · Pre-lab practice · then open [`../lab2/LAB-2-GUIDE.md`](../lab2/LAB-2-GUIDE.md)  
 **Folder:** `examples/module-02-exercises/` ([setup](EXERCISES-INDEX.md))
 
+![Java Methods: Return Values and Overloading](../../../lab_diagrams/mod02-ex04-methods.png)
+
 > **New for Module 2:** declaring your own methods, passing parameters, returning a value, and overloading.
 
 ## Goal

@@ -3,6 +3,8 @@
 **Module 3** · Pre-lab practice · then open [`../lab3/LAB-3-GUIDE.md`](../lab3/LAB-3-GUIDE.md)  
 **Folder:** `examples/module-03-exercises/` ([setup](EXERCISES-INDEX.md))
 
+![Inheritance and Runtime Polymorphism](../../../lab_diagrams/mod03-ex03-inheritance-polymorphism.svg)
+
 > **Builds on Exercise 2:** Keep `Account.java`. Add two specialized account types and call overridden behavior through `Account` references.
 
 ## Goal

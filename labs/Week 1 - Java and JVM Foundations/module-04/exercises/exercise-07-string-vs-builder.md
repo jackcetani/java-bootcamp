@@ -3,6 +3,8 @@
 **Module 4** · Pre-lab practice · then open [`../lab4/LAB-4-GUIDE.md`](../lab4/LAB-4-GUIDE.md)  
 **Folder:** `examples/module-04-exercises/` ([setup](EXERCISES-INDEX.md))
 
+![String Concatenation Compared with StringBuilder](../../../lab_diagrams/mod04-ex07-string-vs-builder.png)
+
 ## Goal
 
 Create `StringBuilderComparison.java` and compare repeated immutable `String` concatenation with mutable `StringBuilder`.

@@ -3,6 +3,8 @@
 **Module 3** · Pre-lab practice · then open [`../lab3/LAB-3-GUIDE.md`](../lab3/LAB-3-GUIDE.md)
 **Folder:** `examples/module-03-exercises/` ([setup](EXERCISES-INDEX.md))
 
+![SOLID Principles in a Banking Design](../../../lab_diagrams/mod03-ex07-solid-principles.png)
+
 > **Builds on Exercises 3–6:** Reuse `Account`, `SavingsAccount`,
 > `CurrentAccount`, `InheritanceDemo`, `Printable`, and your SRP notes.
 
