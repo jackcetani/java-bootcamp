@@ -19,6 +19,18 @@
 
 > **Hard gate — pre-lab exercises:** Complete Module 2 **Exercises 1–7** under [`../exercises/`](../exercises/EXERCISES-INDEX.md) and mark their Pass criteria **Pass** **before** Step 1 of this lab. Lab 2 is graded consolidation in a **separate** packaged project (`examples/Lab2-JavaSyntax/`), not a replacement for the flat exercises folder (`examples/module-02-exercises/`).
 
+**Verified participant layout (Windows IntelliJ + PowerShell; Temurin JDK 21.0.11):**
+
+| Role | Path |
+| ---- | ---- |
+| IntelliJ opens | `%USERPROFILE%\java-bootcamp` (SDK / language level **21**) |
+| Pre-lab exercises | `examples\module-02-exercises\` (flat `.java` files) |
+| This lab project | `examples\Lab2-JavaSyntax\` with `src\com\academy\student\` |
+| Compile / run (from `Lab2-JavaSyntax`) | `javac -d out` on the three sources → `java -cp out com.academy.student.Main` |
+| Smoke-test output | Menu → add John → table row `91.00` → search ID `101` → `Average Marks : 91.00` → `Thank You` |
+
+**If it fails (Windows PowerShell):** Prefer naming each `.java` file in the `javac` line (as in [LAB-2-WINDOWS.md](LAB-2-WINDOWS.md)); do not rely on `*.java` globs. Mark `examples\Lab2-JavaSyntax\src` as Sources Root — not `module-02-exercises`.
+
 ---
 
 ## How to follow this lab
@@ -651,22 +663,18 @@ Average Marks : 91.00
 
 **Do this:** From project root `Lab2-JavaSyntax`:
 
-**Windows PowerShell / macOS / Linux** (same `javac` / `java` once `cd` is correct):
-
-```bash
-javac -d out src/com/academy/student/*.java
-java -cp out com.academy.student.Main
-```
-
-**Windows PowerShell clean rebuild:**
+**Windows PowerShell** (name each source file — do not rely on `*.java` globs):
 
 ```powershell
 Remove-Item -Recurse -Force out -ErrorAction SilentlyContinue
-javac -d out src/com/academy/student/*.java
+javac -d out `
+  src\com\academy\student\Student.java `
+  src\com\academy\student\StudentManager.java `
+  src\com\academy\student\Main.java
 java -cp out com.academy.student.Main
 ```
 
-**macOS / Linux clean rebuild:**
+**macOS / Linux:**
 
 ```bash
 rm -rf out
@@ -694,7 +702,7 @@ Enter Choice :
 
 | Symptom | Fix |
 | ------- | --- |
-| `javac: file not found` | `cd` into `Lab2-JavaSyntax` first |
+| `javac: file not found` / empty glob | On Windows PowerShell, name each `.java` file (see [LAB-2-WINDOWS.md](LAB-2-WINDOWS.md)); `cd` into `Lab2-JavaSyntax` first |
 | `package ... does not match` | Check `src/com/academy/student` layout |
 | `Error: Could not find or load main class` | Use `-cp out` and fully qualified `com.academy.student.Main` |
 | Wrong Java version | `javac -version` must be 21 |
@@ -781,15 +789,27 @@ Also try Search (`3`) with `101` and a bad ID before exiting.
 
 ## Reference Commands
 
+**Windows PowerShell** (from `Lab2-JavaSyntax/`):
+
+```powershell
+javac -d out `
+  src\com\academy\student\Student.java `
+  src\com\academy\student\StudentManager.java `
+  src\com\academy\student\Main.java
+java -cp out com.academy.student.Main
+```
+
+**macOS / Linux:**
+
 ```bash
-# From Lab2-JavaSyntax/
 javac -d out src/com/academy/student/*.java
 java -cp out com.academy.student.Main
 ```
 
 | Goal | Command theme |
 | ---- | ------------- |
-| Compile to `out/` | `javac -d out src/com/academy/student/*.java` |
+| Compile to `out/` (Windows) | Named `javac -d out` lines for the three sources |
+| Compile to `out/` (macOS/Linux) | `javac -d out src/com/academy/student/*.java` |
 | Run main | `java -cp out com.academy.student.Main` |
 | List sources (Windows) | `Get-ChildItem -Recurse src\*.java` |
 | List sources (macOS/Linux) | `find src -name '*.java'` |
