@@ -1,0 +1,23 @@
+What does javac do, and what file does it produce?
+
+Javac is the Java compiler, which takes the source code (.java) files and compiles them into bytecode, producing .class files.
+
+What is bytecode, and why is it not machine code?
+
+Bytecode is a set of instructions designed to be executed by the JVM, not by a physical CPU. While it is similar, a CPU can't execute bytecode directly and needs the JVM to interpret or translate it into actual machine instructions.
+
+Why is bytecode platform-independent?
+
+Since bytecode is executed by the JVM rather than any particular CPU or operating system, as long as a platform has a compatible JVM implementation, the same .class file can run unmodified on it.
+
+What is the role of the JVM in executing your program?
+
+The JVM loads .class files, verifies the bytecode for safety/correctness, and then executes it. The JVM also manages runtme concerns like memory allocation, garbage collection, thread scheduling, and exception handling.
+
+Where are objects stored, and where are method calls and stack frames stored?
+
+Objects are stored on the heap, the shared memory region managed by the JVM. Method calls and stack frames are stored on the call stack.
+
+What happens when a class is loaded by the JVM?
+
+First, the JVM locates the .class file and reads its binary data into memory. Then, the bytecode is checked to ensure it is safe and correct, memory is allocated for the class's static fields, and symbolic references are resolved to actual memory references. Lastly, static initializers and static field assignments are run in the order they appear in the source code and the actual initial values are assigned. After this, the class is ready to be used.
