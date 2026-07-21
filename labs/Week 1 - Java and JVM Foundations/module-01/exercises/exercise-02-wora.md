@@ -67,9 +67,9 @@ Hello, JVM!
 **Sample note:**
 
 ```text
-javac turned Hello.java into Hello.class (bytecode).
-The java command starts a JVM that runs that bytecode — I did not need to recompile to run it again.
-Any OS with a compatible JVM can run the same .class file without changing the source — that is Write Once, Run Anywhere.
+The source code in a java project is the human-readable text / code created by developers, in this case the Hello.java file. 
+The compiler (javac) turns the source code into machine-readable bytecode, in this case Hello.class. 
+Lastly, the JVM executes the bytecode on a user's machine, which is platform-specific.
 ```
 
 ## Expected result
@@ -82,5 +82,5 @@ _Mark each row **Pass** or **Fail** in your lab notes (GitHub markdown files are
 
 | # | Confirm | Your notes |
 | - | ------- | ---------- |
-| 1 | Code compiles and runs (or notes complete if analysis-only) | Pass / Fail |
-| 2 | You can explain the result in one sentence | Pass / Fail |
+| 1 | Code compiles and runs (or notes complete if analysis-only) | Pass |
+| 2 | You can explain the result in one sentence | Pass |

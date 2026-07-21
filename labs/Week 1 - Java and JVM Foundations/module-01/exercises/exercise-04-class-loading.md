@@ -47,6 +47,6 @@ The verbose log shows `Hello` loaded from your local classpath, while `String` i
 _Mark each row **Pass** or **Fail** in your lab notes (GitHub markdown files are not interactive checklists)._
 
 | # | Confirm | Your notes |
-| - | ------- | ---------- |
-| 1 | Code compiles and runs (or notes complete if analysis-only) | Pass / Fail |
-| 2 | You can explain the result in one sentence | Pass / Fail |
+| - | ------- | -------- |
+| 1 | Code compiles and runs (or notes complete if analysis-only) | Pass |
+| 2 | You can explain the result in one sentence | Pass |
