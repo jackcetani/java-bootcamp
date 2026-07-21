@@ -114,6 +114,6 @@ Program prompts for three values and greets with all three.
 _Mark each row **Pass** or **Fail** in your lab notes (GitHub markdown files are not interactive checklists)._
 
 | # | Confirm | Your notes |
-| - | ------- | ---------- |
-| 1 | Code compiles and runs; greeting shows name, age, city | Pass / Fail |
-| 2 | You can explain why an extra `nextLine()` is needed after `nextInt()` | Pass / Fail |
+| - | ------- | --------- |
+| 1 | Code compiles and runs; greeting shows name, age, city | Pass |
+| 2 | You can explain why an extra `nextLine()` is needed after `nextInt()` | Pass |

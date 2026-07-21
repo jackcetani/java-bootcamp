@@ -90,5 +90,5 @@ Both calls print the correct square, and the program compiles even though two me
 
 | # | Confirm | Your notes |
 | - | ------- | ---------- |
-| 1 | Both `square` calls print the correct result | Pass / Fail |
-| 2 | You can explain how Java chooses which overload to call | Pass / Fail |
+| 1 | Both `square` calls print the correct result | Pass |
+| 2 | You can explain how Java chooses which overload to call | Pass |

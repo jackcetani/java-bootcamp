@@ -95,6 +95,6 @@ Product name, quantity, and price print correctly (price with two decimals).
 ## Pass criteria
 
 | # | Confirm | Your notes |
-| - | ------- | ---------- |
-| 1 | Code compiles and runs; all three fields print | Pass / Fail |
-| 2 | You can explain why `nextLine()` + parse is safer than mixing `nextInt` / `nextDouble` | Pass / Fail |
+| - | ------- |------|
+| 1 | Code compiles and runs; all three fields print | Pass |
+| 2 | You can explain why `nextLine()` + parse is safer than mixing `nextInt` / `nextDouble` | Pass |

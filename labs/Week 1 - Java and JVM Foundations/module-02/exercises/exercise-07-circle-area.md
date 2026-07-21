@@ -90,8 +90,8 @@ Area matches π × r × r and prints with two decimals.
 
 | # | Confirm | Your notes |
 | - | ------- | ---------- |
-| 1 | Area prints with two decimals for your radius | Pass / Fail |
-| 2 | You can write the formula `Math.PI * r * r` from memory | Pass / Fail |
+| 1 | Area prints with two decimals for your radius | Pass |
+| 2 | You can write the formula `Math.PI * r * r` from memory | Pass |
 
 ---
 

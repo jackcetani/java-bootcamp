@@ -111,6 +111,6 @@ Table prints 5x1 through 5x5, countdown prints 3 to 1, and the menu prompt appea
 ## Pass criteria
 
 | # | Confirm | Your notes |
-| - | ------- | ---------- |
-| 1 | All three loops produce the expected output | Pass / Fail |
-| 2 | You can explain why `do-while` always runs its body once | Pass / Fail |
+| - | ------- | --------- |
+| 1 | All three loops produce the expected output | Pass |
+| 2 | You can explain why `do-while` always runs its body once | Pass |

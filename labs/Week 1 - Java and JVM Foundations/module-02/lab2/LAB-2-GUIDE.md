@@ -238,9 +238,9 @@ ls examples/module-02-exercises
 
 | File | Responsibility |
 | ---- | -------------- |
-| `Student.java` | Fields, constructor, getters/setters, `display()` |
-| `StudentManager.java` | `Student[]`, count, menu print, CRUD-ish ops, validation helpers |
-| `Main.java` | Create `Scanner` + `StudentManager`, loop, `switch` choices 1–5 |
+| `src/com/academy/student/Student.java` | Fields, constructor, getters/setters, `display()` |
+| `src/com/academy/student/StudentManager.java` | `Student[]`, count, menu print, CRUD-ish ops, validation helpers |
+| `src/com/academy/student/Main.java` | Create `Scanner` + `StudentManager`, loop, `switch` choices 1–5 |
 
 Optional bonus later: menu items 6–10 (top / lowest / pass-fail / sort / stats)—see Bonus Challenges.
 
@@ -337,7 +337,7 @@ find src -type d
 
 ---
 
-### Step 3 — Create `Student.java` (model)
+### Step 3 — Create `src/com/academy/student/Student.java` (model)
 
 **Why:** The model holds data only. Menu logic belongs elsewhere. Encapsulation (private fields + getters/setters) is a Week 1 habit.
 
@@ -390,7 +390,7 @@ You may keep getters/setters on one line or expand them—style is yours as long
 **If it fails:**
 
 * `The declared package does not match...` → folder path is not `src/com/academy/student`
-* Public class name ≠ file name → rename file to `Student.java`
+* Public class name ≠ file name → rename file to `src/com/academy/student/Student.java`
 
 ---
 
@@ -682,7 +682,7 @@ javac -d out src/com/academy/student/*.java
 java -cp out com.academy.student.Main
 ```
 
-**IntelliJ alternative:** After Sources Root + SDK 21, open `Main.java` → Run gutter on `main`. Then still practice the terminal once.
+**IntelliJ alternative:** After Sources Root + SDK 21, open `src/com/academy/student/Main.java` → Run gutter on `main`. Then still practice the terminal once.
 
 **Expected result:** Menu appears:
 

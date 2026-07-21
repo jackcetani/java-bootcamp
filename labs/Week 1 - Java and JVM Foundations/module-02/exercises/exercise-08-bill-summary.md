@@ -113,5 +113,5 @@ Bill shows total, discount, and final amount with two decimal places.
 
 | # | Confirm | Your notes |
 | - | ------- | ---------- |
-| 1 | Sample `3 × 59.99` yields final **161.97** (or equivalent rounding) | Pass / Fail |
-| 2 | You can explain total → discount → final in one sentence | Pass / Fail |
+| 1 | Sample `3 × 59.99` yields final **161.97** (or equivalent rounding) | Pass |
+| 2 | You can explain total → discount → final in one sentence | Pass |

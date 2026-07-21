@@ -95,6 +95,6 @@ Four labeled results print for your two inputs.
 ## Pass criteria
 
 | # | Confirm | Your notes |
-| - | ------- | ---------- |
-| 1 | Four results print correctly | Pass / Fail |
-| 2 | You can explain why `double` is preferred for division here | Pass / Fail |
+| - | ------- | -------- |
+| 1 | Four results print correctly | Pass |
+| 2 | You can explain why `double` is preferred for division here | Pass |

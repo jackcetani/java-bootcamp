@@ -110,5 +110,5 @@ A readable two-column profile table with aligned fields.
 
 | # | Confirm | Your notes |
 | - | ------- | ---------- |
-| 1 | Table prints with four fields aligned | Pass / Fail |
-| 2 | You can explain what `%-12s` does in one sentence | Pass / Fail |
+| 1 | Table prints with four fields aligned | Pass |
+| 2 | You can explain what `%-12s` does in one sentence | Pass |
