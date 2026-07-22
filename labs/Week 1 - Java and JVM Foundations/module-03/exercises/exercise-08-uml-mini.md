@@ -126,10 +126,10 @@ The rendered diagram matches your code and clearly distinguishes inheritance, in
 
 | # | Confirm | Your notes |
 | - | ------- | ---------- |
-| 1 | Diagram includes all six types | Pass / Fail |
-| 2 | Inheritance and interface arrows are correct | Pass / Fail |
-| 3 | Customer–Account and Account–Transaction multiplicities appear | Pass / Fail |
-| 4 | You can explain the three relationship types | Pass / Fail |
+| 1 | Diagram includes all six types | Pass |
+| 2 | Inheritance and interface arrows are correct | Pass |
+| 3 | Customer–Account and Account–Transaction multiplicities appear | Pass |
+| 4 | You can explain the three relationship types | Pass |
 
 ---
 

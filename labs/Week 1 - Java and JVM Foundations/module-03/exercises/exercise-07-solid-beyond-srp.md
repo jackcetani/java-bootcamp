@@ -164,7 +164,7 @@ and you have one written sentence for each remaining SOLID principle.
 
 | # | Confirm | Your notes |
 | - | ------- | ---------- |
-| 1 | `FrozenAccount` compiles and runs inside the same loop | Pass / Fail |
-| 2 | Frozen withdrawal returns `false` and leaves balance unchanged | Pass / Fail |
-| 3 | You wrote one sentence for each of OCP, LSP, ISP, and DIP | Pass / Fail |
-| 4 | You can name all five SOLID letters from memory | Pass / Fail |
+| 1 | `FrozenAccount` compiles and runs inside the same loop | Pass |
+| 2 | Frozen withdrawal returns `false` and leaves balance unchanged | Pass |
+| 3 | You wrote one sentence for each of OCP, LSP, ISP, and DIP | Pass |
+| 4 | You can name all five SOLID letters from memory | Pass |

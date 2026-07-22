@@ -168,7 +168,7 @@ One `Account[]` holds both subclasses. The same `withdraw(20)` call produces dif
 ## Pass criteria
 
 | # | Confirm | Your notes |
-| - | ------- | ---------- |
-| 1 | Savings prints `80.00`; Current prints `78.00` | Pass / Fail |
-| 2 | Base-type array contains both subclass objects | Pass / Fail |
-| 3 | You can explain `super` and runtime polymorphism | Pass / Fail |
+| - | ------- |------|
+| 1 | Savings prints `80.00`; Current prints `78.00` | Pass |
+| 2 | Base-type array contains both subclass objects | Pass |
+| 3 | You can explain `super` and runtime polymorphism | Pass |

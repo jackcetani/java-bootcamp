@@ -163,7 +163,7 @@ Valid operations change the balance; the oversized withdrawal does not. Outside 
 ## Pass criteria
 
 | # | Confirm | Your notes |
-| - | ------- | ---------- |
-| 1 | Demo prints rejection and final balance `120.00` | Pass / Fail |
-| 2 | Direct `account.balance` access fails to compile | Pass / Fail |
-| 3 | You can explain why no public `setBalance` exists | Pass / Fail |
+| - | ------- | --------- |
+| 1 | Demo prints rejection and final balance `120.00` | Pass |
+| 2 | Direct `account.balance` access fails to compile | Pass |
+| 3 | You can explain why no public `setBalance` exists | Pass |

@@ -139,7 +139,7 @@ The program prints `500.00`; calculation has no `System.out`, and display code d
 
 | # | Confirm | Your notes |
 | - | ------- | ---------- |
-| 1 | Output is `Interest earned: 500.00` | Pass / Fail |
-| 2 | Calculation and display are separate methods | Pass / Fail |
-| 3 | You can name both reasons the original method might change | Pass / Fail |
-| 4 | You can connect SRP to Main / BankService / domain classes | Pass / Fail |
+| 1 | Output is `Interest earned: 500.00` | Pass |
+| 2 | Calculation and display are separate methods | Pass |
+| 3 | You can name both reasons the original method might change | Pass |
+| 4 | You can connect SRP to Main / BankService / domain classes | Pass |

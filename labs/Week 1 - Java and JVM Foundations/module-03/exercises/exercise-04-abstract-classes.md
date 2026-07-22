@@ -120,6 +120,6 @@ The direct-instantiation line fails to compile; the program runs once you go thr
 
 | # | Confirm | Your notes |
 | - | ------- | ---------- |
-| 1 | Direct instantiation of `AbstractAccount` fails to compile | Pass / Fail |
-| 2 | `AbstractDemo` runs successfully through `AbstractSavings` | Pass / Fail |
-| 3 | You can explain why `abstract` forces subclasses to implement the method | Pass / Fail |
+| 1 | Direct instantiation of `AbstractAccount` fails to compile | Pass |
+| 2 | `AbstractDemo` runs successfully through `AbstractSavings` | Pass |
+| 3 | You can explain why `abstract` forces subclasses to implement the method | Pass |

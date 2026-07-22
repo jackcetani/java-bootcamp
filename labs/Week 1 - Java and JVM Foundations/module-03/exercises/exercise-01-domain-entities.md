@@ -110,8 +110,8 @@ Suggested idea: `Account` owns the balance and its rules, while `Main` should on
 _Mark each row **Pass** or **Fail** in your lab notes._
 
 | # | Confirm | Your notes |
-| - | ------- | ---------- |
-| 1 | `notes.md` identifies at least Customer, Account, Transaction | Pass / Fail |
-| 2 | Every entity has attributes and one focused responsibility | Pass / Fail |
-| 3 | Relationships include one-to-many multiplicities | Pass / Fail |
-| 4 | You can explain why Account owns withdrawal validation | Pass / Fail |
+| - | ------- | --------- |
+| 1 | `notes.md` identifies at least Customer, Account, Transaction | Pass |
+| 2 | Every entity has attributes and one focused responsibility | Pass |
+| 3 | Relationships include one-to-many multiplicities | Pass |
+| 4 | You can explain why Account owns withdrawal validation | Pass |
