@@ -36,30 +36,20 @@ public class StudentManager {
         String course = "";
         double marks = 0;
 
-        boolean valid = false;
-        while (!valid) {
-            System.out.println("Enter student ID : ");
+        while (true) {
+            System.out.print("Enter student ID : ");
             String input = scanner.nextLine().trim();
-            try {
-                id = Integer.parseInt(input);
-            } catch (NumberFormatException ex) {
-                System.out.println("Invalid Input");
-                System.out.println("Enter a positive integer.");
-                continue;
-            }
+
+            id = readPositiveInt(input);
 
             if (id <= 0) {
-                System.out.println("Invalid Input");
-                System.out.println("Enter a positive integer.");
                 continue;
             }
-
-            valid = true;
+            break;
         }
 
-        valid = false;
-        while (!valid) {
-            System.out.println("Enter Student Name : ");
+        while (true) {
+            System.out.print("Enter Student Name : ");
             String input = scanner.nextLine().trim();
 
             if (input.isEmpty()) {
@@ -69,12 +59,11 @@ public class StudentManager {
             }
 
             name = input;
-            valid = true;
+            break;
         }
 
-        valid = false;
-        while (!valid) {
-            System.out.println("Enter Course Name : ");
+        while (true) {
+            System.out.print("Enter Course Name : ");
             String input = scanner.nextLine().trim();
 
             if (input.isEmpty()) {
@@ -84,12 +73,11 @@ public class StudentManager {
             }
 
             course = input;
-            valid = true;
+            break;
         }
 
-        valid = false;
-        while (!valid) {
-            System.out.println("Enter student marks : ");
+        while (true) {
+            System.out.print("Enter student marks : ");
             String input = scanner.nextLine().trim();
             try {
                 marks = Double.parseDouble(input);
@@ -105,7 +93,7 @@ public class StudentManager {
                 continue;
             }
 
-            valid = true;
+            break;
         }
 
         students[studentCount] = new Student(id, name, course, marks);
@@ -131,29 +119,27 @@ public class StudentManager {
         }
         int id = 0;
         while (true) {
-            System.out.println("Enter student ID : ");
+            System.out.print("Enter student ID : ");
             String input = scanner.nextLine().trim();
-            try {
-                id = Integer.parseInt(input);
-            } catch (NumberFormatException ex) {
-                System.out.println("Invalid Input");
-                System.out.println("Enter a positive integer.");
-                continue;
-            }
+
+            id = readPositiveInt(input);
 
             if (id <= 0) {
                 System.out.println("Invalid Input");
                 System.out.println("Enter a positive integer.");
                 continue;
             }
+
+            for (int i = 0; i < studentCount; i++) {
+                if (students[i].getStudentId() == id) {
+                    students[i].display();
+                    return;
+                }
+            }
+
             break;
         }
-        for (int i = 0; i < studentCount; i++) {
-            if (students[i].getStudentId() == id) {
-                students[i].display();
-                return;
-            }
-        }
+
         System.out.println("Student Not Found.");
     }
 
@@ -170,4 +156,28 @@ public class StudentManager {
         double avg = sum / studentCount;
         System.out.printf("Average Marks : %.2f%n", avg);
     }
+
+    public int readPositiveInt(String input) {
+        int num = -1;
+        if (input.isEmpty()) {
+            System.out.println("Invalid Input");
+            System.out.println("Enter a positive integer.");
+            return -1;
+        }
+        try {
+            num = Integer.parseInt(input);
+        } catch (NumberFormatException ex) {
+            System.out.println("Invalid Input");
+            System.out.println("Enter a positive integer.");
+            return -1;
+        }
+
+        if (num <= 0) {
+            System.out.println("Invalid Input");
+            System.out.println("Enter a positive integer.");
+            return -1;
+        }
+        return num;
+    }
+
 }
