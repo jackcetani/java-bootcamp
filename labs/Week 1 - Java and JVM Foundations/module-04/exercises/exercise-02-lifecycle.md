@@ -120,6 +120,6 @@ You can explain the difference between removing one alias, losing all strong ref
 
 | # | Confirm | Your notes |
 | - | ------- | ---------- |
-| 1 | Output confirms both references initially share one object | Pass / Fail |
-| 2 | You identify the exact GC-eligibility point | Pass / Fail |
-| 3 | You state that `System.gc()` is not guaranteed | Pass / Fail |
+| 1 | Output confirms both references initially share one object | Pass |
+| 2 | You identify the exact GC-eligibility point | Pass |
+| 3 | You state that `System.gc()` is not guaranteed | Pass |

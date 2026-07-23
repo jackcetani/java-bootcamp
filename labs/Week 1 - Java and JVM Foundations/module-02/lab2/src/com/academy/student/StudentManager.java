@@ -22,7 +22,6 @@ public class StudentManager {
         System.out.println("3. Search Student");
         System.out.println("4. Average Marks");
         System.out.println("5. Exit");
-        System.out.print("Enter Choice : ");
     }
 
     public void addStudent() {
@@ -102,6 +101,8 @@ public class StudentManager {
     }
 
     public void displayStudents() {
+        System.out.println("-------------------------------------------------------------");
+        System.out.println("ID       Name                 Course          Marks");
         for (int i = 0; i < studentCount; i++) {
             System.out.println("-------------------------------------------------------------");
             System.out.printf("%-8d %-20s %-15s %-8.2f%n",
@@ -132,6 +133,7 @@ public class StudentManager {
 
             for (int i = 0; i < studentCount; i++) {
                 if (students[i].getStudentId() == id) {
+                    System.out.println("Student Found!");
                     students[i].display();
                     return;
                 }

@@ -7,9 +7,10 @@ public class Main {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         StudentManager studentManager = new StudentManager(scanner);
+        studentManager.displayMenu();
 
         while (true) {
-            studentManager.displayMenu();
+            System.out.print("Enter Choice: ");
 
             String choiceInput = scanner.nextLine().trim();
             if (choiceInput.isEmpty()) {

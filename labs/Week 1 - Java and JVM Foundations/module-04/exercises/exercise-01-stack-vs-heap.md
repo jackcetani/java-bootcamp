@@ -123,6 +123,6 @@ Saying “the object is in the variable.” More precisely, the local variable h
 
 | # | Confirm | Your notes |
 | - | ------- | ---------- |
-| 1 | Program compiles and prints the verified output | Pass / Fail |
-| 2 | You can identify both stack frames | Pass / Fail |
-| 3 | You can distinguish `person` reference from `Person` object | Pass / Fail |
+| 1 | Program compiles and prints the verified output | Pass |
+| 2 | You can identify both stack frames | Pass |
+| 3 | You can distinguish `person` reference from `Person` object | Pass |
