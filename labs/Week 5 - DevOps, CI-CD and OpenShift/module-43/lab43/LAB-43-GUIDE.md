@@ -3,7 +3,7 @@
 **Module:** 43 — GitHub CI/CD Pipeline for the CRM  
 **Lab folder:** `labs/Week 5 - DevOps, CI-CD and OpenShift/module-43/lab43/`  
 **Difficulty:** Intermediate  
-**Duration:** 3–4 Hours
+**Duration:** ~45 minutes (timed path with starter) · Full path: 3–4 Hours
 
 **Primary IDE:** IntelliJ IDEA Community Edition · **Optional IDE:** VS Code
 
@@ -12,17 +12,50 @@
 | Windows | [LAB-43-WINDOWS.md](LAB-43-WINDOWS.md) |
 | macOS | [LAB-43-MACOS.md](LAB-43-MACOS.md) |
 
-> **Environment reminder:** Finish [Lab 0](../../../Week%201%20-%20Java%20and%20JVM%20Foundations/module-00/lab0/LAB-0-GUIDE.md). Use **IntelliJ IDEA Community** (primary; optional VS Code) on your laptop with **JDK 21**, **Maven 3.9+**, and a **GitHub** repo with **Actions** enabled. Work under `~/java-bootcamp` (Windows: `%USERPROFILE%\java-bootcamp`).
+> **Environment reminder:** Complete the [Module 43 pre-lab exercises](../exercises/EXERCISES-INDEX.md) after the slides and before this lab.  Finish [Lab 0](../../../Week%201%20-%20Java%20and%20JVM%20Foundations/module-00/lab0/LAB-0-GUIDE.md). Use **IntelliJ IDEA Community** (primary; optional VS Code) on your laptop with **JDK 21**, **Maven 3.9+**, and a **GitHub** repo with **Actions** enabled. Work under `~/java-bootcamp` (Windows: `%USERPROFILE%\java-bootcamp`).
+
+---
+
+## 45-minute timed path (use starter)
+
+In class, use the starter templates so the **core** objectives fit **~45 minutes**. The full Steps below remain for homework / extended depth.
+
+1. Open [`starter/README.md`](starter/README.md).
+2. Copy `starter/` into your `java-bootcamp/examples/…` target (see starter README).
+3. Fill every `// TODO` / `TODO` — do **not** wait on a perfect prior lab; the starter includes a baseline.
+4. Run the starter smoke test; evidence under `notes/screenshots/lab-43/`.
+5. Mark timed-path Pass criteria in the starter README. Continue remaining GUIDE steps as homework if needed.
+
+| Path | Time | Scope |
+| ---- | ---- | ----- |
+| **Timed (default)** | ~45 min | Starter TODOs + smoke test |
+| **Full (extended)** | see Duration | Every Step in this GUIDE |
 
 ---
 
 ## How to follow this lab
 
-1. Open the **Windows** or **macOS** how-to (links above) in a second tab.
-2. Create/work only under your `java-bootcamp/examples/…` folder from the steps (not inside this `labs/` git clone unless a step says otherwise).
-3. For each **Step N**: read **Why** (if present) → do the actions → confirm **Expected** / **Expected result** → then continue.
-4. When stuck, use **Failure Experiments** / troubleshooting in this guide before asking for help.
-5. Capture evidence under `notes/screenshots/lab-43/` (workspace root under `java-bootcamp`; redact secrets). Use the **Pass criteria** tables — write **Pass** or **Fail** in your notes. GitHub file view does not support clickable checkboxes.
+1. **In class (timed path):** prefer [`starter/README.md`](starter/README.md) — copy starter → `java-bootcamp/examples/lab43-crm`, fill TODOs, run smoke test (~45 min).
+2. Open the **Windows** or **macOS** how-to (links above) in a second tab for OS-specific commands.
+3. Create/work only under your `java-bootcamp/examples/…` folder from the steps (not inside this `labs/` git clone unless a step says otherwise).
+4. For each **Step N** (full path / homework): read **Why** (if present) → do the actions → confirm **Expected** / **Expected result** → then continue.
+5. When stuck, use **Failure Experiments** / troubleshooting in this guide before asking for help.
+6. Capture evidence under `notes/screenshots/lab-43/` (workspace root under `java-bootcamp`; redact secrets). Use the **Pass criteria** tables — write **Pass** or **Fail** in your notes. GitHub file view does not support clickable checkboxes.
+
+## What you'll submit (read this first)
+
+Keep this checklist visible while you work. Full detail is under [Expected Deliverables](#expected-deliverables) at the end.
+
+| # | Deliverable |
+| - | ----------- |
+| 1 | `.github/workflows/ci.yml` with PR / main / tag behavior |
+| 2 | Test reports (Surefire/Failsafe) evidence |
+| 3 | Security / scan report evidence (or documented residual risk) |
+| 4 | JAR and SHA-256 checksum tied to commit |
+| 5 | `docs/ci-runbook.md` with policy, rerun, and troubleshooting |
+| 6 | Controlled failure-path result then restore |
+| 7 | No secrets or real customer records in Git |
+
 
 ## Lab Overview
 
@@ -728,6 +761,8 @@ Delete temporary plaintext secret files. Keep sanitized screenshots. Do not comm
 
 ## Expected Deliverables
 
+Same checklist as [What you'll submit](#what-youll-submit-read-this-first) above.
+
 * `.github/workflows/ci.yml` with PR / main / tag behavior
 * Test reports (Surefire/Failsafe) evidence
 * Security / scan report evidence (or documented residual risk)
@@ -801,7 +836,7 @@ You are finished when:
 * **Assess:** Package-once discipline, secured variables, honest scan gate, forced-failure evidence, usable runbook.
 * **Continuity:** Prefer `examples/lab43-crm`. Keep fixture IDs. Lab 44 consumes this artifact identity—do not invent a parallel “staging rebuild.”
 * **Common pitfalls:** `skipTests` on main; secrets in YAML; wrong artifact globs; deploy `mvn package`; unpinned `maven:latest`; PR auto-deploy to prod.
-* **Timing:** 3–4 hours. YAML debugging and GitHub UI permissions often burn 45 minutes—ensure Actions are enabled before the lab session.
+* **Timing:** Timed path ~45 minutes with starter; full path remains 3–4 hours. YAML debugging and GitHub UI permissions often burn 45 minutes—ensure Actions are enabled before the lab session.
 
 ---
 
