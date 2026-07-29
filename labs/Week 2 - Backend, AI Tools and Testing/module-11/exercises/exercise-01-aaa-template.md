@@ -40,6 +40,6 @@ An AAA template using Ravi PROSPECT → ACTIVE narrative.
 
 | # | Confirm | Notes |
 | --- | --- | --- |
-| 1 | AAA table present | Pass / Fail |
-| 2 | Test name proposed | Pass / Fail |
-| 3 | Lab 18 boundary noted | Pass / Fail |
+| 1 | AAA table present | Pass |
+| 2 | Test name proposed | Pass |
+| 3 | Lab 18 boundary noted | Pass |

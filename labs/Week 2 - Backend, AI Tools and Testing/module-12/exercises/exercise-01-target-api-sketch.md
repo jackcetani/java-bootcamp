@@ -32,6 +32,6 @@ A minimal target API with honest exclusions.
 
 | # | Confirm | Notes |
 | --- | --- | --- |
-| 1 | Methods listed | Pass / Fail |
-| 2 | Ravi transition noted | Pass / Fail |
-| 3 | SOAP/Spring excluded | Pass / Fail |
+| 1 | Methods listed | Pass |
+| 2 | Ravi transition noted | Pass |
+| 3 | SOAP/Spring excluded | Pass |

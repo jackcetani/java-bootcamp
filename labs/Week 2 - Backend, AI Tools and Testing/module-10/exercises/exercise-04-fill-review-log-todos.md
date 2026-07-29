@@ -45,8 +45,8 @@ A completed review-log TODO sheet with correct Northstar statuses.
 
 ## Pass criteria
 
-| # | Confirm | Notes |
-| --- | --- | --- |
-| 1 | All _____ replaced | Pass / Fail |
-| 2 | Statuses match fixtures | Pass / Fail |
-| 3 | Accept/Reject decision recorded | Pass / Fail |
+| # | Confirm | Notes       |
+| --- | --- |-------------|
+| 1 | All _____ replaced | Pass |
+| 2 | Statuses match fixtures | Pass |
+| 3 | Accept/Reject decision recorded | Pass |

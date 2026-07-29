@@ -40,6 +40,6 @@ Paired weak/strong prompts with three explicit constraints documented.
 
 | # | Confirm | Notes |
 | --- | --- | --- |
-| 1 | Weak and strong prompts written | Pass / Fail |
-| 2 | Three constraints listed | Pass / Fail |
-| 3 | Notes file saved under notes/ | Pass / Fail |
+| 1 | Weak and strong prompts written | Pass |
+| 2 | Three constraints listed | Pass |
+| 3 | Notes file saved under notes/ | Pass |

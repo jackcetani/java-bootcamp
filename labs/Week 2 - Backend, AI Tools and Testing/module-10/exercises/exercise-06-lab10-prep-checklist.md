@@ -32,6 +32,6 @@ A readiness checklist with fixtures memorized and scope boundary stated.
 
 | # | Confirm | Notes |
 | --- | --- | --- |
-| 1 | Three lab asks listed | Pass / Fail |
-| 2 | Fixtures correct | Pass / Fail |
-| 3 | Explicit pre-lab-only statement | Pass / Fail |
+| 1 | Three lab asks listed | Pass |
+| 2 | Fixtures correct | Pass |
+| 3 | Explicit pre-lab-only statement | Pass |

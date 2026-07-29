@@ -32,6 +32,6 @@ A short toolchain checklist with PATH awareness and pre-lab boundary.
 
 | # | Confirm | Notes |
 | --- | --- | --- |
-| 1 | java and mvn checks listed | Pass / Fail |
-| 2 | One PATH trap named | Pass / Fail |
-| 3 | No-full-lab note present | Pass / Fail |
+| 1 | java and mvn checks listed | Pass |
+| 2 | One PATH trap named | Pass |
+| 3 | No-full-lab note present | Pass |

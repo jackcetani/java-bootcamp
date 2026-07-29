@@ -41,6 +41,6 @@ A phantom-annotation checklist tied to JDK 21 / Maven honesty.
 
 | # | Confirm | Notes |
 | --- | --- | --- |
-| 1 | Table copied with one trap row | Pass / Fail |
-| 2 | Reject-unknown-import rule written | Pass / Fail |
-| 3 | Ravi status PROSPECT called out | Pass / Fail |
+| 1 | Table copied with one trap row | Pass |
+| 2 | Reject-unknown-import rule written | Pass |
+| 3 | Ravi status PROSPECT called out | Pass |

@@ -32,6 +32,6 @@ Two fixture rows and a correlation placement note ready for the lab.
 
 | # | Confirm | Notes |
 | --- | --- | --- |
-| 1 | Amina and Ravi rows correct | Pass / Fail |
-| 2 | Correlation not stored as a Customer field | Pass / Fail |
-| 3 | Explicit pre-lab boundary written | Pass / Fail |
+| 1 | Amina and Ravi rows correct | Pass |
+| 2 | Correlation not stored as a Customer field | Pass |
+| 3 | Explicit pre-lab boundary written | Pass |
