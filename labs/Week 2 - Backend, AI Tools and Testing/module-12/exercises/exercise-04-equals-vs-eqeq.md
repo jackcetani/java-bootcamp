@@ -40,6 +40,6 @@ A comparison cheat sheet tied to Northstar statuses.
 
 | # | Confirm | Notes |
 | --- | --- | --- |
-| 1 | Table plus null-safe row | Pass / Fail |
-| 2 | Bad and good snippets present | Pass / Fail |
-| 3 | Enum preference noted | Pass / Fail |
+| 1 | Table plus null-safe row | Pass |
+| 2 | Bad and good snippets present | Pass |
+| 3 | Enum preference noted | Pass |

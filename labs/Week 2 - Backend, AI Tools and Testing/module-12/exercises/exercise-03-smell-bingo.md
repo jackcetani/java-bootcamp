@@ -32,6 +32,6 @@ A smell bingo card prioritized for Lab 12.
 
 | # | Confirm | Notes |
 | --- | --- | --- |
-| 1 | Five smells listed | Pass / Fail |
-| 2 | Fixture impact noted | Pass / Fail |
-| 3 | Two priorities starred | Pass / Fail |
+| 1 | Five smells listed | Pass |
+| 2 | Fixture impact noted | Pass |
+| 3 | Two priorities starred | Pass |
