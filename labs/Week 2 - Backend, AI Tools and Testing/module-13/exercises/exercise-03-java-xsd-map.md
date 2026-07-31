@@ -40,6 +40,6 @@ A Java→XSD map using Amina and Ravi examples.
 
 | # | Confirm | Notes |
 | --- | --- | --- |
-| 1 | Table includes both customers | Pass / Fail |
-| 2 | Id pattern proposed | Pass / Fail |
-| 3 | Lab 24 hosting deferred | Pass / Fail |
+| 1 | Table includes both customers | Pass |
+| 2 | Id pattern proposed | Pass |
+| 3 | Lab 24 hosting deferred | Pass |

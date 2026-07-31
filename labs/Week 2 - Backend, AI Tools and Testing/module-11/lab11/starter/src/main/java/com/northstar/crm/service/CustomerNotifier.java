@@ -1,7 +1,7 @@
 package com.northstar.crm.service;
 
-/** Extracted collaborator for Lab 11 — verify with Mockito. */
+import com.northstar.crm.entity.CustomerStatus;
+
 public interface CustomerNotifier {
-    // TODO: declare void notifyCreated(String customerId, String correlationId);
-    void notifyCreated(String customerId, String correlationId);
+    void notifyStatusChange(String customerId, CustomerStatus oldStatus, CustomerStatus newStatus);
 }

@@ -73,7 +73,7 @@ Keep this checklist visible while you work. Full detail is under [Expected Deliv
 
 ## Lab Overview
 
-This Module 10 lab continues the **Northstar Customer Service Platform** into `lab10-crm/`, picking up the Maven project (`com.northstar:customer-service`) from Lab 9. There is still **no Spring Framework** in application code — Week 2 (Labs 8–21) stays plain Java and Maven. What is new is the tool you write that plain Java with: **GitHub Copilot**.
+This Module 10 lab continues the **Northstar Customer Service Platform** into `starter/`, picking up the Maven project (`com.northstar:customer-service`) from Lab 9. There is still **no Spring Framework** in application code — Week 2 (Labs 8–21) stays plain Java and Maven. What is new is the tool you write that plain Java with: **GitHub Copilot**.
 
 **Purpose.** Copilot can accelerate boilerplate, but unreviewed AI code is a production risk. Enterprise teams treat suggestions like work from a junior teammate: useful, never trusted blindly. This lab trains **deliberate prompting** and a **mandatory human-review log** before anything merges.
 
@@ -168,7 +168,7 @@ flowchart TD
 
 Complete [SETUP-INSTRUCTIONS](../../../SETUP-INSTRUCTIONS.md), [Lab 0](../../../Week%201%20-%20Java%20and%20JVM%20Foundations/module-00/lab0/LAB-0-GUIDE.md), and [Lab 9](../../module-09/lab9/LAB-9-GUIDE.md). Confirm:
 
-* Maven project from **Lab 9** (`lab9-crm/`) — `com.northstar:customer-service`, package `com.northstar.crm` with layered packages
+* Maven project from **Lab 9** (`lab10-crm/`) — `com.northstar:customer-service`, package `com.northstar.crm` with layered packages
 * JDK 21 + Maven working
 * GitHub account with an active **GitHub Copilot** license
 * **VS Code** with **GitHub Copilot** and **GitHub Copilot Chat** installed and signed in (see [Setup § Week 2](../../../SETUP-INSTRUCTIONS.md)) — Connected via VS Code as in Lab 0
@@ -287,7 +287,7 @@ GitHub.copilot-chat: Ready
 Status bar Copilot icon shows no slash/error badge.
 ```
 
-**If it fails:** No Copilot license → request/enable in GitHub settings. Sign-in loops → Sign Out then Sign In; check Output → GitHub Copilot. Missing `lab9-crm` → finish Lab 9 first. Wrong path → use `examples/` as in Labs 8–9.
+**If it fails:** No Copilot license → request/enable in GitHub settings. Sign-in loops → Sign Out then Sign In; check Output → GitHub Copilot. Missing `lab10-crm` → finish Lab 9 first. Wrong path → use `examples/` as in Labs 8–9.
 
 ---
 
@@ -631,7 +631,7 @@ _Mark each row **Pass** or **Fail** in your lab notes (GitHub markdown files are
 
 | # | Confirm | Your notes |
 | - | ------- | ---------- |
-| 1 | `lab10-crm` copied from Lab 9 under `~/java-bootcamp/examples/` | Pass / Fail |
+| 1 | `starter` copied from Lab 9 under `~/java-bootcamp/examples/` | Pass / Fail |
 | 2 | Copilot + Chat signed in (`Check Status` Ready) | Pass / Fail |
 | 3 | Sanity ghost-text suggestion observed in a `.java` file | Pass / Fail |
 
@@ -711,7 +711,7 @@ No **new** dependencies are required for this lab—keep Lab 9 POM. Do not add J
 
 ## Manual Verification
 
-1. Copilot status Ready; workspace is `lab10-crm`.
+1. Copilot status Ready; workspace is `starter`.
 2. `Customer` / `CustomerStatus` compile with zero JPA/Spring imports.
 3. `CustomerService` rejects blank ID, duplicate ID, unknown ID on update.
 4. `Main` prints both sample customers; PROSPECT list includes `CUS-1002`; after activation status is ACTIVE.
@@ -750,7 +750,7 @@ Perform deliberately; document in `ai-review-notes.md`.
 | Compile fails on jakarta.persistence | Accepted phantom imports | Remove annotations/imports; do not add JPA to POM |
 | `Main` ClassNotFound | Wrong `-cp` / not compiled | `mvn compile` then `java -cp target/classes ...` |
 | Review log empty | Skipped writing | Entries are required deliverables |
-| Edited Lab 9 by mistake | Wrong folder | Work only in `lab10-crm` |
+| Edited Lab 9 by mistake | Wrong folder | Work only in `starter` |
 
 ### Suggestions target wrong Java version
 
@@ -783,7 +783,7 @@ git status
 
 No containers or cloud services were started. Remove scratch prompt files that contained example-only sensitive data before committing. Keep `copilot-notes/` and domain sources.
 
-**Keep `lab10-crm`**—Lab 11 builds tests on this service.
+**Keep `starter`**—Lab 11 builds tests on this service.
 
 ---
 
@@ -847,7 +847,7 @@ Write short answers (3–6 sentences) in the review log or `notes/lab10-answers.
 
 You are finished when:
 
-* GitHub Copilot is signed in and producing suggestions inside `lab10-crm/`
+* GitHub Copilot is signed in and producing suggestions inside `starter/`
 * `Customer`, `CustomerStatus`, and `CustomerService` compile and behave correctly for `CUS-1001` and `CUS-1002`
 * Review log shows weak-vs-strong comparison and at least one caught/corrected AI mistake
 * Three failure experiments are documented
@@ -868,4 +868,4 @@ You are finished when:
 
 ---
 
-*End of Lab 10 — GitHub Copilot Fundamentals for Java Developers. Keep `lab10-crm` and `copilot-notes/` for Lab 11 and portfolio evidence.*
+*End of Lab 10 — GitHub Copilot Fundamentals for Java Developers. Keep `starter` and `copilot-notes/` for Lab 11 and portfolio evidence.*

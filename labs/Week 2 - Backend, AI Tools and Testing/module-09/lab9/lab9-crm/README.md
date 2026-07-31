@@ -1,0 +1,65 @@
+# Lab 9 starter — timed path (~45 minutes)
+
+**Theme:** Maven build, dependencies, plugins, profiles
+
+## Copy into your workspace
+
+**Windows (PowerShell)** — from this lab folder:
+
+```powershell
+New-Item -ItemType Directory -Force -Path "$env:USERPROFILE\java-bootcamp\examples\lab9-crm" | Out-Null
+Copy-Item -Recurse -Force ".\starter\*" "$env:USERPROFILE\java-bootcamp\examples\lab9-crm\"
+cd $env:USERPROFILE\java-bootcamp\examples\lab9-crm
+```
+
+**macOS / Linux:**
+
+```bash
+mkdir -p ~/java-bootcamp/examples/lab9-crm
+cp -R starter/. ~/java-bootcamp/examples/lab9-crm/
+cd ~/java-bootcamp/examples/lab9-crm
+```
+
+Full GUIDE: [`../LAB-9-GUIDE.md`](../LAB-9-GUIDE.md)
+
+## 45-minute checklist
+
+- [ ] Fill `pom.xml` TODOs (dependencies with scopes, compiler/Surefire/jar plugins)
+- [ ] Confirm `PlaceholderTest` runs under Surefire
+- [ ] Walk lifecycle phases; fill `docs/lifecycle-evidence.md`
+- [ ] Capture `docs/dependency-tree.txt`
+- [ ] Optional timed stretch: add `dev`/`prod` profiles
+- [ ] Run smoke test
+
+## Smoke test
+
+```bash
+mvn -B -q clean verify
+mvn -q package
+java -jar target/customer-service.jar
+```
+
+## Timed-path Pass criteria
+
+| Criterion | Pass / Fail |
+| --------- | ----------- |
+| `mvn -B verify` BUILD SUCCESS | Pass / Fail |
+| JUnit is `test` scope; PlaceholderTest green | Pass / Fail |
+| `target/customer-service.jar` runs Main | Pass / Fail |
+| lifecycle-evidence.md has phase notes | Pass / Fail |
+
+Continue remaining GUIDE steps as homework / full path if needed.
+
+## CI note (preview — pipelines deepen in later modules)
+
+Preferred verify command on agents:
+
+    mvn -B verify
+
+`-B` is batch mode (non-interactive). Prefer `verify` over `install` on CI unless your
+pipeline intentionally publishes to an artifact repository. Never deploy snapshots from
+a developer laptop without agreement.
+
+Artifact coordinates: com.northstar:customer-service:0.1.0-SNAPSHOT
+Sample customer IDs (docs only): CUS-1001, CUS-1002
+Correlation ID (logs later): lab-request-001
