@@ -53,9 +53,14 @@ What staus are the semantics of the three operations `create`/`update`/`get`. Al
 Lab 24 implements Spring-WS `@Endpoint` methods against this exact contract, wired to
 `CustomerService` from Labs 12/15. No XML shape here changes when that happens.
 
-## TODO
-1. Contract-first vs code-first for partners
-2. Document/literal choice
-3. Correlation placement (`lab-request-001`)
-4. Fault shapes: not-found vs validation
-5. What Lab 24 will host vs what stays static here
+
+1. **Contract-first vs code-first:**\
+We published the XSD/WSDL before any server exists, so partners can build and test against a stable, version-controlled contract instead of reverse-engineering whatever a Java class happens to look like this sprint.
+2. **document/literal choice:**\
+Chosen over RPC/encoded because it's the modern, WS-I-compliant, widely interoperable style. RPC/encoded is legacy and poorly supported by current tooling.
+3. **Correlation placement:**\
+`correlationId` sits as an optional field inside each request/response element rather than a SOAP header. It is simplest to implement for this lab. A header-based approach is the Bonus Challenge 1 upgrade.
+4. **Fault shapes:**\
+Both not-found (`CUSTOMER_NOT_FOUND`) and validation (`VALIDATION_FAILED`) are `soapenv:Client` faults, since both stem from something the caller sent wrong, not a server-side failure.
+5. **Lab 24 vs static here:**\
+Lab 24 hosts a live endpoint at a real address implementing these operations against `CustomerService`. The XSD, WSDL structure, namespace, and operation names all stay exactly as they are in this lab.
