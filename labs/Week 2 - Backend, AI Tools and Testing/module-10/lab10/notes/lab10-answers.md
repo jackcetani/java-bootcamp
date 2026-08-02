@@ -1,18 +1,18 @@
 ## Lab 10 Answers
 
 ### Manual Verification
-| Step | Result |
-|------|--------|
-| Copilot status Ready; workspace is `starter`. | PASS   |
-| `Customer` / `CustomerStatus` compile with zero JPA/Spring imports. |  PASS      |
-| `CustomerService` rejects blank ID, duplicate ID, unknown ID on update. |    PASS    |
+| Step                                                                                                       | Result |
+|------------------------------------------------------------------------------------------------------------|--------|
+| Copilot status Ready; workspace is `starter`.                                                              | PASS   |
+| `Customer` / `CustomerStatus` compile with zero JPA/Spring imports.                                        | PASS   |
+| `CustomerService` rejects blank ID, duplicate ID, unknown ID on update.                                    | PASS   |
 | `Main` prints both sample customers; PROSPECT list includes `CUS-1002`; after activation status is ACTIVE. |        |
-| `ai-review-notes.md` has lab10-001–lab10-004. |     PASS   |
-| At least one deliberately caught Copilot mistake documented. |   PASS     |
-| No real PII/secrets in prompts or committed files. |   PASS     |
-| `git status` shows no staged `target/` or IDE junk. |   PASS     |
-| `mvn -q clean compile` succeeds. |    PASS    |
-| You can explain accepted AI lines without reopening Chat. |   PASS     |
+| `ai-review-notes.md` has lab10-001–lab10-004.                                                              | PASS   |
+| At least one deliberately caught Copilot mistake documented.                                               | PASS   |
+| No real PII/secrets in prompts or committed files.                                                         | PASS   |
+| `git status` shows no staged `target/` or IDE junk.                                                        | PASS   |
+| `mvn -q clean compile` succeeds.                                                                           | PASS   |
+| You can explain accepted AI lines without reopening Chat.                                                  | PASS   |
 
 ### Concepts to Discuss
 1. **Difference between a Copilot inline completion and a Copilot Chat request—when is each better?**\

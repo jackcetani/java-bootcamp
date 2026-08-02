@@ -35,8 +35,8 @@
 
 In class, use the starter templates so the **core** objectives fit **~45 minutes**. The full Steps below remain for homework / extended depth.
 
-1. Open [`starter/README.md`](starter/README.md).
-2. Copy `starter/` into your `java-bootcamp/examples/lab11-crm/` target (see starter README).
+1. Open [`lab11-crm/README.md`](lab11-crm/README.md).
+2. Copy `lab11-crm/` into your `java-bootcamp/examples/lab11-crm/` target (see starter README).
 3. Fill every `// TODO` — do **not** wait on a perfect prior lab; the starter includes a baseline.
 4. Run the starter smoke test; evidence under `notes/screenshots/lab-11/`.
 5. Mark timed-path Pass criteria in the starter README. Continue remaining GUIDE steps as homework if needed.
@@ -49,7 +49,7 @@ In class, use the starter templates so the **core** objectives fit **~45 minutes
 
 ## How to follow this lab
 
-1. **In class (timed path):** prefer [`starter/README.md`](starter/README.md) — copy starter → `java-bootcamp/examples/lab11-crm`, fill `// TODO`, run smoke test (~45 min).
+1. **In class (timed path):** prefer [`lab11-crm/README.md`](lab11-crm/README.md) — copy starter → `java-bootcamp/examples/lab11-crm`, fill `// TODO`, run smoke test (~45 min).
 2. Open the **Windows** or **macOS** how-to (links above) in a second tab for OS-specific commands.
 3. Create/work only under your `java-bootcamp/examples/…` folder from the steps (not inside this `labs/` git clone unless a step says otherwise).
 4. For each **Step N** (full path / homework): read **Why** (if present) → do the actions → confirm **Expected** / **Expected result** → then continue.

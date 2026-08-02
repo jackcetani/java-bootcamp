@@ -47,6 +47,6 @@ Filled activate pseudocode with repo boundary called out.
 
 | # | Confirm | Notes |
 | --- | --- | --- |
-| 1 | All _____ replaced | Pass / Fail |
-| 2 | PROSPECT→ACTIVE correct | Pass / Fail |
-| 3 | Repo boundary sentence present | Pass / Fail |
+| 1 | All _____ replaced | Pass |
+| 2 | PROSPECT→ACTIVE correct | Pass |
+| 3 | Repo boundary sentence present | Pass |
