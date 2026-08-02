@@ -53,3 +53,21 @@ Evidence under `~/java-bootcamp/notes/screenshots/lab-15/` (redact secrets).
 | No HashMap / JDBC in service package | Pass / Fail |
 
 Continue remaining GUIDE steps as homework / full path if needed.
+
+## Security and Production Review
+1. **Which inputs are untrusted (all client fields reaching the service)?**\
+All client fields reaching the service are considered untrusted.
+2. **Where are authn/authz/validation enforced (shape at facade; meaning in validator; auth still absent)?**\
+Shape is enforced at the facde, meaning enforced in `CustomerValidator`. Auth is still missing in this lab.
+3. **Which values are sensitive, and where stored?**\
+None are sensitive beyond the sample emails, they are held in memory only.
+4. **What can be retried safely (findById; changeStatus depending on your noop policy)?**\
+`findById` is always safe to rety. `changeStatus` is only safe if changing status to the current status is considered safe. However, in this lab, it is documented as unsafe and to reject.
+5. **What happens after partial failure (no status write if validation fails)?**\
+No status write happens if `validateTransition` throws. The order matters and is enforced, you must validate before mutation.
+6. **What would an operator monitor (rejected transition counts, correlation IDs)?**\
+Operators would monitor rejected-transition counts and correlation ids on failures.
+7. **Which local default is unacceptable in production (in-memory; no auth)?**\
+Local defaults unacceptable in prod are in-memory storage and no auth on `changeStatus`.
+8. **How are transition policies versioned when product changes KYC rules?**\
+When product changes HYC rules, the `ALLOWED` static block is the single place to update. It needs its own change-review process since it's a business policy, not just code.

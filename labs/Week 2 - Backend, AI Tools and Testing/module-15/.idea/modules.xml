@@ -2,9 +2,9 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/lab15/starter/src/main/main.iml" filepath="$PROJECT_DIR$/lab15/starter/src/main/main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/lab15/lab15-crm/src/main/main.iml" filepath="$PROJECT_DIR$/lab15/lab15-crm/src/main/main.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/module-15.iml" filepath="$PROJECT_DIR$/.idea/module-15.iml" />
-      <module fileurl="file://$PROJECT_DIR$/lab15/starter/src/test/test.iml" filepath="$PROJECT_DIR$/lab15/starter/src/test/test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/lab15/lab15-crm/src/test/test.iml" filepath="$PROJECT_DIR$/lab15/lab15-crm/src/test/test.iml" />
     </modules>
   </component>
 </project>

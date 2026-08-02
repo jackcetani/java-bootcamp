@@ -59,3 +59,21 @@ Continue remaining GUIDE steps as homework / full path if needed.
 ## Sample invalid (email)
 email=not-an-email -> IllegalArgumentException with field message, 
 correlationId=lab-request-001
+
+## Security and Production Review
+1. **Which inputs are untrusted (all DTO fields from clients)?**\
+Every DTO field from the client are untrusted.
+2. **Where are authn/authz/validation enforced (validation now; auth still absent)?**\
+Shape validation is enforced at the facade. Real auth is still absent in this lab.
+3. **Which values are sensitive—never put them on response DTOs?**\
+None of them belong on response DTOs. This discipline should be held even as fields get added later.
+4. **What can be retried safely (getById; create only with idempotency design)?**\
+`getById` is safe to retry. `create` is only safe with real idempotency design.
+5. **What happens after validation failure (no service call, no partial save)?**\
+No service call happens at all. Nothing partial is saved.
+6. **What would an operator monitor (validation fail rate, correlation IDs)?**\
+An operator would likely monitor validation failure rate and correlation IDs on rejected requests.
+7. **Which local default is unacceptable in production (in-memory; exceptions as HTTP 400 mapping TBD)?**\
+In production, an in-memory store is unacceptable. Same with exceptions instead of real HTTP 400 mapping, which will be Spring's responsibility later on.
+8. **How are contracts versioned (DTO field adds vs breaking renames; Lab 13 WSDL parallel)?**\
+Additive DTO fields are safe, however, the renames/removals are breaking and need a version bump.
