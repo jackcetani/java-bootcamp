@@ -10,14 +10,32 @@ import com.northstar.crm.service.DefaultCustomerService;
 
 public class Main {
     public static void main(String[] args) {
-        // TODO: one shared InMemoryCustomerRepository for validator + service
         CustomerRepository repo = new InMemoryCustomerRepository();
         CustomerValidator validator = new CustomerValidator(repo);
         CustomerService service = new DefaultCustomerService(repo, validator);
 
-        // TODO: addCustomer Amina (ACTIVE) and Ravi (PROSPECT)
-        // TODO: changeStatus CUS-1002 → ACTIVE with correlation lab-request-001
-        // TODO: catch illegal ACTIVE → PROSPECT on CUS-1001; print message; prove still ACTIVE
-        throw new UnsupportedOperationException("TODO: service-layer demo (activate + illegal transition)");
+        Customer amina = new Customer();
+        amina.setCustomerId("CUS-1001");
+        amina.setFullName("Amina Khan");
+        amina.setEmail("amina.khan@example.com");
+        amina.setStatus(CustomerStatus.ACTIVE);
+        service.addCustomer(amina);
+
+        Customer ravi = new Customer();
+        ravi.setCustomerId("CUS-1002");
+        ravi.setFullName("Ravi Singh");
+        ravi.setEmail("ravi.singh@example.com");
+        ravi.setStatus(CustomerStatus.PROSPECT);
+        service.addCustomer(ravi);
+
+        Customer activated = service.changeStatus("CUS-1002", CustomerStatus.ACTIVE, "lab-request-001");
+        System.out.printf("activated %s status=%s%n", activated.getCustomerId(), activated.getStatus());
+
+        try {
+            service.changeStatus("CUS-1001", CustomerStatus.PROSPECT, "lab-request-001");
+        } catch (IllegalStateException ex) {
+            System.out.println("expected failure: " + ex.getMessage());
+        }
+        System.out.println("CUS-1001 still: " + service.findById("CUS-1001").orElseThrow().getStatus());
     }
 }

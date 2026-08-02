@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
 /** Lab 14 facade adapted to Lab 15 CustomerService interface. */
 public class CustomerApiFacade {
     private final CustomerService service;
-    private final Validator validator;
+    private final CustomerValidator validator;
 
     public CustomerApiFacade(CustomerService service) {
         this.service = service;

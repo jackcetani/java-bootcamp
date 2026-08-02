@@ -1,5 +1,6 @@
 ## Lab 14 Answers:
 
+### Concepts to Discuss
 1. **Main data/request flow (facade → validate → map → service → response DTO)**\
 2. **Trust boundary and input validation point**\
 3. **Success and failure contract (validation vs duplicate ID vs not found)**\

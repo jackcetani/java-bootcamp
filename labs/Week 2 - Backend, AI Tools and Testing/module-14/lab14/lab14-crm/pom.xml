@@ -14,19 +14,16 @@
     <junit.version>5.11.4</junit.version>
   </properties>
   <dependencies>
-    <!-- TODO: confirm jakarta.validation-api 3.1.0 present -->
     <dependency>
       <groupId>jakarta.validation</groupId>
       <artifactId>jakarta.validation-api</artifactId>
       <version>3.1.0</version>
     </dependency>
-    <!-- TODO: hibernate-validator 8.0.2.Final -->
     <dependency>
       <groupId>org.hibernate.validator</groupId>
       <artifactId>hibernate-validator</artifactId>
       <version>8.0.2.Final</version>
     </dependency>
-    <!-- TODO: expressly 5.0.0 (EL provider) -->
     <dependency>
       <groupId>org.glassfish.expressly</groupId>
       <artifactId>expressly</artifactId>
