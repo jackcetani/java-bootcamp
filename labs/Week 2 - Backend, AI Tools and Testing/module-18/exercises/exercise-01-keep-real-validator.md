@@ -32,6 +32,6 @@ A mock/real decision table for activate collaborators.
 
 | # | Confirm | Notes |
 | --- | --- | --- |
-| 1 | Repo mock justified | Pass / Fail |
-| 2 | Validator real justified | Pass / Fail |
-| 3 | Notifier mock justified | Pass / Fail |
+| 1 | Repo mock justified | Pass |
+| 2 | Validator real justified | Pass |
+| 3 | Notifier mock justified | Pass |

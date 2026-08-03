@@ -14,7 +14,7 @@ public class Main {
         amina.setCustomerId("CUS-1001");
         amina.setFullName("Amina Khan");
         amina.setEmail("amina.khan@example.com");
-        amina.setStatus("Active");
+        amina.setStatus("ACTIVE");
         CustomerResponseDTO aminaResponse = api.create(amina, correlationId);
         System.out.println("Created: " + aminaResponse.getCustomerId() + " "
                 + aminaResponse.getFullName() + " " + aminaResponse.getStatus());

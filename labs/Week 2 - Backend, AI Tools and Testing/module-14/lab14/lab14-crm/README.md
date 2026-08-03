@@ -60,6 +60,20 @@ Continue remaining GUIDE steps as homework / full path if needed.
 email=not-an-email -> IllegalArgumentException with field message, 
 correlationId=lab-request-001
 
+## Manual Verificaiton
+| Step                                                                             | Result |
+|----------------------------------------------------------------------------------|--------|
+| Create/read workflow succeeds for CUS-1001 and CUS-1002.                         | PASS   |
+| Invalid email / blank name / oversized ID rejected at the facade.                | PASS   |
+| API returns CustomerResponseDTO, never Customer.                                 | PASS   |
+| Correlation lab-request-001 appears on validation/not-found errors.              | PASS   |
+| Validation tests pass independently of service tests.                            | PASS   |
+| Duplicate create still handled by service rules (distinct from Bean Validation). | PASS   |
+| No secrets in logs or Git; target/ ignored.                                      | PASS   |
+| README lists constraints and run commands.                                       | PASS   |
+| mvn -q clean test succeeds.                                                      | PASS   |
+| You can explain why entities stay behind the mapper.                             | PASS   |
+
 ## Security and Production Review
 1. **Which inputs are untrusted (all DTO fields from clients)?**\
 Every DTO field from the client are untrusted.

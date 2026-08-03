@@ -31,7 +31,7 @@ Clear stub vs verify examples using CUS-1002.
 ## Pass criteria
 
 | # | Confirm | Notes |
-| --- | --- | --- |
-| 1 | Stub example written | Pass / Fail |
-| 2 | Verify example written | Pass / Fail |
-| 3 | Contrast sentence present | Pass / Fail |
+| --- | --- |-------|
+| 1 | Stub example written | Pass  |
+| 2 | Verify example written | Pass  |
+| 3 | Contrast sentence present | Pass  |
