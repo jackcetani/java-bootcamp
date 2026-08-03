@@ -2,6 +2,7 @@ package com.northstar.crm.service;
 
 import com.northstar.crm.entity.Customer;
 import com.northstar.crm.entity.CustomerStatus;
+import com.northstar.crm.exception.BusinessException;
 import com.northstar.crm.repository.CustomerRepository;
 import java.util.List;
 import java.util.Optional;
@@ -35,8 +36,7 @@ public class DefaultCustomerService implements CustomerService {
     @Override
     public Customer changeStatus(String customerId, CustomerStatus newStatus, String correlationId) {
         Customer existing = repository.findById(customerId)
-                .orElseThrow(() -> new IllegalArgumentException(
-                        "customer not found [" + correlationId + "]: " + customerId));
+                .orElseThrow(() -> com.northstar.crm.exception.BusinessException.notFound(customerId, correlationId));
         validator.validateTransition(existing.getStatus(), newStatus, correlationId);
         existing.setStatus(newStatus);
         existing.touchUpdatedAt();

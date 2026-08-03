@@ -16,6 +16,12 @@ public class BusinessException extends RuntimeException {
     public int getStatusHint() { return statusHint; }
     public String getCorrelationId() { return correlationId; }
 
-    // TODO: static notFound(customerId, correlationId) → CUSTOMER_NOT_FOUND / 404
-    // TODO: static conflict(message, correlationId) → BUSINESS_CONFLICT / 409
+    public static BusinessException notFound(String customerId, String correlationId) {
+        return new BusinessException(
+                "CUSTOMER_NOT_FOUND", "Customer not found: " + customerId, 404, correlationId);
+    }
+
+    public static BusinessException conflict(String message, String correlationId) {
+        return new BusinessException("BUSINESS_CONFLICT", message, 409, correlationId);
+    }
 }

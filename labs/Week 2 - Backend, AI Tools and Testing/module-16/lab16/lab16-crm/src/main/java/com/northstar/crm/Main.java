@@ -17,12 +17,46 @@ public class Main {
         CustomerValidator validator = new CustomerValidator(repo);
         CustomerService service = new DefaultCustomerService(repo, validator);
         CustomerApiFacade api = new CustomerApiFacade(service);
+        String correlationId = "lab-request-001";
 
-        service.addCustomer(Customer.amina());
-        service.addCustomer(Customer.ravi());
+        Customer amina = new Customer();
+        amina.setCustomerId("CUS-1001");
+        amina.setFullName("Amina Khan");
+        amina.setEmail("amina.khan@example.com");
+        amina.setStatus(CustomerStatus.ACTIVE);
+        service.addCustomer(amina);
 
-        // TODO: print Fail JSON for invalid email (400), CUS-9999 (404), ACTIVE→PROSPECT (409)
-        // TODO: after Lab 16 refactor, validator/service throw BusinessException
-        throw new UnsupportedOperationException("TODO: demo 400/404/409 with lab-request-001");
+        Customer ravi = new Customer();
+        ravi.setCustomerId("CUS-1002");
+        ravi.setFullName("Ravi Singh");
+        ravi.setEmail("ravi.singh@example.com");
+        ravi.setStatus(CustomerStatus.PROSPECT);
+        service.addCustomer(ravi);
+
+        // 400 — validation
+        CustomerRequestDTO invalid = new CustomerRequestDTO();
+        invalid.setCustomerId("CUS-1003");
+        invalid.setFullName("Bad Email");
+        invalid.setEmail("not-an-email");
+        invalid.setStatus("PROSPECT");
+        ApiResult badResult = api.create(invalid, correlationId);
+        if (badResult instanceof ApiResult.Fail fail) {
+            System.out.println(fail.error().toJson());
+        }
+
+        // 404 — not found
+        ApiResult notFound = api.getById("CUS-9999", correlationId);
+        if (notFound instanceof ApiResult.Fail fail) {
+            System.out.println(fail.error().toJson());
+        }
+
+
+        // 409 — illegal transition
+        ApiResult conflict = api.changeStatus("CUS-1001", CustomerStatus.PROSPECT, correlationId);
+        if (conflict instanceof ApiResult.Fail fail) {
+            System.out.println(fail.error().toJson());
+        }
+        System.out.println("CUS-1001 still: "
+                + service.findById("CUS-1001").orElseThrow().getStatus());
     }
 }

@@ -2,6 +2,7 @@ package com.northstar.crm.service;
 
 import com.northstar.crm.entity.Customer;
 import com.northstar.crm.entity.CustomerStatus;
+import com.northstar.crm.exception.BusinessException;
 import com.northstar.crm.repository.CustomerRepository;
 import java.util.EnumMap;
 import java.util.EnumSet;
@@ -41,9 +42,8 @@ public class CustomerValidator {
     public void validateTransition(CustomerStatus from, CustomerStatus to, String correlationId) {
         Set<CustomerStatus> allowed = ALLOWED.getOrDefault(from, Set.of());
         if (!allowed.contains(to)) {
-            throw new IllegalStateException(
-                    "illegal status transition " + from + " -> " + to
-                            + " [" + correlationId + "]");
+            throw BusinessException.conflict(
+                    "illegal status transition " + from + " -> " + to, correlationId);
         }
     }
 }

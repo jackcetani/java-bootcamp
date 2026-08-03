@@ -11,3 +11,4 @@
 | 3 | Full lab → [`lab16/LAB-16-GUIDE.md`](lab16/LAB-16-GUIDE.md) |
 
 The pre-lab exercises warm up the skills for **API Exception Handling**. The full lab is the graded consolidation.
+
