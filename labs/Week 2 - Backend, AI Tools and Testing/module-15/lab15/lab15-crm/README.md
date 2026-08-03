@@ -54,6 +54,21 @@ Evidence under `~/java-bootcamp/notes/screenshots/lab-15/` (redact secrets).
 
 Continue remaining GUIDE steps as homework / full path if needed.
 
+## Manual Verificaiton
+
+| Test                                                          | Result |
+|---------------------------------------------------------------|--------|
+| Create Amina ACTIVE and Ravi PROSPECT.                        | PASS   |
+| Activate Ravi → ACTIVE succeeds.                              | PASS   |
+| Illegal ACTIVE → PROSPECT on Amina fails with correlation id. | PASS   |
+| Amina still ACTIVE after failure.                             | PASS   |
+| Duplicate customerId/email fail with clear messages.          | PASS   |
+| Service has no HashMap/SQL imports.                           | PASS   |
+| listAll is unmodifiable from caller’s perspective.            | PASS   |
+| Constructor DI graph explicit in Main.                        | PASS   |
+| Validator tests pass.                                         | PASS   |
+| README transition table matches code.                         | PASS   |
+
 ## Security and Production Review
 1. **Which inputs are untrusted (all client fields reaching the service)?**\
 All client fields reaching the service are considered untrusted.
