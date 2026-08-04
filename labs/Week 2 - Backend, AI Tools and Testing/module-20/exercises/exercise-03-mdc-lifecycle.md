@@ -30,8 +30,8 @@ An MDC lifecycle sketch with clear-in-finally.
 
 ## Pass criteria
 
-| # | Confirm | Notes |
-| --- | --- | --- |
-| 1 | Put documented | Pass / Fail |
-| 2 | Clear in finally documented | Pass / Fail |
-| 3 | Lab 21 boundary noted | Pass / Fail |
+| # | Confirm                     | Notes |
+|---|-----------------------------|-------|
+| 1 | Put documented              | Pass  |
+| 2 | Clear in finally documented | Pass  |
+| 3 | Lab 21 boundary noted       | Pass  |

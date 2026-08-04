@@ -32,6 +32,6 @@ Before/after log lines using Northstar fixtures safely.
 
 | # | Confirm | Notes |
 | --- | --- | --- |
-| 1 | Unsafe example named | Pass / Fail |
-| 2 | Safe Amina line written | Pass / Fail |
-| 3 | Safe Ravi line written | Pass / Fail |
+| 1 | Unsafe example named | Pass |
+| 2 | Safe Amina line written | Pass |
+| 3 | Safe Ravi line written | Pass |

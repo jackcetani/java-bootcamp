@@ -32,6 +32,6 @@ A clear MDC bug/fix story for thread reuse.
 
 | # | Confirm | Notes |
 | --- | --- | --- |
-| 1 | Bug story written | Pass / Fail |
-| 2 | Finally fix named | Pass / Fail |
-| 3 | Notes saved | Pass / Fail |
+| 1 | Bug story written | Pass |
+| 2 | Finally fix named | Pass |
+| 3 | Notes saved | Pass |

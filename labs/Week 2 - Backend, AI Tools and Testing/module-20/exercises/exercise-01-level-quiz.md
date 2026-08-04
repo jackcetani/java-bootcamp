@@ -41,6 +41,6 @@ A level quiz table with prod DEBUG habit.
 
 | # | Confirm | Notes |
 | --- | --- | --- |
-| 1 | Table plus custom event | Pass / Fail |
-| 2 | Prod DEBUG habit written | Pass / Fail |
-| 3 | Pre-lab boundary present | Pass / Fail |
+| 1 | Table plus custom event | Pass |
+| 2 | Prod DEBUG habit written | Pass |
+| 3 | Pre-lab boundary present | Pass |
