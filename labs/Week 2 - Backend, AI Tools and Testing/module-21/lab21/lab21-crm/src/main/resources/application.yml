@@ -1,0 +1,22 @@
+management:
+  endpoints:
+    web:
+      exposure:
+        # LAB ONLY, Production must NOT expose everything
+        include: health,info,metrics,prometheus
+  endpoint:
+    health:
+      show-details: always
+      probes:
+        enabled: true
+      group:
+        readiness:
+          include:
+            - readinessState
+            - crmReadinessIndicator
+  metrics:
+    tags:
+      application: northstar-crm
+
+server:
+  port: 8080
