@@ -1,0 +1,13 @@
+logging:
+  level:
+    com.northstar.crm: INFO
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health
+  endpoint:
+    health:
+      show-details: never
+# Unrestricted Actuator exposure is not acceptable in a real public production environment.
+# Lab 26 introduces proper secrets/profile handling. No real credentials or PII belong here.
