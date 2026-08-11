@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
+                  xmlns:cust="http://northstar.com/crm/customer">
+  <soapenv:Header/>
+  <soapenv:Body>
+    <cust:getCustomerRequest>
+      <cust:customerId>CUS-1001</cust:customerId>
+    </cust:getCustomerRequest>
+  </soapenv:Body>
+</soapenv:Envelope>

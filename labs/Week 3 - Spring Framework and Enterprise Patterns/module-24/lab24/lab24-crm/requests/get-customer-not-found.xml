@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
+                  xmlns:wsse="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd"
+                  xmlns:cust="http://northstar.com/crm/customer">
+    <soapenv:Header>
+        <wsse:Security>
+            <wsse:UsernameToken>
+                <wsse:Username>crm-partner</wsse:Username>
+                <wsse:Password Type="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-username-token-profile-1.0#PasswordText">lab24-shared-secret</wsse:Password>
+            </wsse:UsernameToken>
+        </wsse:Security>
+    </soapenv:Header>
+    <soapenv:Body>
+        <cust:getCustomerRequest>
+            <cust:customerId>CUS-9999</cust:customerId>
+        </cust:getCustomerRequest>
+    </soapenv:Body>
+</soapenv:Envelope>
