@@ -42,6 +42,6 @@ Exception→status map and handler type documented.
 
 | # | Confirm | Notes |
 | --- | --- | --- |
-| 1 | Five cases mapped | Pass / Fail |
-| 2 | Global handler named | Pass / Fail |
-| 3 | Justification for transition status present | Pass / Fail |
+| 1 | Five cases mapped | Pass |
+| 2 | Global handler named | Pass |
+| 3 | Justification for transition status present | Pass |

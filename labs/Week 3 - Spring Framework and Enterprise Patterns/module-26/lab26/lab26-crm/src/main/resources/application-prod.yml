@@ -1,0 +1,28 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://${DB_HOST:prod-db.northstar.internal}:${DB_PORT:5432}/${DB_SERVICE:CRMPROD}
+    driver-class-name: org.postgresql.Driver
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+    hikari:
+      maximum-pool-size: 10
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    show-sql: false
+  h2:
+    console:
+      enabled: false
+logging:
+  level:
+    root: WARN
+    com.northstar.crm: INFO
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health
+northstar:
+  integration:
+    api-key: ${NORTHSTAR_API_KEY}
+    timeout-ms: 3000
