@@ -1,44 +1,129 @@
 # Exercise 5 — Actions Secrets Checklist
 
-**Module 43** · Documentation exercise · [setup](EXERCISES-INDEX.md)
+## Activity card
 
-## Goal
+| | |
+| --- | --- |
+| **Time** | 8–10 minutes |
+| **Checkpoint** | **D** (after slides 111–117) |
+| **Deliverable** | `notes/lab43-secrets-checklist.md` |
+| **Fixtures** | CUS-1001/CUS-1002 synthetic only · no secrets in Git |
 
-List what may live in Git vs Actions secrets vs local only.
+### What you will learn
 
-## Steps
+List which names live in Actions secrets vs plain vars; never echo values.
 
-### Step 1 — Sort
+### Enterprise context
+
+Kubeconfig and registry tokens must not appear in workflow YAML or screenshots.
+
+### Predict
+
+CRM_REGISTRY_TOKEN in plain text in ci.yml — gate fail?
+
+### Debug
+
+Secret appears in Actions log — response?
+
+### Troubleshooting
+
+| Symptom | Fix |
+| --- | --- |
+| echo $SECRET | Never print; rotate if leaked |
+| Full CD promotions now | Park Lab 44 |
+
+**Module 43** · Documentation exercise · [setup + file names](EXERCISES-INDEX.md)
+
+## Deliverable
+
+**Submit only** the file(s) below (not the graded lab).
+
+| Item | Path (under `examples/module-43-exercises/`) |
+| ---- | --------------------------------------------- |
+| Your notes file | `notes/lab43-secrets-checklist.md` |
+
+## Worked example (read first)
+
+Here is the shape of a complete answer for this exercise. Adapt the content — do not leave blanks.
+
+```markdown
+# Lab 43 — Actions Secrets Checklist
+
+## Step 1 — Sort
 
 Sort: workflow YAML, README, registry password, kubeconfig, `.env`, scan reports.
 
-### Step 2 — Check the reference
+## Step 2 — Check the reference
 
 Only non-secret config in Git; credentials in Actions secrets/variables as instructed.
 
-### Step 3 — Leak response
+## Step 3 — Leak response
 
 Write three steps if a secret is committed: rotate, purge history per policy, notify instructor.
 
-### Step 4 — CRM note
+## Step 4 — CRM note
 
 Customer fixtures are not secrets—but real customer dumps are forbidden.
 
+## Scope
+Pre-lab only — do not finish the full graded lab in this exercise.
+```
+
+Then follow **Steps** to create your own file.
+
+## Steps
+
+### Step 1 — Create the notes file
+
+From `examples/module-43-exercises/`, create `notes/` if needed, then create `notes/lab43-secrets-checklist.md`.
+
+### Step 2 — Paste and complete this template
+
+```markdown
+# Lab 43 — Actions Secrets Checklist
+
+## Step 1 — Sort
+
+Sort: workflow YAML, README, registry password, kubeconfig, `.env`, scan reports.
+
+## Step 2 — Check the reference
+
+Only non-secret config in Git; credentials in Actions secrets/variables as instructed.
+
+## Step 3 — Leak response
+
+Write three steps if a secret is committed: rotate, purge history per policy, notify instructor.
+
+## Step 4 — CRM note
+
+Customer fixtures are not secrets—but real customer dumps are forbidden.
+
+## Scope
+Pre-lab only — do not finish the full graded lab in this exercise.
+```
+
+### Step 3 — Self-check
+
+Confirm fixtures if used: Amina `CUS-1001`/`ACTIVE`, Ravi `CUS-1002`/`PROSPECT`, correlation `lab-request-001`. Replace every `_____` before Pass.
+
 ## Expected result
 
-Secrets checklist with leak response.
+Secrets checklist with leak response in `notes/lab43-secrets-checklist.md`.
 
 ## If it fails
 
 | Problem | Fix |
 | --- | --- |
+| No file / wrong name | Must be `notes/lab43-secrets-checklist.md` |
 | Hardcoding tokens in ci.yml | Use Actions secrets |
 | Skipping tests to go green | Fix or quarantine with policy |
 
 ## Pass criteria
 
-| # | Confirm | Notes |
-| --- | --- | --- |
-| 1 | Items classified | Pass / Fail |
-| 2 | Leak response has three steps | Pass / Fail |
-| 3 | Fixture vs secret clarified | Pass / Fail |
+Self-check before marking Pass:
+
+- [ ] File exists at `notes/lab43-secrets-checklist.md`
+- [ ] Items classified
+- [ ] Leak response has three steps
+- [ ] Fixture vs secret clarified
+

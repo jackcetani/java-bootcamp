@@ -1,8 +1,6 @@
 # Lab 41: Containerize the Spring Boot CRM — Multi-Stage Dockerfile, Non-Root, Health
 
 **Module:** 41 — Containerize the Spring Boot CRM  
-**Lab folder:** `labs/Week 5 - DevOps, CI-CD and k3s/lab41/`  
-**Difficulty:** Intermediate  
 **Duration:** ~45 minutes (timed path with starter) · Full path: 3–4 Hours
 
 **Primary IDE:** IntelliJ IDEA Community Edition · **Optional IDE:** VS Code
@@ -12,68 +10,96 @@
 | Windows | [LAB-41-WINDOWS.md](LAB-41-WINDOWS.md) |
 | macOS | [LAB-41-MACOS.md](LAB-41-MACOS.md) |
 
-> **Environment reminder:** Complete the [Module 41 pre-lab exercises](../exercises/EXERCISES-INDEX.md) after the slides and before this lab.  Finish [Lab 0](../../../Week%201%20-%20Java%20and%20JVM%20Foundations/module-00/lab0/LAB-0-GUIDE.md). Use **IntelliJ IDEA Community** (primary; optional VS Code) on your laptop with **JDK 21**, **Maven 3.9+**, and **Docker** (image builds). Work under `~/java-bootcamp` (Windows: `%USERPROFILE%\java-bootcamp`).
+> **Two folders (do not mix):** [Clone the course repo · Commit in your own repo](../../../CLONE-AND-OWN-REPO-GUIDE.md). Read this GUIDE in the **course clone**. Write and run everything in **your** `java-bootcamp` repo.
+
+---
+
+## Activity card
+
+| | |
+| --- | --- |
+| **Time** | ~45 min timed · full path 3–4 h |
+| **Checkpoint** | **E** (after Ex 1→4→2→3→5→6) |
+| **Must prove** | Multi-stage build · USER 10001 · no secrets in layers · HEALTHCHECK |
+| **Hard gate** | Pre-lab Pass · Docker engine · bootable Lab 40 CRM in `java-bootcamp` |
+
+### What you will learn
+
+Package the Spring CRM as a small non-root image with runtime env and readiness checks.
+
+### Enterprise context
+
+Ops rejects root/`latest`-only images with passwords baked into layers.
+
+### Predict
+
+If `.env` is not dockerignored, where might the DB password appear?
+
+### Debug
+
+Readiness never UP — `localhost` inside the container, or missing `--network`?
+
+---
+
+## Two folders — every command below uses these paths
+
+| Folder | Remote | You… |
+| ------ | ------ | ---- |
+| **Course clone** (handouts) | `bc-sw-engineer-java-participant` | **Read** this GUIDE / starter. **Never** commit homework here. |
+| **Your repo** | private `java-bootcamp` | **Copy** Lab 40 here, **merge** starter stubs, **build** the image, **commit**. |
+
+| Item | Course clone (read) | Your `java-bootcamp` (write) |
+| ---- | ------------------- | ---------------------------- |
+| This GUIDE | `labs/…/module-41/lab41/LAB-41-GUIDE.md` | — |
+| Starter stubs | `labs/…/module-41/lab41/starter/` | merged into `examples/lab41-crm/` |
+| Graded CRM + Dockerfile | — | `examples/lab41-crm/` |
+| Pre-lab notes | — | `examples/module-41-exercises/notes/` |
+| Screenshots | — | `notes/screenshots/lab-41/` (gitignored) |
+
+IntelliJ stays on `java-bootcamp`. Keep the course clone in a browser tab or a second window.
+
+**Lab 40 baseline (what you copy):** Spring Boot JAR built with **`mvn`** (no Maven Wrapper unless you added one), **`GET /api/customers`** list API, **no** Spring Security, **no** `/api/v1/interactions`, datasource today is `SPRING_DATASOURCE_*` until you add the docker profile in Step 2. PostgreSQL user from Lab 37 compose is **`crm` / `change-me`**, not `crm_app`. Point the copy at database **`crm_lab41`**. JDBC hostname from another container is **`crm-postgres`** on network **`lab37-crm_default`** (confirm with `docker network ls`).
 
 ---
 
 ## 45-minute timed path (use starter)
 
-In class, use the starter templates so the **core** objectives fit **~45 minutes**. The full Steps below remain for homework / extended depth.
+> **Pacing reminder:** [PACING.md](../PACING.md) checkpoint **E**. Homework: digest evidence + graceful stop + full runbook.
 
-1. Open [`starter/README.md`](starter/README.md).
-2. Copy `starter/` into your `java-bootcamp/examples/…` target (see starter README).
-3. Fill every `// TODO` / `TODO` — do **not** wait on a perfect prior lab; the starter includes a baseline.
-4. Run the starter smoke test; evidence under `notes/screenshots/lab-41/`.
-5. Mark timed-path Pass criteria in the starter README. Continue remaining GUIDE steps as homework if needed.
+1. Open [`starter/README.md`](starter/README.md) **in the course clone**.
+2. In **`java-bootcamp`**, copy Lab 40 → `examples/lab41-crm`, then merge `starter/` from the course clone.
+3. Fill every `TODO` — do **not** work under `labs/`.
+4. Build/run from `examples/lab41-crm`; evidence under `notes/screenshots/lab-41/`.
+5. Mark timed-path Pass criteria in the starter README.
 
 | Path | Time | Scope |
 | ---- | ---- | ----- |
-| **Timed (default)** | ~45 min | Starter TODOs + smoke test |
-| **Full (extended)** | see Duration | Every Step in this GUIDE |
+| **Timed (default)** | ~45 min | Dockerfile TODOs + non-root inspect + readiness (first image pull is several minutes) |
+| **Full (extended)** | see Duration | Every Step (networked run, smoke, stop, runbook, peer) |
 
 ---
 
-## How to follow this lab
-
-1. **In class (timed path):** prefer [`starter/README.md`](starter/README.md) — copy starter → `java-bootcamp/examples/lab41-crm`, fill TODOs, run smoke test (~45 min).
-2. Open the **Windows** or **macOS** how-to (links above) in a second tab for OS-specific commands.
-3. Create/work only under your `java-bootcamp/examples/…` folder from the steps (not inside this `labs/` git clone unless a step says otherwise).
-4. For each **Step N** (full path / homework): read **Why** (if present) → do the actions → confirm **Expected** / **Expected result** → then continue.
-5. When stuck, use **Failure Experiments** / troubleshooting in this guide before asking for help.
-6. Capture evidence under `notes/screenshots/lab-41/` (workspace root under `java-bootcamp`; redact secrets). Use the **Pass criteria** tables — write **Pass** or **Fail** in your notes. GitHub file view does not support clickable checkboxes.
-
 ## What you'll submit (read this first)
 
-Keep this checklist visible while you work. Full detail is under [Expected Deliverables](#expected-deliverables) at the end.
+All of these live under **`java-bootcamp`**, not the course clone.
 
-| # | Deliverable |
-| - | ----------- |
-| 1 | `Dockerfile` (multi-stage, non-root, health) |
-| 2 | `.dockerignore` + `.env.example` |
-| 3 | Image build evidence (id/size/user) + digest notes |
-| 4 | Readiness + CRM smoke evidence (`CUS-1001`) |
-| 5 | Graceful stop + dependency failure evidence |
-| 6 | `docs/container-runbook.md` (registry flow included) |
-| 7 | No secrets in Git or image layers |
+| # | Deliverable | Where |
+| - | ----------- | ----- |
+| 1 | `Dockerfile` (multi-stage, non-root, health) | `examples/lab41-crm/Dockerfile` |
+| 2 | `.dockerignore` + `.env.example` | same folder (`.env.local` gitignored) |
+| 3 | Image build evidence (id/size/user) + digest notes | `docs/container-runbook.md` + `notes/screenshots/lab-41/` |
+| 4 | Readiness + CRM list smoke (`GET /api/customers`) | notes |
+| 5 | Graceful stop + bad `CRM_DB_HOST` evidence | notes |
+| 6 | `docs/container-runbook.md` (registry flow included) | `examples/lab41-crm/docs/` |
+| 7 | No secrets in Git or image layers | `git status` on **your** repo |
 
+**Do not submit:** `target/`, secrets, `.env.local`, or a verbatim instructor `solution/`.
+
+---
 
 ## Lab Overview
 
 This Module 41 lab packages the CRM backend as a **small, reproducible, non-root** container image: multi-stage Maven build, hardened JRE runtime, runtime configuration via env, meaningful health checks, resource limits, log hygiene, graceful shutdown, and a `docs/container-runbook.md` another engineer can follow.
-
-**Purpose.** Operations rejects images that embed secrets, run as root, or cannot report readiness. Leadership freezes:
-
-**No registry push of `:latest`-only root images with passwords in layers.**
-
-**What you build (exercise).** Branch `lab41-crm`; add `.dockerignore` and multi-stage `Dockerfile`; build `crm-api:lab41`; inspect user/layers/digest; run with `.env.example`-driven runtime config and memory limits; verify readiness and create/retrieve synthetic Amina; test graceful stop and bad dependency URL behavior; document registry tagging/digest pinning (auth outside Git).
-
-**What success looks like.** Under `~/java-bootcamp/examples/lab41-crm/` the image runs as UID `10001`, readiness returns success, CRM fixtures work with correlation `lab-request-001`, and the runbook lists exact `docker build` / `run` / `stop` commands with digest evidence.
-
-**Depends on Labs 39–40.** Need a bootable Spring JAR with actuator health (add if missing) and env-based datasource. Lab 42 deploys this image to Kubernetes (k3s).
-
-**CRM connection.** Fixtures `CUS-1001` / `CUS-1002` / `lab-request-001`. Never bake PostgreSQL passwords into the image—inject at `docker run` / later K8s Secret.
-
----
 
 ## Learning Objectives
 
@@ -82,15 +108,8 @@ After completing this lab, you will be able to:
 * Explain image layers and build-context hygiene
 * Create a multi-stage Maven → JRE Dockerfile for Java 21
 * Run Spring Boot as a fixed non-root UID
-* Inject profile, JDBC, and broker settings at runtime
+* Inject profile, JDBC, and (later) broker settings at runtime
 * Add container `HEALTHCHECK` aligned with readiness
-* Inspect image size, user, entrypoint, architecture, and digest
-* Troubleshoot startup, health, and graceful shutdown
-* Document registry auth, immutable tags, and digest pinning
-* Keep `.env` secrets out of Git and out of image layers
-* Prove a controlled failure when a dependency URL is wrong
-
----
 
 ## Business Scenario
 
@@ -100,477 +119,155 @@ The CRM must run consistently from developer laptops through the delivery platfo
 
 You own that packaging gate for the API that serves Amina (`CUS-1001`) and Ravi (`CUS-1002`).
 
-Use these examples consistently:
-
 | ID | Name | Notes |
 | -- | ---- | ----- |
-| `CUS-1001` | Amina Khan | `ACTIVE` — create/get smoke in container |
+| `CUS-1001` | Amina Khan | `ACTIVE` — list-API smoke fixture |
 | `CUS-1002` | Ravi Singh | `PROSPECT` — optional second smoke |
-| `CUS-9999` | — | not-found path from inside container network |
-| `lab-request-001` | — | correlation header in request/logs |
+| `lab-request-001` | — | correlation header |
 | `lab41-001`, … | — | runbook experiment IDs |
 
-**Security note for evidence.** Use fictional emails. Never commit `.env.local`, registry passwords, or `docker history` dumps that include secrets. Prefer `.env.example` with empty values.
+**Security note.** Never commit `.env.local`, registry passwords, or `docker history` dumps that include secrets. Prefer `.env.example` with **empty** password.
 
 ---
 
 ## Architecture Context
-
 ### NOW (this lab)
 
 ```mermaid
 flowchart TB
-  DF["Dockerfile multi-stage"] --> Build["build: maven Temurin 21<br/>mvn verify -> JAR"]
+  DF["Dockerfile multi-stage"] --> Build["build: maven Temurin 21<br/>mvn package -DskipTests"]
   DF --> Run["run: JRE 21 USER 10001<br/>java -jar"]
-  Run --> Docker["docker run --env-file<br/>memory 512m -p 8080"]
+  Run --> Docker["docker run -d --network lab37-crm_default<br/>--env-file .env.local -p 8080"]
   Docker --> HC["HEALTHCHECK readiness"]
-  Docker --> Ext["PostgreSQL / Kafka via env"]
+  Docker --> Ext["crm-postgres via CRM_DB_HOST"]
 ```
-
-### Lab flow (mermaid)
-
-```mermaid
-flowchart TD
-    A["Copy lab40 -> lab41<br/>baseline verify"] --> B[".dockerignore<br/>+ context review"]
-    B --> C["Multi-stage<br/>Dockerfile"]
-    C --> D["Harden runtime<br/>non-root UID"]
-    D --> E["docker build<br/>inspect digest"]
-    E --> F["Run with env<br/>+ memory limits"]
-    F --> G["Health + CRM<br/>smoke CUS-1001"]
-    G --> H["Shutdown + bad URL<br/>failure experiment"]
-    H --> I["container-runbook.md<br/>registry flow"]
-```
-
-### Architecture NOW vs LATER
-
-| Aspect | Lab 41 (NOW) | Lab 42 (k3s) |
-| ------ | ------------ | ---------------------- |
-| Packaging | Local Docker image | Same image in cluster |
-| Config | `--env-file` / `-e` | ConfigMap + Secret |
-| Health | Docker `HEALTHCHECK` | startup/readiness/liveness probes |
-| Identity | Tag `crm-api:lab41` | Digest-pinned Deployment |
-
-**Lab focus:** layers, multi-stage build, non-root, runtime config, health, inspect/troubleshoot—not yet Routes or rollouts.
-
----
 
 ## Prerequisites
 
-Complete [SETUP](../../../SETUP-INSTRUCTIONS.md), [Lab 0](../../../Week%201%20-%20Java%20and%20JVM%20Foundations/module-00/lab0/LAB-0-GUIDE.md), and Labs [39](../../../Week%204%20-%20Kafka,%20React,%20PostgreSQL%20and%20Resilience/module-39/lab39/LAB-39-GUIDE.md)–[40](../../module-40/lab40/LAB-40-GUIDE.md) as available. Confirm:
+Prior labs: [Lab 40](../../module-40/lab40/LAB-40-GUIDE.md) already in **`java-bootcamp/examples/lab40-crm`**.
 
-* Java 21 + Maven Wrapper; `./mvnw -B clean verify` green
-* Docker Engine for multi-stage builds
-* Actuator health endpoints (add dependency if needed)
-* No production secrets in images or Git
+Confirm:
+
+* JDK 21 + Maven 3.9.x (`mvn -version`). Use `./mvnw` only if **your** project already has a wrapper
+* Docker Engine (`docker version` shows a Server)
+* Lab 40 `mvn -B test` green on the host before you copy
+* `crm-postgres` running (Lab 37 compose). Do not Flyway-migrate `crm` / `crm_lab39` / `crm_lab40`
 
 ### Pre-flight
 
 ```bash
 java -version
-./mvnw --version 2>/dev/null || mvn -version
-docker --version
-docker info >/dev/null
-git status --short
-pwd
-ls ~/java-bootcamp/examples
+mvn -version
+docker version
 ```
 
-```bash
-cd ~/java-bootcamp/examples
-cp -r lab40-crm lab41-crm   # or lab39-crm if needed
-cd lab41-crm
-./mvnw -B clean verify
-```
-
----
-
-## Suggested Project Files
-
-Prefer examples. Platform cohorts may place the same files at `customer-management-platform/backend/` (Dockerfile beside `pom.xml`).
+Working directory for every later command unless noted:
 
 ```text
-~/java-bootcamp/examples/lab41-crm/
-├── src/...
-├── Dockerfile
-├── .dockerignore
-├── .env.example
-├── docs/
-│   └── container-runbook.md
-├── notes/screenshots/
-├── pom.xml
-├── .gitignore
-└── README.md
+~/java-bootcamp/examples/lab41-crm
+# Windows: %USERPROFILE%\java-bootcamp\examples\lab41-crm
 ```
 
-Expected evidence: image digest, readiness curl output, non-root `docker inspect` user, graceful stop note.
+## Worked example (read before you code)
 
-Ignore `.env`, `.env.local`, `target/` in Git (and via `.dockerignore`).
+Lab 39/40 has **no** `mvnw`. Build inside Docker with **`mvn`**. Skip tests in the image build (Testcontainers cannot start Docker-in-Docker here).
 
----
+```dockerfile
+# syntax=docker/dockerfile:1
+FROM maven:3.9-eclipse-temurin-21 AS build
+WORKDIR /workspace
+COPY pom.xml .
+RUN mvn -B -q dependency:go-offline || true
+COPY src ./src
+RUN mvn -B -DskipTests package && cp target/*-SNAPSHOT.jar target/app.jar
 
-## Concepts to Discuss
+FROM eclipse-temurin:21-jre
+RUN groupadd --system --gid 10001 spring \
+ && useradd --system --uid 10001 --gid spring --create-home spring
+WORKDIR /app
+COPY --from=build --chown=spring:spring /workspace/target/app.jar /app/app.jar
+USER 10001
+EXPOSE 8080
+ENV JAVA_TOOL_OPTIONS="-XX:MaxRAMPercentage=75.0"
+HEALTHCHECK --interval=30s --timeout=3s --start-period=40s --retries=3 \
+  CMD ["bash", "-c", "exec 3<>/dev/tcp/127.0.0.1/8080 && printf 'GET /actuator/health/readiness HTTP/1.0\r\nHost: localhost\r\n\r\n' >&3 && cat <&3 | grep -q UP"]
+ENTRYPOINT ["java","-jar","/app/app.jar"]
+```
 
-Write 2–3 sentences each in `docs/container-runbook.md` (concepts section):
-
-1. Main flow: build context → layers → runtime process
-2. Trust boundary: what is in the image vs injected at run
-3. Success/failure contracts: readiness vs liveness meaning
-4. Stable tags/digests vs floating `latest`
-5. Idempotency of `docker build` with cache; when to `--pull`
-6. Why multi-stage shrinks attack surface vs fat Maven image
-7. Evidence operators need (digest, health, logs without secrets)
-8. Two hosts: same Dockerfile + pinned bases → comparable images
-9. Root vs UID 10001 blast radius
-10. What Lab 42 adds (probes, Route, rollout) without rewriting the JAR
+**What to notice:** JRE has no `curl`/`wget` — HEALTHCHECK uses `/dev/tcp`. No password in `ENV`. Instructors check `Config.User=10001`.
 
 ---
 
 ## Implementation Steps
 
-Complete each step in order. Commands assume `~/java-bootcamp/examples/lab41-crm` (Windows: `%USERPROFILE%\java-bootcamp\examples\lab41-crm`) unless noted.
+Complete each step in order. **Write** under `java-bootcamp`. **Read** starter files from the course clone.
 
 ---
 
-### Step 1 — Prepare application and build context
+### Step 1 — Copy Lab 40 into your repo, then merge starter stubs
 
-**Why:** Secrets and `target/` in context bloat layers and risk leaks.
+**Why:** Graded work belongs in `java-bootcamp`. The course `starter/` is Dockerfile/docs, not a CRM.
 
-**Do this:** Confirm executable Spring Boot JAR from `./mvnw -B clean verify`. Note port (`8080`), required env (`CRM_DB_*`), and actuator paths. Create `.dockerignore`:
-
-```gitignore
-target/
-.git/
-.idea/
-.vscode/
-.env
-.env.*
-!.env.example
-*.log
-reports/
-**/node_modules/
-notes/screenshots/
-```
-
-Confirm `mvnw`, `pom.xml`, and `src/` remain in context.
-
-**Expected result:** Context excludes secrets and build output; wrapper still included if you build inside Docker.
-
-**If it fails:** Accidental ignore of `src` → fix `.dockerignore`. Verify still red → fix Lab 39/40 first.
-
----
-
-### Step 2 — Create the multi-stage Dockerfile
-
-**Why:** Builder tools must not ship in the runtime image.
-
-**Do this:** Add `Dockerfile` (pin base tags per instructor if provided):
-
-```dockerfile
-# syntax=docker/dockerfile:1
-FROM maven:3.9-eclipse-temurin-21 AS build
-WORKDIR /workspace
-COPY pom.xml .
-COPY .mvn .mvn
-COPY mvnw mvnw
-RUN chmod +x mvnw && ./mvnw -B -q -DskipTests dependency:go-offline
-COPY src ./src
-RUN ./mvnw -B clean verify
-
-FROM eclipse-temurin:21-jre
-RUN useradd --system --uid 10001 --create-home spring
-WORKDIR /app
-COPY --from=build --chown=spring:spring /workspace/target/*-SNAPSHOT.jar app.jar
-# Prefer a single Boot jar name; adjust pattern to your artifact
-USER 10001
-EXPOSE 8080
-ENV JAVA_TOOL_OPTIONS="-XX:MaxRAMPercentage=75"
-HEALTHCHECK --interval=30s --timeout=3s --start-period=40s --retries=3 \
-  CMD wget -qO- http://127.0.0.1:8080/actuator/health/readiness || exit 1
-ENTRYPOINT ["java","-jar","/app/app.jar"]
-```
-
-Adapt jar copy (`*.jar` vs exact name). If `wget` is missing in JRE image, use a documented alternative (`curl`, CMD-SHELL with actuator) or install only with instructor-approved slim tooling—prefer distroless-friendly approaches discussed in class.
-
-**Expected result:** Multi-stage file present; dependency layer cached before source copy.
-
-**If it fails:** `dependency:go-offline` incomplete → still OK if final `verify` works; document. Wrong jar glob → list `/workspace/target` in build.
-
----
-
-### Step 3 — Harden runtime (non-root, no secrets)
-
-**Why:** Root containers turn RCE into host privilege stories.
-
-**Do this:** Confirm `USER 10001`, no `CRM_DB_PASSWORD` in `ENV`, no copying `.env`, no package-manager leftovers in final stage. Optional: OCI labels for version/git SHA (bonus). Ensure working directory is writable only as needed.
-
-**Expected result:** Runtime stage is JRE-only + jar + non-root user; no credentials in Dockerfile.
-
-**If it fails:** App needs write to `/tmp` only → keep that; avoid writable whole rootfs unless Lab bonus.
-
----
-
-### Step 4 — Build and inspect the image
-
-**Why:** Digests—not just tags—identify what you will deploy in Lab 42.
+**Where:** IntelliJ Terminal in **`java-bootcamp`**. Starter copy source is the **course clone**.
 
 **Do this:**
 
-```bash
-docker build --pull -t crm-api:lab41 .
-docker image inspect crm-api:lab41 --format '{{.Id}} {{.Size}} {{json .Config.User}}'
-docker image inspect crm-api:lab41 --format '{{index .RepoDigests 0}}'
-# If RepoDigests empty before push, record Image Id and later digest on push
-docker history crm-api:lab41 --no-trunc | head
+**Windows (PowerShell):**
+
+```powershell
+$jb = "$env:USERPROFILE\java-bootcamp"
+$courseLab41 = "$env:USERPROFILE\bc-sw-engineer-java-participant\labs\Week 5 - DevOps, CI-CD and OpenShift\module-41\lab41"
+
+Copy-Item -Recurse -Force "$jb\examples\lab40-crm" "$jb\examples\lab41-crm"
+Copy-Item -Recurse -Force "$courseLab41\starter\*" "$jb\examples\lab41-crm\"
+New-Item -ItemType Directory -Force -Path "$jb\notes\screenshots\lab-41" | Out-Null
+
+docker exec -e PGPASSWORD=change-me crm-postgres psql -U crm -d postgres -c "CREATE DATABASE crm_lab41;"
 ```
 
-Record size, user `10001`, entrypoint, architecture in the runbook.
+**macOS / Linux:**
 
-**Expected result:** Image builds; user is non-root; size materially smaller than a Maven-based single stage (note comparison if you measure).
+```bash
+JB=~/java-bootcamp
+COURSE_LAB41=~/bc-sw-engineer-java-participant/labs/Week\ 5\ -\ DevOps,\ CI-CD\ and\ OpenShift/module-41/lab41
 
-**If it fails:** Build context huge → fix `.dockerignore`. Permission on `mvnw` → `chmod` in Dockerfile.
+cp -R "$JB/examples/lab40-crm" "$JB/examples/lab41-crm"
+cp -R "$COURSE_LAB41/starter/." "$JB/examples/lab41-crm/"
+mkdir -p "$JB/notes/screenshots/lab-41"
+
+docker exec -e PGPASSWORD=change-me crm-postgres psql -U crm -d postgres -c "CREATE DATABASE crm_lab41;"
+```
+
+Confirm `examples/lab41-crm` has `pom.xml`, `src/`, and the merged `Dockerfile`. Add `.env.local` and `dependency-check-data/` to `.gitignore` if missing.
+
+**Expected result:** `lab41-crm` exists in **your** repo; `crm_lab41` created; you are not editing files under `labs/`.
+
+**If it fails:** Copied into the course clone → start over in `java-bootcamp`. No `lab40-crm` → finish Lab 40 first.
 
 ---
 
-### Step 5 — Run with configuration and limits
+### Step 2 — Build-context hygiene, actuator, and `CRM_DB_*` mapping
 
-**Why:** Config must be injectable; memory limits surface MaxRAMPercentage behavior.
+**Why:** Secrets in context leak into layers. Lab 40 yml listens to `SPRING_DATASOURCE_*`; Lab 42 ConfigMaps use `CRM_DB_*`. You must map them before `docker run`.
 
-**Do this:** Create `.env.example`:
-
-```bash
-SPRING_PROFILES_ACTIVE=docker
-CRM_DB_URL=jdbc:postgresql://${CRM_DB_HOST:localhost}:5432/${CRM_DB_NAME:crm}
-CRM_DB_USERNAME=crm_app
-CRM_DB_PASSWORD=
-# KAFKA_BOOTSTRAP=...
-```
-
-Copy to gitignored `.env.local`, fill training values, run:
-
-```bash
-docker run --rm --name crm-api -p 8080:8080 \
-  --memory=512m --env-file .env.local crm-api:lab41
-```
-
-Use Compose network DNS (`crm-postgres`) instead of `host.docker.internal` when PostgreSQL is a sibling container—document which.
-
-**Expected result:** Container starts with injected env; port published; memory capped.
-
-**If it fails:** Cannot reach PostgreSQL → fix JDBC host for Docker networking. Immediate exit → `docker logs crm-api`.
-
----
-
-### Step 6 — Verify health and CRM workflow
-
-**Why:** A listening port is not readiness; CRM smoke proves the image is useful.
+**Where:** `java-bootcamp/examples/lab41-crm`
 
 **Do this:**
 
-```bash
-curl -fsS http://localhost:8080/actuator/health/readiness
-# Create/get Amina with synthetic payload; include correlation:
-curl -fsS -H "X-Correlation-Id: lab-request-001" ...
-docker logs crm-api --tail 100
-```
-
-Confirm logs show correlation where instrumented, **no** password or full PAN/PII dumps.
-
-**Expected result:** Readiness success; `CUS-1001` create/get works (or documented seed + get); logs sanitized.
-
-**If it fails:** Health 404 → enable actuator exposure for health. 503 readiness → DB down; fix dependency first.
-
----
-
-### Step 7 — Test graceful shutdown and dependency failure
-
-**Why:** Orchestrators need SIGTERM behavior; bad config must fail clearly.
-
-**Do this:**
-
-```bash
-docker stop --time 20 crm-api
-```
-
-Confirm logs show orderly shutdown (Spring shutdown hooks) within timeout. Then run once with an invalid JDBC URL; observe readiness failure / exit; capture logs; remove the failed container without deleting your runbook notes.
-
-**Expected result:** Graceful stop within ~20s; invalid dependency produces bounded, understandable failure evidence.
-
-**If it fails:** Forced kill only → check `server.shutdown=graceful` / timeout settings. Hang forever → reduce work on shutdown; document.
-
----
-
-### Step 8 — Document registry flow and finish evidence pack
-
-**Why:** Lab 42 needs an immutable identity story even if you do not push yet.
-
-**Do this:** In `docs/container-runbook.md` describe: registry login outside source control; tag by version + git SHA (not only `latest`); push authorization; digest pinning; cleanup of old tags. Complete [Failure Experiments](#failure-experiments). Save inspect excerpts under `notes/screenshots/lab-41/`.
-
-```bash
-git status --short
-```
-
-**Expected result:** Runbook alone suffices for a peer to build/run/stop; digest/ID recorded; no `.env.local` staged.
-
-**If it fails:** See Troubleshooting.
-
----
-
-### Step 9 — Optional Compose wiring for PostgreSQL sibling (document either way)
-
-**Why:** Many CRM stacks fail first on Docker DNS (`localhost` inside the container is the container itself).
-
-**Do this:** If PostgreSQL runs as `crm-postgres` on a user-defined bridge network, document one of:
-
-```bash
-docker network ls
-docker network connect <crm-net> crm-api   # if started separately
-# or run:
-docker run --rm --name crm-api --network <crm-net> -p 8080:8080 \
-  -e CRM_DB_URL='jdbc:postgresql://crm-postgres:5432/crm' \
-  --env-file .env.local crm-api:lab41
-```
-
-Record in the runbook which hostname works on the local workstation (`host.docker.internal` vs Compose service name). Do not commit a Compose file that embeds passwords.
-
-**Expected result:** Documented working JDBC host for container→PostgreSQL; smoke still green.
-
-**If it fails:** Connection timed out → wrong network; inspect `docker inspect crm-postgres` networks. TLS/TCPS surprises → stay on training thin URL unless instructor requires wallet.
-
----
-
-### Step 10 — Peer build from runbook only
-
-**Why:** Operator docs that require tribal knowledge fail Lab 42 under time pressure.
-
-**Do this:** Have a peer (or you on a clean shell) follow **only** `docs/container-runbook.md` to rebuild/run/curl readiness. Note any missing step and patch the runbook. Capture second build image ID (cache may make it fast—still record User and health).
-
-**Expected result:** Peer reaches readiness without Slack help; runbook gaps closed; evidence of second successful run.
-
-**If it fails:** Missing `--pull` / jar name / env keys → fix runbook immediately.
-
----
-
-## Implementation Checkpoints
-
-### Checkpoint A — Context and Dockerfile
-
-_Mark each row **Pass** or **Fail** in your lab notes (GitHub markdown files are not interactive checklists)._
-
-| # | Confirm | Your notes |
-| - | ------- | ---------- |
-| 1 | `lab41-crm` verifies before image work | Pass / Fail |
-| 2 | `.dockerignore` excludes secrets/`target` | Pass / Fail |
-| 3 | Multi-stage Dockerfile builds JAR then JRE runtime | Pass / Fail |
-
-### Checkpoint B — Hardening and inspect
-
-_Mark each row **Pass** or **Fail** in your lab notes (GitHub markdown files are not interactive checklists)._
-
-| # | Confirm | Your notes |
-| - | ------- | ---------- |
-| 1 | Runs as UID `10001` (or fixed non-root) | Pass / Fail |
-| 2 | No secrets in image env/layers | Pass / Fail |
-| 3 | Image id/size/user recorded | Pass / Fail |
-
-### Checkpoint C — Run and prove
-
-_Mark each row **Pass** or **Fail** in your lab notes (GitHub markdown files are not interactive checklists)._
-
-| # | Confirm | Your notes |
-| - | ------- | ---------- |
-| 1 | Runtime env via `.env.example` pattern | Pass / Fail |
-| 2 | Readiness healthy; CRM smoke with `CUS-1001` | Pass / Fail |
-| 3 | Graceful stop + bad URL experiment documented | Pass / Fail |
-
-### Checkpoint D — Hygiene
-
-_Mark each row **Pass** or **Fail** in your lab notes (GitHub markdown files are not interactive checklists)._
-
-| # | Confirm | Your notes |
-| - | ------- | ---------- |
-| 1 | `container-runbook.md` complete | Pass / Fail |
-| 2 | Registry/digest notes present | Pass / Fail |
-| 3 | No `.env` / tokens in Git | Pass / Fail |
-| 4 | Peer build from runbook succeeded (or gaps fixed) | Pass / Fail |
-| 5 | JDBC hostname for container→PostgreSQL documented | Pass / Fail |
-| 6 | Actuator does not expose `env`/`beans` publicly without auth | Pass / Fail |
-
----
-
-## Safety Rules (restate before building)
-
-* Work only against local Docker / authorized training hosts.
-* Never `COPY` `.env` or kubeconfig into the image.
-* Pin or record base image tags (`maven:…`, `eclipse-temurin:…`).
-* Prefer digest identity for anything you will promote to Lab 42.
-* Do not run training containers as root “just to make volume mounts work”—fix ownership instead.
-* Keep CRM smoke traffic synthetic (`CUS-1001` / `CUS-1002` only).
-* Delete failed containers after capturing logs; do not leave password-bearing env files on shared disks.
-
----
-
-## Reference Commands, Configuration, and Code
-
-### Multi-stage Dockerfile (full pattern)
-
-```dockerfile
-# syntax=docker/dockerfile:1
-FROM maven:3.9-eclipse-temurin-21 AS build
-WORKDIR /workspace
-COPY pom.xml .
-COPY .mvn .mvn
-COPY mvnw mvnw
-RUN chmod +x mvnw && ./mvnw -B -q -DskipTests dependency:go-offline
-COPY src ./src
-RUN ./mvnw -B clean verify
-
-FROM eclipse-temurin:21-jre
-RUN useradd --system --uid 10001 --create-home spring
-WORKDIR /app
-COPY --from=build --chown=spring:spring /workspace/target/*.jar app.jar
-USER 10001
-EXPOSE 8080
-ENV JAVA_TOOL_OPTIONS="-XX:MaxRAMPercentage=75"
-HEALTHCHECK --interval=30s --timeout=3s --start-period=40s --retries=3 \
-  CMD wget -qO- http://127.0.0.1:8080/actuator/health/readiness || exit 1
-ENTRYPOINT ["java","-jar","/app/app.jar"]
-```
-
-### `.dockerignore` (minimum)
-
-```gitignore
-target/
-.git/
-.idea/
-.vscode/
-.env
-.env.*
-!.env.example
-*.log
-reports/
-**/node_modules/
-```
-
-### Build and run
-
-```bash
-cd ~/java-bootcamp/examples/lab41-crm
-docker build --pull -t crm-api:lab41 .
-docker image inspect crm-api:lab41 --format 'id={{.Id}} size={{.Size}} user={{json .Config.User}}'
-docker run --rm --name crm-api -p 8080:8080 \
-  --memory=512m --env-file .env.local crm-api:lab41
-curl -fsS http://localhost:8080/actuator/health/readiness
-curl -fsS -H "X-Correlation-Id: lab-request-001" \
-  -H "Content-Type: application/json" \
-  -d '{"publicId":"CUS-1001","fullName":"Amina Khan","email":"amina.khan@example.test"}' \
-  http://localhost:8080/api/customers   # adapt to your API
-docker logs crm-api --tail 50
-docker stop --time 20 crm-api
-```
-
-### Actuator exposure reminder (`application.yml`)
+1. Keep / finish `.dockerignore` (starter already excludes `target/`, `.git/`, `.env`, `.env.*`, with `!.env.example`).
+2. Add `spring-boot-starter-actuator` to `pom.xml` (merge `pom-actuator-snippet.xml`).
+3. Add `src/main/resources/application-docker.yml` (starter file) so profile `docker` binds:
 
 ```yaml
+spring:
+  datasource:
+    url: jdbc:postgresql://${CRM_DB_HOST:crm-postgres}:${CRM_DB_PORT:5432}/${CRM_DB_NAME:crm_lab41}
+    username: ${CRM_DB_USER:crm}
+    password: ${CRM_DB_PASSWORD}
+  lifecycle:
+    timeout-per-shutdown-phase: 20s
+server:
+  shutdown: graceful
 management:
   endpoint:
     health:
@@ -582,7 +279,237 @@ management:
         include: health,info
 ```
 
-Do not expose `env`/`beans` in training images that leave the private network without auth.
+4. Host check (not inside Docker): `mvn -B test` from `lab41-crm`.
+
+Do **not** expose `env` / `beans`. Lab 40 has **no** Spring Security — health 401 is not the default failure mode.
+
+**Expected result:** Ignore file present; actuator on the classpath; docker profile maps `CRM_DB_*`; host tests green.
+
+**If it fails:** Accidental ignore of `src` or `Dockerfile` → fix `.dockerignore`.
+
+---
+
+### Step 3 — Create the multi-stage Dockerfile
+
+**Why:** Builder tools must not ship in the runtime image.
+
+**Where:** `java-bootcamp/examples/lab41-crm/Dockerfile` (fill starter TODOs).
+
+**Do this:** Use **`mvn`**, not `mvnw`. Use **`-DskipTests`** in the image build. Rename the Boot jar to `app.jar` so `COPY` is a single file. Create UID **10001**. HEALTHCHECK via `/dev/tcp` (see Worked example). Never `ENV CRM_DB_PASSWORD`.
+
+**Expected result:** Multi-stage file present; pom copied before `src` for cache.
+
+**If it fails:** `COPY mvnw` not found → you followed the old wrapper snippet; use `mvn`. `verify` hung/failed on Testcontainers → use `package -DskipTests`.
+
+---
+
+### Step 4 — Harden runtime (non-root, no secrets)
+
+**Why:** Root containers turn RCE into host privilege stories.
+
+**Do this:** Confirm `USER 10001`, `--chown=spring:spring` on the jar, no `.env` `COPY`, no password `ARG`/`ENV`.
+
+**Expected result:** Runtime stage is JRE + jar + non-root user.
+
+**If it fails:** App needs `/tmp` — that is fine; do not run as root to “fix” mounts.
+
+---
+
+### Step 5 — Build and inspect the image
+
+**Why:** Digests—not just tags—identify what you will deploy in Lab 42.
+
+**Where:** `java-bootcamp/examples/lab41-crm`
+
+```bash
+docker build --pull -t crm-api:lab41 .
+docker image inspect crm-api:lab41 --format "{{.Id}} {{.Size}} {{json .Config.User}}"
+docker image inspect crm-api:lab41 --format "{{index .RepoDigests 0}}"
+```
+
+`RepoDigests` is empty until push — record **Image Id**. First `--pull` downloads Maven + JRE (several minutes).
+
+**Expected result:** Image builds; user is `"10001"`; size noted (Windows reference ~404 MB).
+
+**If it fails:** Huge context → `.dockerignore`. Permission on scripts → not applicable without wrapper.
+
+---
+
+### Step 6 — Run with configuration, network, and limits
+
+**Why:** `localhost` inside the CRM container is the container itself. Config must be injectable.
+
+**Where:** `java-bootcamp/examples/lab41-crm`
+
+**Do this:** Copy `.env.example` → **`.env.local`** (gitignored). Fill `CRM_DB_PASSWORD=change-me`. Do **not** `--env-file .env.example` while the password is empty.
+
+```bash
+# confirm postgres network name if this fails:
+docker network ls
+```
+
+**Windows (PowerShell):**
+
+```powershell
+cd $env:USERPROFILE\java-bootcamp\examples\lab41-crm
+docker run -d --name crm-lab41 --network lab37-crm_default `
+  --memory=512m --env-file .env.local -p 8080:8080 crm-api:lab41
+```
+
+**macOS / Linux:**
+
+```bash
+cd ~/java-bootcamp/examples/lab41-crm
+docker run -d --name crm-lab41 --network lab37-crm_default \
+  --memory=512m --env-file .env.local -p 8080:8080 crm-api:lab41
+```
+
+If port 8080 is busy, stop leftover `mvn spring-boot:run` first.
+
+**Expected result:** Container running (`docker ps`); env injected; memory capped; on the postgres network.
+
+**If it fails:** Cannot reach PostgreSQL → `--network` + `CRM_DB_HOST=crm-postgres`. Immediate exit → `docker logs crm-lab41`. Wrong DB user → Lab 37 user is **`crm`**, not `crm_app`.
+
+---
+
+### Step 7 — Verify health and CRM list smoke
+
+**Why:** A listening port is not readiness.
+
+**Do this:**
+
+```bash
+curl -fsS http://127.0.0.1:8080/actuator/health/readiness
+curl -fsS -H "X-Correlation-Id: lab-request-001" "http://127.0.0.1:8080/api/customers?status=ACTIVE"
+docker exec crm-lab41 id
+docker logs crm-lab41 --tail 100
+```
+
+(Windows: `curl.exe`.) Lab 39/40 has **no** POST `/api/v1/interactions` and **no** Basic `admin:change-me`. A **200** list (possibly empty) is a valid smoke. Optionally seed `CUS-1001` with `psql` against `crm_lab41` if you want a named row.
+
+Confirm logs have **no** password dumps.
+
+**Expected result:** Readiness `UP`; list endpoint 200; `uid=10001(spring)`.
+
+**If it fails:** Health 404 → actuator + `application-docker.yml` + `SPRING_PROFILES_ACTIVE=docker`. 503 → DB host/network/name. Do not look for SecurityConfig unless you added Security.
+
+---
+
+### Step 8 — Graceful shutdown and dependency failure
+
+**Why:** Orchestrators need SIGTERM behavior; bad config must fail clearly.
+
+```bash
+docker stop --time 20 crm-lab41
+docker logs crm-lab41 --tail 50
+docker rm crm-lab41
+```
+
+Then run once with `CRM_DB_HOST=no-such-host` (same network, same `--env-file` plus `-e CRM_DB_HOST=no-such-host`). Capture Flyway/JDBC failure; remove that container.
+
+**Expected result:** Orderly stop within ~20s; invalid host produces bounded logs.
+
+**If it fails:** Forced kill only → confirm `server.shutdown=graceful` in the docker profile.
+
+---
+
+### Step 9 — Registry notes and evidence pack
+
+**Why:** Lab 42 needs an immutable identity story even if you do not push yet.
+
+**Where:** `java-bootcamp/examples/lab41-crm/docs/container-runbook.md` and `git status` in **your** repo.
+
+**Do this:** Record image id, user, size, JDBC hostname, smoke command, tag-by-SHA (not only `latest`). Complete Failure Experiments. Confirm `.env.local` is **not** staged.
+
+```bash
+git status --short
+git remote -v   # must be YOUR java-bootcamp
+```
+
+**Expected result:** Peer can build/run/stop from the runbook; no secrets staged.
+
+---
+
+### Step 10 — Peer build from runbook only
+
+**Why:** Operator docs that require tribal knowledge fail Lab 42 under time pressure.
+
+**Where:** Peer clones **your** `java-bootcamp`, not the course handouts.
+
+**Do this:** Follow **only** `docs/container-runbook.md` to rebuild/run/curl readiness. Patch gaps. Record second image id.
+
+**Expected result:** Peer reaches readiness without extra chat; evidence of second successful run.
+
+**If it fails:** Missing `--network` / jar name / env keys → fix runbook immediately.
+
+---
+
+## Implementation Checkpoints
+
+### Checkpoint A — Context and Dockerfile
+
+| # | Confirm | Your notes |
+| - | ------- | ---------- |
+| 1 | Work is in `java-bootcamp/examples/lab41-crm` (not the course clone) | Pass / Fail |
+| 2 | `.dockerignore` excludes secrets/`target` | Pass / Fail |
+| 3 | Multi-stage Dockerfile uses `mvn` + `-DskipTests` + UID 10001 | Pass / Fail |
+
+### Checkpoint B — Hardening and inspect
+
+| # | Confirm | Your notes |
+| - | ------- | ---------- |
+| 1 | `docker inspect` user is `10001` | Pass / Fail |
+| 2 | No secrets in image env/layers | Pass / Fail |
+| 3 | Image id/size/user recorded | Pass / Fail |
+
+### Checkpoint C — Run and prove
+
+| # | Confirm | Your notes |
+| - | ------- | ---------- |
+| 1 | `.env.local` (not empty `.env.example`) + `crm_lab41` + `crm-postgres` | Pass / Fail |
+| 2 | Readiness healthy; `GET /api/customers` 200 | Pass / Fail |
+| 3 | Graceful stop + bad host experiment documented | Pass / Fail |
+
+### Checkpoint D — Hygiene
+
+| # | Confirm | Your notes |
+| - | ------- | ---------- |
+| 1 | `container-runbook.md` complete | Pass / Fail |
+| 2 | Registry/digest notes present | Pass / Fail |
+| 3 | No `.env.local` / tokens in Git | Pass / Fail |
+| 4 | Peer build from runbook succeeded (or gaps fixed) | Pass / Fail |
+| 5 | JDBC hostname for container→PostgreSQL documented | Pass / Fail |
+| 6 | Actuator does not expose `env`/`beans` | Pass / Fail |
+| 7 | Pushes went to **your** `java-bootcamp` remote | Pass / Fail |
+
+---
+
+## Safety Rules (restate before building)
+
+* Work only against local Docker / authorized training hosts.
+* Never `COPY` `.env` or kubeconfig into the image.
+* Pin or record base image tags (`maven:3.9-eclipse-temurin-21`, `eclipse-temurin:21-jre`).
+* Prefer digest identity for anything you will promote to Lab 42.
+* Do not run training containers as root to make volume mounts work.
+* Keep CRM smoke synthetic (`CUS-1001` / `CUS-1002` only).
+* Delete failed containers after capturing logs; do not leave password-bearing env files on shared disks.
+
+---
+
+## Reference Commands, Configuration, and Code
+
+### Build and run (from `java-bootcamp/examples/lab41-crm`)
+
+```bash
+docker build --pull -t crm-api:lab41 .
+docker run -d --name crm-lab41 --network lab37-crm_default \
+  --memory=512m --env-file .env.local -p 8080:8080 crm-api:lab41
+curl -fsS http://127.0.0.1:8080/actuator/health/readiness
+curl -fsS -H "X-Correlation-Id: lab-request-001" \
+  "http://127.0.0.1:8080/api/customers?status=ACTIVE"
+docker exec crm-lab41 id
+docker stop --time 20 crm-lab41
+```
 
 ### Tagging for Lab 42
 
@@ -590,45 +517,18 @@ Do not expose `env`/`beans` in training images that leave the private network wi
 GIT_SHA=$(git rev-parse --short HEAD)
 docker tag crm-api:lab41 crm-api:1.0.0-${GIT_SHA}
 # docker login …  (credentials never in Git)
-# docker push registry.example.com/training/crm-api:1.0.0-${GIT_SHA}
 ```
-
-### Artifact map
-
-| Artifact | Role |
-| -------- | ---- |
-| `Dockerfile` | Multi-stage build + non-root |
-| `.dockerignore` | Context hygiene |
-| `.env.example` | Runtime contract |
-| `container-runbook.md` | Operator evidence |
-| Image id / digest notes | Immutable identity for Lab 42 |
-
----
-
-## Manual Verification
-
-1. `./mvnw -B clean verify` green before and after Dockerfile (as applicable).
-2. Image builds with multi-stage; runtime not full Maven.
-3. `Config.User` is non-root (`10001`).
-4. No password ARG/ENV baked into the image.
-5. Readiness endpoint succeeds when dependencies are up.
-6. Synthetic customer smoke works with `lab-request-001`.
-7. `docker stop --time 20` shows graceful behavior.
-8. Invalid dependency URL failure is captured and understood.
-9. Runbook lists build/run/stop and digest/ID.
-10. `.env.local` is not committed.
-
----
 
 ## Failure Experiments
 
 | # | Experiment | Observe | Restore |
 | - | ---------- | ------- | ------- |
-| 1 | Run as root by commenting `USER` | Inspect user `0`; note risk | Restore `USER 10001` |
-| 2 | Invalid `CRM_DB_URL` | Readiness fail / crash loop | Fix URL |
+| 1 | Comment out `USER` | Inspect user `0`; note risk | Restore `USER 10001` |
+| 2 | `CRM_DB_HOST=no-such-host` | Flyway/JDBC fail; unhealthy/exit | Fix host |
 | 3 | Omit `.dockerignore` `target/` | Slower/messier context | Restore ignore |
-| 4 | `docker stop --time 1` | Possible forced kill | Prefer 20s; tune app |
+| 4 | `docker stop --time 1` | Possible forced kill | Prefer 20s |
 | 5 | Tag only `latest` in notes | Document why Lab 42 rejects it | Use version+SHA |
+| 6 | `--env-file .env.example` with empty password | Auth fail | Use `.env.local` |
 
 ---
 
@@ -637,28 +537,27 @@ docker tag crm-api:lab41 crm-api:1.0.0-${GIT_SHA}
 | Symptom | Likely cause | Fix |
 | ------- | ------------ | --- |
 | Huge context | Missing `.dockerignore` | Ignore `target`, `.git`, `.env` |
-| Jar not found | Wrong COPY glob | Match Boot jar name |
-| Permission denied | Root-owned files | `--chown=spring:spring` |
-| Cannot connect DB | Docker DNS/host | Use compose service name / host gateway |
-| HEALTHCHECK fail | No wget/curl | Adjust check; expose actuator |
-| OOM kill | Memory limit tight | Tune limit / MaxRAMPercentage |
-| Secrets in history | ARG password | Rebuild without; rotate |
-| Slow repeated builds | Cache busted by COPY order | Keep pom-first pattern |
-| Health 401 | Security locks actuator | Permit `/actuator/health/**` only |
-| Wrong timezone logs | Container TZ unset | Set UTC deliberately if required |
-| Jar is plain not Boot | Wrong classifier/name | Ensure `spring-boot-maven-plugin` repackage |
-
----
+| `COPY mvnw` fails | Lab 40 has no wrapper | Dockerfile must use `mvn` |
+| Testcontainers during `docker build` | `mvn verify` in image | `package -DskipTests` |
+| Jar not found | Glob matched 0 or 2 files | Copy renamed `target/app.jar` |
+| Cannot connect DB | Docker DNS | `--network lab37-crm_default` + `CRM_DB_HOST=crm-postgres` |
+| Password authentication failed | User `crm_app` vs compose `crm` | `CRM_DB_USER=crm` |
+| Migrated the wrong database | `CRM_DB_NAME=crm` | Use **`crm_lab41`** |
+| HEALTHCHECK fail | No wget/curl | `/dev/tcp` HEALTHCHECK; expose actuator health |
+| Port 8080 bind | Leftover Java | Stop host `spring-boot:run` |
+| `./mvnw` not found on host | No wrapper | Use `mvn` |
+| Accidental work in course clone | Wrong folder | Move to `java-bootcamp` |
 
 ## Evidence Log Template
 
 ```markdown
 # Lab 41 Evidence Log
+- Repo (must be java-bootcamp):
 - Image tag / id:
 - Config.User:
 - Size (bytes):
 - Readiness curl result:
-- Smoke CUS-1001 result:
+- GET /api/customers result:
 - Stop --time 20 observation:
 - Bad JDBC experiment:
 - Runbook peer-tested: Y/N
@@ -666,116 +565,27 @@ docker tag crm-api:lab41 crm-api:1.0.0-${GIT_SHA}
 
 ---
 
-## Security and Production Review
-
-Answer in the runbook:
-
-1. Which inputs are untrusted (env files, image bases, registry)?
-2. Where are authn/authz/validation enforced (still in app—not Docker alone)?
-3. Which values are sensitive—how injected (env/secret store)?
-4. What can be retried safely (`docker build`, recreate container)?
-5. What happens after partial failure (crash loop vs ready)?
-6. What would an operator monitor (health, restart count, image digest)?
-7. Which local default is unacceptable (root, `latest`, secrets in image)?
-8. How are image contracts versioned (tag + digest + git SHA)?
-
----
-
 ## Cleanup
 
 ```bash
-docker stop crm-api 2>/dev/null || true
-docker rm crm-api 2>/dev/null || true
-# optional: docker rmi crm-api:lab41
+docker stop crm-lab41 2>/dev/null || true
+docker rm crm-lab41 2>/dev/null || true
 cd ~/java-bootcamp/examples/lab41-crm
 git status --short
 ```
 
 Keep Dockerfile and runbook; delete plaintext env files from shared hosts.
 
-**Keep `lab41-crm`**—Lab 42 deploys this image with Deployment/Service/Route and probes.
-
----
-
-## Expected Deliverables
-
-Same checklist as [What you'll submit](#what-youll-submit-read-this-first) above.
-
-* `Dockerfile` (multi-stage, non-root, health)
-* `.dockerignore` + `.env.example`
-* Image build evidence (id/size/user) + digest notes
-* Readiness + CRM smoke evidence (`CUS-1001`)
-* Graceful stop + dependency failure evidence
-* `docs/container-runbook.md` (registry flow included)
-* No secrets in Git or image layers
-
----
-
-## Evaluation Rubric (100 Marks)
-
-| Criteria | Marks |
-| -------- | ----: |
-| Environment and project structure | 10 |
-| Core implementation (Dockerfile, ignore, run) | 30 |
-| Integration/configuration correctness (env, health, limits) | 15 |
-| Failure handling (shutdown, bad dependency) | 15 |
-| Automated / scripted verification | 10 |
-| Security and production awareness (non-root, no secrets) | 10 |
-| Documentation and evidence | 10 |
-
-**Notes:** Root runtime → lose security marks. Password `ENV` in Dockerfile → honor violation. Runbook without inspect evidence → lose documentation marks.
+**Keep `lab41-crm` in `java-bootcamp`**—Lab 42 deploys this image.
 
 ---
 
 ## Reflection Questions
 
-Write 3–6 sentence answers:
+Write **1–3 sentence** answers (not essays):
 
 1. Which design decision most affected image safety/size?
-2. Which failure was hardest to diagnose (network vs health vs perms)?
-3. What evidence proves non-root + readiness?
-4. What breaks first at ten times the build frequency (cache, base CVEs)?
-5. Which concern should move to shared CI image pipelines?
-6. What must change before real customer data is used in container logs?
-7. How does this lab connect to Labs 39–40 and Lab 42?
-8. What metric matters most when a pod/container restarts?
-9. (Forward look) Which Docker HEALTHCHECK semantics differ from K8s probes?
+2. What evidence proves non-root + readiness?
+3. Which failure was hardest to diagnose (network vs health vs perms)?
 
 ---
-
-## Bonus Challenges
-
-1. Add OCI labels (`org.opencontainers.image.revision`, version).
-2. Compare image size single-stage vs multi-stage with numbers.
-3. Generate and inspect an image SBOM.
-4. Scan the image (Trivy/Grype if available) and triage one result.
-5. Run with read-only rootfs + explicit tmp volume.
-6. Document rollback if a bad base image tag is pulled.
-
----
-
-## Success Criteria
-
-You are finished when:
-
-* Multi-stage non-root image builds reproducibly
-* Runtime config is injected safely
-* Readiness and CRM smoke succeed
-* Shutdown and failure experiments are documented
-* Runbook enables a peer to reproduce
-* No production secret is in Git or layers
-* Digests/tags are ready for Lab 42
-
----
-
-## Instructor Notes
-
-* **Live probe:** `docker image inspect` → show User `10001`. Curl readiness; ask where the DB password lives (env, not image).
-* **Assess:** `.dockerignore`, multi-stage, non-root, health alignment, runbook quality.
-* **Continuity:** Prefer `examples/lab41-crm`. Same image coordinates for Lab 42.
-* **Common pitfalls:** Copying `.env` into image; root user; `latest` only; HEALTHCHECK on liveness path only; host networking assumptions.
-* **Timing:** Timed path ~45 minutes with starter; full path remains 3–4 hours. First multi-stage build often 20–40 minutes with dependency download—start early.
-
----
-
-*End of Lab 41 — Containerize the Spring Boot CRM. Keep `lab41-crm` and image tag notes for Lab 42 Kubernetes (k3s) deployment.*

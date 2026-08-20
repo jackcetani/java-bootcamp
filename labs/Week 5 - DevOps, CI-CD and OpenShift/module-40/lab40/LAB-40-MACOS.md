@@ -4,82 +4,76 @@
 **Primary IDE:** IntelliJ IDEA Community Edition  
 **Optional IDE:** VS Code  
 **Shell:** macOS Terminal (zsh)  
-**Stack hint:** JDK 21 · Maven · Docker as assigned · kubectl + kubeconfig · GitHub Actions · IntelliJ  
+**Stack hint:** JDK 21 · Maven 3.9.x · PostgreSQL in `crm-postgres` · IntelliJ  
 **Full lab steps:** [LAB-40-GUIDE.md](LAB-40-GUIDE.md)  
-**Other OS:** [Windows guide](LAB-40-WINDOWS.md) · [IDE conventions](../../../Week%201%20-%20Java%20and%20JVM%20Foundations/_IDE-CONVENTIONS.md)
+**Pre-lab exercises:** [`../exercises/EXERCISES-INDEX.md`](../exercises/EXERCISES-INDEX.md)  
+**Other OS:** [Windows guide](LAB-40-WINDOWS.md) · [IDE conventions](../../../Week%201%20-%20Java%20and%20JVM%20Foundations/_IDE-CONVENTIONS.md)  
+**Two folders:** [Clone + own repo](../../../CLONE-AND-OWN-REPO-GUIDE.md)
+
 
 ## Prerequisites (macOS)
 
 - [Lab 0 (macOS)](../../../Week%201%20-%20Java%20and%20JVM%20Foundations/module-00/lab0/LAB-0-MACOS.md) complete (JDK 21, Maven when needed, Git)
-- IntelliJ IDEA Community with **Project SDK 21**
-- Optional: VS Code + Extension Pack for Java
-- Instructor shared Kafka / PostgreSQL credentials when this lab needs them ([FINAL-SETUP](../../../FINAL-SETUP-README.md))
-
-## Open this lab in IntelliJ (primary)
-
-1. Start **IntelliJ IDEA Community**.
-2. **File → Open…** → `~/java-bootcamp` (Lab 0 workspace root — same folder every lab).  
-   If `examples/lab40-crm` does not exist yet, create it as the lab GUIDE describes; keep the workspace open at `~/java-bootcamp`.
-3. Trust the project if prompted.
-4. **File → Project Structure → Project** → SDK = **21**, language level **21**.
-5. Maven labs: open the `pom.xml` under `examples/lab40-crm` so IntelliJ imports the project; wait for indexing.
-6. If there is a `src/main/java` tree, confirm it is marked as **Sources Root** (Maven usually does this).
-7. **View → Tool Windows → Terminal** → `cd ~/java-bootcamp` then `cd examples/lab40-crm` when ready.
-
-## Optional: VS Code
-
-1. **File → Open Folder…** → `~/java-bootcamp` (same Lab 0 workspace).
-2. Confirm **Extension Pack for Java** (and Maven for Java when needed) are installed.
-3. **Terminal → New Terminal** → `cd examples/lab40-crm` for this lab’s commands.
+- IntelliJ with **Project SDK 21** — open **`~/java-bootcamp`**, not the course clone
+- Lab 39 `mvn -B test` green under `examples/lab39-crm`
+- Personal NVD API key (free): [request](https://nvd.nist.gov/developers/request-an-api-key) — env only, never `pom.xml`
 
 ## Paths (macOS)
 
-| Item | macOS |
-| ---- | ----- |
-| Workspace (open in IDE) | `~/java-bootcamp` |
+| Item | Path |
+| ---- | ---- |
+| Course clone (read GUIDE / starter) | `~/bc-sw-engineer-java-participant/` (adjust if you cloned elsewhere) |
+| Your repo (write / run / commit) | `~/java-bootcamp` |
 | This lab project | `~/java-bootcamp/examples/lab40-crm` |
 | Evidence / screenshots | `~/java-bootcamp/notes/screenshots/lab-40` |
-| Shell | zsh / bash inside IntelliJ |
-| Path style | Forward slashes; case-sensitive |
+| Shell | macOS Terminal inside IntelliJ |
+| Path style | Forward slashes |
 
 ```bash
 cd ~/java-bootcamp
-# Lab 0 layout: evidence at workspace root; code under examples/
 mkdir -p notes/screenshots/lab-40
 cd examples/lab40-crm
 ```
 
 ### Commands this lab typically uses
 
-```text
-mvn clean compile
-mvn -q -DskipTests package   # when the lab says so
+```bash
+cd ~/java-bootcamp/examples/lab40-crm
+mvn -B test
+mvn -B -Psecurity-scan dependency-check:check -DnvdApiKey="$NVD_API_KEY" -DdataDirectory="$PWD/dependency-check-data"
+mvn -B test -Dtest=ObjectOwnershipSecurityTest   # full path only, after adding Spring Security
 ```
 
-## Run configurations (IntelliJ)
+Same verification notes as Windows (2026-08-11): Dependency-Check **10.0.4**, copy **Lab 39** then merge **starter** from the course clone, database **`crm_lab40`**, NVD **403** without a key, Boot **3.3.5** fails `failBuildOnCVSS=7` until parent **3.5.16** + `tomcat.version=10.1.57`. Lab 39 has **no** `mvnw` and **no** Spring Security. Details: [LAB-40-WINDOWS.md](LAB-40-WINDOWS.md) verified bullets and [LAB-40-GUIDE.md](LAB-40-GUIDE.md) Steps 1–8.
 
-1. Open the class with `public static void main` (or use the Spring Boot run config when the lab uses Spring).
-2. Green ▶ → **Run**.
-3. **Run → Edit Configurations…** → set **Working directory** to the project root (`examples/lab40-crm`) when the lab reads relative files (`.env`, `application.properties`, logs).
-4. For Maven goals: right-click `pom.xml` → **Maven** → `clean` / `compile` / `test` / `package`, or use the Maven tool window.
+### If it fails
+
+| Symptom | Fix |
+| -------- | --- |
+| NVD 403 | `export NVD_API_KEY=…` then pass `-DnvdApiKey="$NVD_API_KEY"` |
+| `./mvnw` not found | Use `mvn` |
+| Scan fails only on CVSS ≥ 7 | Upgrade Boot/Tomcat (GUIDE Step 7); keep the profile |
+| Wrong database | `jdbc:postgresql://localhost:5432/crm_lab40` |
+| Work ended up in the course clone | Move to `~/java-bootcamp`; never push homework to the participant remote |
+
 
 ## Do the lab
 
-Complete **every step** in **[LAB-40-GUIDE.md](LAB-40-GUIDE.md)**.  
-Wherever that guide shows `~/java-bootcamp`, on macOS use `~/java-bootcamp`. Prefer IntelliJ for Java editing and runs; use VS Code only if you already prefer it.
+Complete every step in **[LAB-40-GUIDE.md](LAB-40-GUIDE.md)**. GUIDE paths already use `~/java-bootcamp`.  
+Open/run IntelliJ steps are the same every lab — see [IDE conventions](../../../Week%201%20-%20Java%20and%20JVM%20Foundations/_IDE-CONVENTIONS.md).
 
 ## Evidence / screenshots
 
-Save screenshots under `~/java-bootcamp/notes/screenshots/lab-40` (Lab 0 workspace layout). Capture IntelliJ (project tree + Run/Terminal) on macOS. Redact passwords, tokens, and kubeconfig contents.
+Save under `~/java-bootcamp/notes/screenshots/lab-40`. Capture IntelliJ (project tree + Run/Terminal). Redact secrets and NVD keys.
 
 ## Pass criteria
 
-_Mark each row **Pass** or **Fail** in your lab notes (GitHub markdown files are not interactive checklists)._
+_Mark **Pass** or **Fail** in your lab notes._
 
 | # | Confirm | Your notes |
 | - | ------- | ---------- |
 | 1 | Workspace `~/java-bootcamp` open in IntelliJ with SDK **21** | Pass / Fail |
-| 2 | Lab project under `examples/lab40-crm` as in [LAB-40-GUIDE.md](LAB-40-GUIDE.md) | Pass / Fail |
-| 3 | Lab pass criteria / deliverables in the GUIDE are complete | Pass / Fail |
-| 4 | Commands above succeed in the IntelliJ terminal (or as the lab specifies) | Pass / Fail |
-| 5 | Screenshots (if required) saved under `notes/screenshots/lab-40/` | Pass / Fail |
+| 2 | Lab project under `examples/lab40-crm` (not the course `labs/` tree) | Pass / Fail |
+| 3 | GUIDE deliverables / checkpoints complete | Pass / Fail |
+| 4 | Scan command succeeds in producing reports (key set; 403 gone) | Pass / Fail |
+| 5 | Screenshots (if required) under `notes/screenshots/lab-40/` | Pass / Fail |

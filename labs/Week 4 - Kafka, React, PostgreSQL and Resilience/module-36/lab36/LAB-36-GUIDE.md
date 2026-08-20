@@ -1,8 +1,6 @@
 # Lab 36: Frontend Security for the CRM SPA
 
 **Module:** 36 — Frontend Security for the CRM SPA  
-**Lab folder:** `labs/Week 4 - Kafka, React, PostgreSQL and Resilience/module-36/lab36/`  
-**Difficulty:** Intermediate  
 **Duration:** ~45 minutes (timed path with starter) · Full path: 4–5 Hours
 
 **Primary IDE:** IntelliJ IDEA Community Edition · **Optional IDE:** VS Code
@@ -12,11 +10,38 @@
 | Windows | [LAB-36-WINDOWS.md](LAB-36-WINDOWS.md) |
 | macOS | [LAB-36-MACOS.md](LAB-36-MACOS.md) |
 
-> **Environment reminder:** Complete the [Module 36 pre-lab exercises](../exercises/EXERCISES-INDEX.md) after the slides and before this lab.  Finish [Lab 0](../../../Week%201%20-%20Java%20and%20JVM%20Foundations/module-00/lab0/LAB-0-GUIDE.md). Use **IntelliJ IDEA Community** (primary; optional VS Code) on your laptop with **Node.js 22+**, **npm**, **JDK 21**, and **Maven 3.9+** (API + UI). Work under `~/java-bootcamp` (Windows: `%USERPROFILE%\java-bootcamp`).
+---
+
+## Activity card
+
+| | |
+| --- | --- |
+| **Time** | ~45 min timed · full path 4–5 h |
+| **Checkpoint** | **E** (after Ex 1→2→3→4→5→6) |
+| **Must prove** | Memory token · ProtectedRoute · origin-scoped bearer · XSS test |
+| **Hard gate** | Pre-lab Pass · Lab 35 http · no real secrets |
+
+### What you will learn
+
+Harden the CRM SPA with in-memory auth, XSS-safe rendering, and honest 401/403 UX.
+
+### Enterprise context
+
+UI guards improve UX only — Spring Security remains the authorization boundary.
+
+### Predict
+
+If a token appears under Application → Local Storage — does the lab pass?
+
+### Debug
+
+403 response logs the user out — which handler is wrong?
 
 ---
 
 ## 45-minute timed path (use starter)
+
+> **Pacing reminder:** [PACING.md](../PACING.md) checkpoint **E**. Homework: CSP headers + CSRF evidence/N/A + abuse tests.
 
 In class, use the starter templates so the **core** objectives fit **~45 minutes**. The full Steps below remain for homework / extended depth.
 
@@ -33,18 +58,9 @@ In class, use the starter templates so the **core** objectives fit **~45 minutes
 
 ---
 
-## How to follow this lab
-
-1. **In class (timed path):** prefer [`starter/README.md`](starter/README.md) — copy starter → `java-bootcamp/examples/lab36-crm`, fill TODOs, run smoke test (~45 min).
-2. Open the **Windows** or **macOS** how-to (links above) in a second tab for OS-specific commands.
-3. Create/work only under your `java-bootcamp/examples/…` folder from the steps (not inside this `labs/` git clone unless a step says otherwise).
-4. For each **Step N** (full path / homework): read **Why** (if present) → do the actions → confirm **Expected** / **Expected result** → then continue.
-5. When stuck, use **Failure Experiments** / troubleshooting in this guide before asking for help.
-6. Capture evidence under `notes/screenshots/lab-36/` (workspace root under `java-bootcamp`; redact secrets). Use the **Pass criteria** tables — write **Pass** or **Fail** in your notes. GitHub file view does not support clickable checkboxes.
-
 ## What you'll submit (read this first)
 
-Keep this checklist visible while you work. Full detail is under [Expected Deliverables](#expected-deliverables) at the end.
+Keep this checklist visible while you work.
 
 | # | Deliverable |
 | - | ----------- |
@@ -57,22 +73,13 @@ Keep this checklist visible while you work. Full detail is under [Expected Deliv
 | 7 | Abuse tests + green build |
 | 8 | Redacted screenshots + README runbook |
 
+**Must submit:** the items in the table above (sources + evidence + short notes).
+
+**Do not submit:** `target/`, `node_modules/`, secrets, heap dumps, or a verbatim instructor `solution/`.
 
 ## Lab Overview
 
 This Module 36 lab hardens the CRM SPA: threat model, authentication state, **in-memory** access tokens (not `localStorage`), origin-restricted `Authorization` headers, login UX, route guards as UX-only, 401 vs 403 handling, logout, XSS-safe rendering, cookie-mode CSRF notes, CSP/security headers, and abuse-case tests. Backend authorization remains the source of truth.
-
-**Purpose.** Leadership freezes a browser security gate before PostgreSQL persistence labs expand data exposure: route guards are not authorization; tokens never hit persistent web storage in this exercise; XSS payloads in customer names must render as text; CSRF applies when cookie sessions are used; CSP/headers are configured at server/gateway.
-
-**What you build (exercise).** Copy to `lab36-crm`; write `docs/security-decisions.md`; implement `AuthContext` + in-memory `tokenStore`; attach bearer only to CRM API origin; build safe login; add `ProtectedRoute`; distinguish 401/403; complete logout; prove XSS with RTL; document CSRF for cookie mode; add CSP/headers evidence; run abuse tests.
-
-**What success looks like.** Under `~/java-bootcamp/examples/lab36-crm/` anonymous users redirect, authenticated calls send bearer only to the API origin, storage has no token, XSS test passes, CSRF missing-token evidence exists for cookie mode (or N/A with rationale for bearer-only), headers present, abuse tests green.
-
-**Depends on Lab 35.** Need typed `http.request` / `customersApi` and Spring API. Finish API integration first if fetch boundary is missing.
-
-**CRM connection.** Still Amina `CUS-1001` / Ravi `CUS-1002`; correlation `lab-request-001`. Lab 37 designs PostgreSQL storage—security controls here must not assume DB trust.
-
----
 
 ## Learning Objectives
 
@@ -83,13 +90,6 @@ After completing this lab, you will be able to:
 * Store short-lived tokens in memory only (exercise pattern)
 * Attach bearer tokens only to the approved CRM API origin
 * Compare memory-token vs HttpOnly cookie session trade-offs in writing
-* Protect navigation while treating guards as UX—not authorization
-* Handle 401 (expire), 403 (forbidden), and logout completely
-* Render customer data without HTML sinks (`dangerouslySetInnerHTML`, etc.)
-* Configure or document CSRF for cookie mode and CSP/security headers
-* Run security abuse tests without leaking secrets in output
-
----
 
 ## Business Scenario
 
@@ -116,7 +116,6 @@ Use these examples consistently:
 ---
 
 ## Architecture Context
-
 ### NOW (this lab)
 
 ```mermaid
@@ -132,36 +131,11 @@ flowchart TB
   Card["CustomerCard: JSX text only"] -.-> Browser
 ```
 
-### Lab flow (mermaid)
-
-```mermaid
-flowchart TD
-    A["Copy lab35 -> lab36<br/>+ threat model doc"] --> B["AuthState + memory tokenStore"]
-    B --> C["Origin-scoped Bearer<br/>on http.request"]
-    C --> D["Login UX + ProtectedRoute"]
-    D --> E["401 logout vs 403 keep"]
-    E --> F["Complete logout<br/>clear cache + history"]
-    F --> G["XSS RTL proof"]
-    G --> H["CSRF cookie mode<br/>+ CSP headers evidence"]
-    H --> I["Abuse tests green"]
-```
-
-### Architecture NOW vs LATER
-
-| Aspect | Lab 36 (NOW) | Production / later modules |
-| ------ | ------------ | -------------------------- |
-| Token storage | In-memory (exercise) | Prefer HttpOnly cookies / BFF where required |
-| Route guards | UX only | Same — never sole authz |
-| XSS | JSX default escaping + tests | + CSP harden |
-| Data | API-backed | PostgreSQL (Lab 37+) still needs authz |
-
-**Lab focus:** tokens and headers, secure session patterns, protected navigation, XSS, CSRF, CSP, and backend authorization.
-
----
-
 ## Prerequisites
 
-Complete [SETUP](../../../SETUP-INSTRUCTIONS.md), [Lab 0](../../../Week%201%20-%20Java%20and%20JVM%20Foundations/module-00/lab0/LAB-0-GUIDE.md), and [Lab 35](../../module-35/lab35/LAB-35-GUIDE.md). Confirm:
+Prior labs: [Lab 35](../../module-35/lab35/LAB-35-GUIDE.md).
+
+Confirm (Lab 0 tools assumed):
 
 * Lab 35 SPA + API integration works
 * Spring Security / JWT (or session) awareness for your course stack
@@ -171,57 +145,21 @@ Complete [SETUP](../../../SETUP-INSTRUCTIONS.md), [Lab 0](../../../Week%201%20-%
 ### Pre-flight
 
 ```bash
-node --version
-npm --version
-curl -i http://localhost:8080/api/customers
-ls ~/java-bootcamp/examples/lab35-crm/crm-ui
+java -version
+mvn -version
 ```
 
----
+## Worked example (read before you code)
 
-## Suggested Project Files
+Study this pattern once before Step 1. Your job is to apply the same idea in the Steps — do not skip ahead to a full solution.
 
-```text
-~/java-bootcamp/examples/lab36-crm/
-└── crm-ui/
-    ├── src/
-    │   ├── auth/
-    │   │   ├── AuthContext.tsx
-    │   │   ├── tokenStore.ts
-    │   │   └── ProtectedRoute.tsx
-    │   ├── pages/
-    │   │   └── LoginPage.tsx
-    │   ├── api/http.ts              (origin-scoped Authorization)
-    │   ├── security/
-    │   │   ├── xss.test.tsx
-    │   │   └── security.test.tsx
-    │   └── ...
-    ├── docs/
-    │   └── security-decisions.md
-    ├── notes/screenshots/
-    ├── .env.example
-    ├── package.json
-    └── README.md
+```bash
+npm run test -- --run
+npm run build
+curl -I http://localhost:8080
 ```
 
-Document Spring Security / header changes in `docs/security-decisions.md` even if Java files live in a sibling backend project.
-
----
-
-## Concepts to Discuss
-
-Write 2–3 sentences each in `docs/security-decisions.md`:
-
-1. Main auth flow (login → memory token → bearer on API → logout)
-2. Trust boundary: browser untrusted; API authorizes every call
-3. Success/failure contracts (401 expire vs 403 forbidden)
-4. Stable identity: user id vs customer ids (`CUS-1001`)
-5. Retry implications after 401 (re-auth; do not infinite refresh without design)
-6. Memory token shortcut vs production HttpOnly/BFF
-7. Evidence: DevTools storage empty of tokens; XSS test; header dump
-8. Two tabs: memory token not shared (document limitation)
-9. False confidence: “ProtectedRoute means secure”
-10. What Lab 37 changes (data at rest) without relaxing browser controls
+**What to notice:** Match names, IDs, and failure behavior from the scenario — instructors check these.
 
 ---
 
@@ -307,7 +245,7 @@ After login, confirm Application tab: **no** token in localStorage/sessionStorag
 **Do this:** In `http.request`, parse request URL and compare to API origin:
 
 ```typescript
-const url = new URL(path.startsWith("http") ? path : `${API_URL}${path}`);
+const url = new URL(path.startsWith("http") ? path : `${VITE_API_BASE_URL}${path}`);
 if (url.origin === apiOrigin && token) {
   headers.set("Authorization", `Bearer ${token}`);
 }
@@ -317,7 +255,7 @@ Still send `X-Correlation-Id: lab-request-001` on CRM calls.
 
 **Expected result:** Bearer header goes only to CRM API origin.
 
-**If it fails:** Relative URLs mis-parsed → normalize with `API_URL`. Token on CDN calls → tighten check.
+**If it fails:** Relative URLs mis-parsed → normalize with `VITE_API_BASE_URL`. Token on CDN calls → tighten check.
 
 ---
 
@@ -420,7 +358,7 @@ Ban HTML sinks in CRM UI review.
 **Do this:** If using cookie sessions on unsafe methods:
 
 ```typescript
-fetch(`${API_URL}/customers`, {
+fetch(`${import.meta.env.VITE_API_BASE_URL}/api/customers`, {
   method: "POST",
   credentials: "include",
   headers: {
@@ -475,7 +413,7 @@ npm run build
 curl -I http://localhost:8080
 ```
 
-Complete [Failure Experiments](#failure-experiments). Confirm storage has no token. Redacted screenshots under `notes/screenshots/lab-36/`.
+Complete Failure Experiments. Confirm storage has no token. Redacted screenshots under `notes/screenshots/lab-36/`.
 
 **Expected result:** Abuse-case tests pass without secrets in output; docs complete.
 
@@ -487,7 +425,7 @@ Complete [Failure Experiments](#failure-experiments). Confirm storage has no tok
 
 ### Checkpoint A — Tooling + model
 
-_Mark each row **Pass** or **Fail** in your lab notes (GitHub markdown files are not interactive checklists)._
+_Mark **Pass** or **Fail** in your lab notes._
 
 | # | Confirm | Your notes |
 | - | ------- | ---------- |
@@ -497,7 +435,7 @@ _Mark each row **Pass** or **Fail** in your lab notes (GitHub markdown files are
 
 ### Checkpoint B — Session mechanics
 
-_Mark each row **Pass** or **Fail** in your lab notes (GitHub markdown files are not interactive checklists)._
+_Mark **Pass** or **Fail** in your lab notes._
 
 | # | Confirm | Your notes |
 | - | ------- | ---------- |
@@ -508,7 +446,7 @@ _Mark each row **Pass** or **Fail** in your lab notes (GitHub markdown files are
 
 ### Checkpoint C — Hardening proofs
 
-_Mark each row **Pass** or **Fail** in your lab notes (GitHub markdown files are not interactive checklists)._
+_Mark **Pass** or **Fail** in your lab notes._
 
 | # | Confirm | Your notes |
 | - | ------- | ---------- |
@@ -519,7 +457,7 @@ _Mark each row **Pass** or **Fail** in your lab notes (GitHub markdown files are
 
 ### Checkpoint D — Hygiene
 
-_Mark each row **Pass** or **Fail** in your lab notes (GitHub markdown files are not interactive checklists)._
+_Mark **Pass** or **Fail** in your lab notes._
 
 | # | Confirm | Your notes |
 | - | ------- | ---------- |
@@ -531,22 +469,6 @@ _Mark each row **Pass** or **Fail** in your lab notes (GitHub markdown files are
 
 ## Reference Commands, Configuration, and Code
 
-### `tokenStore.ts`
-
-```typescript
-let accessToken: string | null = null;
-export const tokenStore = {
-  get: () => accessToken,
-  set: (value: string) => {
-    accessToken = value;
-  },
-  clear: () => {
-    accessToken = null;
-  },
-};
-// Never mirror tokens to localStorage, sessionStorage, or logs.
-```
-
 ### `ProtectedRoute.tsx`
 
 ```tsx
@@ -554,20 +476,6 @@ if (status === "checking") return <LoadingPage />;
 if (status === "anonymous")
   return <Navigate to="/login" replace state={{ from: location.pathname }} />;
 return <Outlet />;
-```
-
-### Cookie-mode CSRF request
-
-```typescript
-fetch(`${API_URL}/customers`, {
-  method: "POST",
-  credentials: "include",
-  headers: {
-    "Content-Type": "application/json",
-    "X-XSRF-TOKEN": csrfToken,
-  },
-  body: JSON.stringify(draft),
-});
 ```
 
 ### Commands
@@ -581,34 +489,6 @@ curl -I http://localhost:8080
 git status
 ```
 
-### Class map
-
-| File | Role |
-| ---- | ---- |
-| `security-decisions.md` | Threat model + trade-offs |
-| `tokenStore.ts` | Memory token |
-| `AuthContext.tsx` | Auth state machine |
-| `ProtectedRoute.tsx` | UX navigation guard |
-| `http.ts` | Origin-scoped bearer |
-| `xss.test.tsx` | XSS non-execution proof |
-| `security.test.tsx` | Abuse suite |
-
-### Origin-scoped Authorization sketch
-
-```typescript
-const apiOrigin = new URL(API_URL).origin;
-const token = tokenStore.get();
-const url = new URL(
-  path.startsWith("http") ? path : `${API_URL}${path.replace(/^\//, "")}`
-);
-const headers = new Headers(init.headers);
-headers.set("Content-Type", "application/json");
-headers.set("X-Correlation-Id", "lab-request-001");
-if (url.origin === apiOrigin && token) {
-  headers.set("Authorization", `Bearer ${token}`);
-}
-```
-
 ### Threat-model checklist (paste into decisions doc)
 
 ```text
@@ -619,31 +499,6 @@ Controls: memory token, origin-scoped bearer, JSX escaping, CSP, CSRF (cookie),
           generic login errors, 401≠403, complete logout
 Non-controls: ProtectedRoute alone, hiding buttons by role alone
 ```
-
-### XSS test reminder
-
-```tsx
-expect(document.querySelector("img")).toBeNull();
-expect(document.querySelector("script")).toBeNull();
-// Prefer getByText with a function/matcher for the literal attack string
-```
-
----
-
-## Manual Verification
-
-1. Threat model maps threats → controls; guards ≠ authz.
-2. Login → memory token; storage tabs empty of token.
-3. Bearer only on CRM API requests in Network.
-4. Anonymous deep link redirects to login.
-5. Forced 401 logs out; forced 403 keeps session.
-6. Logout clears token + customer cache.
-7. Malicious `fullName` renders as text; XSS test green.
-8. CSRF evidence or precise bearer-only N/A.
-9. Security headers visible via `curl -I` (or gateway equivalent).
-10. Abuse tests green twice; no secrets in logs/screenshots.
-
----
 
 ## Failure Experiments
 
@@ -669,23 +524,18 @@ expect(document.querySelector("script")).toBeNull();
 | XSS test finds `img` | HTML sink used | Remove sink; use text |
 | CORS + Authorization fail | Preflight headers | Allow `Authorization` |
 | Open redirect after login | Unvalidated returnUrl | Allowlist internal paths |
-
----
+| Treating ProtectedRoute as authz | UI-only control | Backend must deny anonymous/forbidden |
 
 ## Security and Production Review
 
-Answer in README:
+Optional — jot brief notes in your README if useful for your progress check (not a separate essay):
 
 1. Which inputs are untrusted (all browser input, query params, customer fields)?
 2. Where are authn/authz/validation enforced (Spring Security / API; guards UX only)?
 3. Which values are sensitive—tokens, passwords—and where stored (memory / HttpOnly)?
-4. What can be retried safely (GETs after re-auth; not blind POST replay)?
-5. What happens after partial failure (401 expire; 403 keep; CSRF 403)?
-6. What would an operator monitor (401 spike, CSP reports, auth failures)?
-7. Which local default is unacceptable (`localStorage` tokens, `*` CORS, open redirects)?
-8. How are auth contracts versioned with API changes (header schemes, error codes)?
 
 ---
+
 
 ## Cleanup
 
@@ -700,91 +550,15 @@ Do not commit tokens, `.env` secrets, `node_modules/`, or `dist/`.
 
 **Keep `lab36-crm`**—Lab 37 designs PostgreSQL schema for customers/accounts while these browser controls remain in force.
 
----
-
-## Expected Deliverables
-
-Same checklist as [What you'll submit](#what-youll-submit-read-this-first) above.
-
-* Threat model document
-* Auth state + in-memory token store
-* Origin-scoped Authorization on CRM calls
-* Login + ProtectedRoute + 401/403/logout behavior
-* XSS proof test; CSRF evidence or N/A rationale
-* CSP/security headers evidence
-* Abuse tests + green build
-* Redacted screenshots + README runbook
-* No secrets committed
-
----
-
-## Evaluation Rubric (100 Marks)
-
-| Criteria | Marks |
-| -------- | ----: |
-| Environment and project structure | 10 |
-| Core implementation (auth state, token, guards, http) | 30 |
-| Integration/configuration correctness (headers, CSRF/CSP) | 15 |
-| Failure handling (401/403/XSS/abuse experiments) | 15 |
-| Automated verification | 10 |
-| Security and production awareness | 10 |
-| Documentation and evidence | 10 |
-
-**Notes:** `localStorage` tokens left in submission → honor violation. Claiming ProtectedRoute authorizes APIs → fail security marks.
-
----
 
 ## Reflection Questions
 
-Write 3–6 sentence answers:
+Write **1–3 sentence** answers (not essays):
 
 1. Which design decision most affected correctness?
-2. Which failure was hardest to diagnose?
-3. What evidence proves the implementation works?
-4. What breaks first at ten times the session count?
-5. Which concern should move to shared infrastructure?
-6. What must change before real customer data is used?
-7. How does this lab connect to Labs 35 and 37?
-8. What metric matters most on the security dashboard for this gate?
-9. (Forward look) Why does PostgreSQL schema design not replace XSS/CSP controls?
+2. What evidence proves the implementation works?
+3. Which failure was hardest to diagnose?
 
 ---
 
-## Bonus Challenges
 
-1. Implement a BFF-style cookie session note with SameSite=Lax/Strict trade-offs.
-2. Add refresh-token rotation thought experiment (no long-lived memory secrets).
-3. CSP report-uri / report-to dry-run documentation.
-4. Role-based UI hiding **plus** 403 proof that UI hide is not authz.
-5. Document rollback if someone re-adds `localStorage` tokens.
-6. Automated check failing CI when `localStorage.setItem.*token` appears.
-
----
-
-## Success Criteria
-
-You are finished when:
-
-* Threat model is written and applied
-* Memory tokens + origin-scoped bearer work; storage clean
-* Guards, 401/403, and logout behave correctly
-* XSS test proves non-execution
-* CSRF/CSP evidence (or precise N/A) exists
-* Abuse tests and build are green twice
-* Another student can follow your secure run instructions
-* No production secret is hard-coded
-* You can explain why backend authorization remains mandatory
-
----
-
-## Instructor Notes
-
-* **Live probe:** Application tab empty of tokens after login; Network Authorization only on API host; XSS fullName literal; ask “does ProtectedRoute authorize?”
-* **Assess:** Threat model quality, memory store, origin check, 401≠403, XSS test, CSRF/CSP honesty.
-* **Continuity:** Prefer `examples/lab36-crm/crm-ui`. Keep fixture IDs. Lab 37 should not weaken SPA controls.
-* **Common pitfalls:** `localStorage` tokens; guard-as-authz myth; open redirects; logging JWTs; equating 403 with logout.
-* **Timing:** Timed path ~45 minutes with starter; full path remains 4–5 hours. Threat model + XSS/CSRF conceptual clarity often need a 20-minute mid-lab reset.
-
----
-
-*End of Lab 36 — Frontend Security for the CRM SPA. Keep `lab36-crm` for Lab 37 continuity and portfolio evidence.*

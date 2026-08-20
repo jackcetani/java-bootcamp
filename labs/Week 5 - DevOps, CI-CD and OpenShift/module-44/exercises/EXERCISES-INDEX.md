@@ -1,63 +1,45 @@
 # Module 44 — Pre-Lab Exercises
 
-> **Start here for Module 44:** [`../README.md`](../README.md) · **Clone + own repo:** [`../../../CLONE-AND-OWN-REPO-GUIDE.md`](../../../CLONE-AND-OWN-REPO-GUIDE.md)
+> **Start:** [`../README.md`](../README.md) · **Pacing:** [`../PACING.md`](../PACING.md)
 
 **Module:** 44 — Continuous Delivery and Release Management  
-**Next:** [`../lab44/LAB-44-WINDOWS.md`](../lab44/LAB-44-WINDOWS.md) or [`../lab44/LAB-44-MACOS.md`](../lab44/LAB-44-MACOS.md) → [`../lab44/LAB-44-GUIDE.md`](../lab44/LAB-44-GUIDE.md)
+**Next:** [`../lab44/LAB-44-GUIDE.md`](../lab44/LAB-44-GUIDE.md)
 
-> Complete these exercises after the slides and before Lab 44.  
-> Use JDK 21 and the tools this module requires.  
-> These exercises design and test small pieces; Lab 44 builds the full graded deliverable.  
-> Exercise 4 includes a **TODO / fill-in-the-blank starter** (not a complete solution). Replace every `_____` and `// TODO` / `<!-- TODO -->` before moving on.
+Complete **in checkpoint order** after each slide pause. Notes under `examples/module-44-exercises/` — not the graded lab.
 
-## Scope boundary — do not build later technology yet
+## Practice order (interleaved)
 
-| Do now | Do not add yet |
+| Order | Ex | After CP | Deliverable |
+| --- | --- | --- | --- |
+| 1 | [CD vs CDeploy](exercise-01-cd-vs-cdeploy.md) | **A** | `notes/lab44-cd-vs-cdeploy.md` |
+| 2 | [Manifest fields](exercise-02-manifest-fields.md) | **A** | `notes/lab44-manifest-fields.md` |
+| 3 | [Promotion gates](exercise-03-promotion-gates.md) | **B** | `notes/lab44-promotion-gates.md` |
+| 4 | [Rollback runbook](exercise-05-rollback-runbook.md) | **C** | `notes/lab44-rollback-runbook.md` |
+| 5 | [Release checklist](exercise-04-checklist-todos.md) | **D** | `notes/lab44-checklist-todos.md` |
+| 6 | [Staging smoke](exercise-06-staging-smoke-plan.md) | **D** | `notes/lab44-staging-smoke-plan.md` |
+
+Then **checkpoint E** → Lab 44.
+
+> Numbered exercise files stay 01–06; **complete in the order above** (1→2→3→5→4→6).
+
+## Scope boundary
+
+| Do now | Do not yet |
 | --- | --- |
-| Distinguish continuous delivery vs continuous deployment | Do not perform a real production promotion as this pre-lab |
-| Plan digest-based promotion test → staging → prod | Do not rebuild artifacts on the deploy host |
-| Draft release gates, checklist, and rollback runbook headings | Do not put environment secrets into the immutable artifact |
-| Sketch `artifact-manifest.json` fields for CRM releases | Do not author Terraform/Ansible apply plans here (Lab 45) |
-| Prepare staging smoke using synthetic fixtures only | Do not configure Kafka DLT replay procedures here (Lab 46) |
+| Manifest, gates, checklist, rollback, staging smoke plan | Rebuild on deploy host; secrets in artifact |
+| Digest-based promote plan | Terraform/Ansible (Lab 45) / Kafka DLT (Lab 46) |
 
 ## Workspace
 
-| Item | Windows | macOS |
-| ---- | ------- | ----- |
-| Exercises folder | `%USERPROFILE%\java-bootcamp\examples\module-44-exercises` | `~/java-bootcamp/examples/module-44-exercises` |
-| Notes / mini work | `notes\` | `notes/` |
-
-### Setup
-
-**Windows (PowerShell):**
+| | Windows | macOS |
+| --- | --- | --- |
+| Folder | `%USERPROFILE%\java-bootcamp\examples\module-44-exercises` | `~/java-bootcamp/examples/module-44-exercises` |
 
 ```powershell
 cd $env:USERPROFILE\java-bootcamp
-New-Item -ItemType Directory -Force -Path examples\module-44-exercises | Out-Null
-cd examples\module-44-exercises
-java -version
+New-Item -ItemType Directory -Force -Path examples\module-44-exercises\notes | Out-Null
 ```
 
-**macOS (zsh/bash):**
+## Done when
 
-```bash
-cd ~/java-bootcamp
-mkdir -p examples/module-44-exercises
-cd examples/module-44-exercises
-java -version
-```
-
-**Expected:** Java 21 is available (and any module-specific tools named in the exercises). If not, return to Lab 0 / setup before continuing.
-
-## Exercise index
-
-| # | Exercise | New skill | File |
-| --- | --- | --- | --- |
-| 1 | Delivery vs Deployment | Release vocabulary | [`exercise-01-cd-vs-cdeploy.md`](exercise-01-cd-vs-cdeploy.md) |
-| 2 | Sketch Artifact Manifest | Release evidence model | [`exercise-02-manifest-fields.md`](exercise-02-manifest-fields.md) |
-| 3 | Define Promotion Gates | Objective release gates | [`exercise-03-promotion-gates.md`](exercise-03-promotion-gates.md) |
-| 4 | Fill Release Checklist TODOs | Hands-on checklist draft | [`exercise-04-checklist-todos.md`](exercise-04-checklist-todos.md) |
-| 5 | Outline Rollback Runbook | Recovery planning | [`exercise-05-rollback-runbook.md`](exercise-05-rollback-runbook.md) |
-| 6 | Plan Staging Smoke | Non-prod verification | [`exercise-06-staging-smoke-plan.md`](exercise-06-staging-smoke-plan.md) |
-
-Keep all work separate from `examples/lab44-crm` (or the lab’s named project folder); that project begins in the full lab.
+All six notes files exist; checklist + rollback self-mark **Pass**; Lab 43 digest ready.

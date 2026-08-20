@@ -1,8 +1,6 @@
 # Lab 52: Capstone Final Defense — Northstar CRM Presentation and Technical Defense
 
 **Module:** 52 — Capstone Final Defense  
-**Lab folder:** `labs/Week 6 - Capstone Project/module-52/lab52/`  
-**Difficulty:** Advanced Capstone  
 **Duration:** ~45 minutes (timed path / session block with starter) · Full path: 5–6 Hours
 
 **Primary IDE:** IntelliJ IDEA Community Edition · **Optional IDE:** VS Code
@@ -12,11 +10,38 @@
 | Windows | [LAB-52-WINDOWS.md](LAB-52-WINDOWS.md) |
 | macOS | [LAB-52-MACOS.md](LAB-52-MACOS.md) |
 
-> **Environment reminder:** Complete the [Module 52 pre-lab exercises](../exercises/EXERCISES-INDEX.md) after the slides and before this lab.  Finish Labs 48–51 evidence first. Demo lab: **desktop IntelliJ IDEA Community (primary; optional VS Code)** on your laptop plus your team's running CRM demo path (API/UI/DB/events as built). Work under `~/java-bootcamp/examples/customer-management-platform` (Windows: `%USERPROFILE%\java-bootcamp\examples\customer-management-platform`).
+---
+
+## Activity card
+
+| | |
+| --- | --- |
+| **Time** | ~45 min session block · full path 5–6 h multi-day |
+| **Checkpoint** | **E** (after Ex 1→2→3→4→5→6) |
+| **Must prove** | Slide outline · timed demo script · ≥5 evidence links · deny/fallback beat |
+| **Hard gate** | Pre-lab Pass · Labs 48–51 evidence available (gaps labeled) |
+
+### What you will learn
+
+Deliver an evidence-backed CRM defense: narrative, timed demo, Q&A, blameless retro, completion self-check.
+
+### Enterprise context
+
+A lucky happy-path click-through without an evidence index fails professional defense standards.
+
+### Predict
+
+Panel disputes a security claim — what do you open first?
+
+### Debug
+
+Token visible on a projected screenshot — immediate actions?
 
 ---
 
 ## 45-minute timed path (session block — use starter)
+
+> **Pacing reminder:** [PACING.md](../PACING.md) checkpoint **E**. Homework/multi-day: PDF export, full Q&A, retrospective, self-assessment, panel delivery.
 
 In class, use the starter slide outline + demo script so the **session block** fits **~45 minutes**. Full panel delivery, PDF export, retrospective, and self-assessment remain **multi-day** on the full path.
 
@@ -35,18 +60,9 @@ Policy: [`labs/_STARTER-PATH.md`](../../../_STARTER-PATH.md)
 
 ---
 
-## How to follow this lab
-
-1. **In class (session block):** prefer [`starter/README.md`](starter/README.md) — copy starter → `defense/`, fill outline + demo script (~45 min).
-2. Open the **Windows** or **macOS** how-to (links above) in a second tab.
-3. Create/work only under your `java-bootcamp/examples/…` folder from the steps (not inside this `labs/` git clone unless a step says otherwise).
-4. For each **Step N** (full path / multi-day): read **Why** (if present) → do the actions → confirm **Expected** / **Expected result** → then continue.
-5. When stuck, use **Failure Experiments** / troubleshooting in this guide before asking for help.
-6. Capture evidence under `notes/screenshots/lab-52/` (workspace root under `java-bootcamp`; redact secrets). Use the **Pass criteria** tables — write **Pass** or **Fail** in your notes. GitHub file view does not support clickable checkboxes.
-
 ## What you'll submit (read this first)
 
-Keep this checklist visible while you work. Full detail is under [Expected Deliverables](#expected-deliverables) at the end.
+Keep this checklist visible while you work.
 
 | # | Deliverable |
 | - | ----------- |
@@ -59,22 +75,13 @@ Keep this checklist visible while you work. Full detail is under [Expected Deliv
 | 7 | Baseline/demo validation notes (health, smoke, or fallback) |
 | 8 | One controlled failure-path demo beat result |
 
+**Must submit:** the items in the table above (sources + evidence + short notes).
+
+**Do not submit:** `target/`, `node_modules/`, secrets, heap dumps, or a verbatim instructor `solution/`.
 
 ## Lab Overview
 
-This Module 52 lab is the Week 6 **final defense**: rehearse and deliver a business-to-technology narrative, a deterministic live demo, evidence-backed technical Q&A, a blameless retrospective, and a rubric-based self-assessment—packaged for the review panel and portfolio.
-
-**Purpose.** Panels assess whether the CRM runs **and** whether the team understands business value, architecture, security, data, messaging, delivery, operations, limitations, and recovery. A lucky happy-path click-through without evidence index fails professional defense standards.
-
-**What you build (exercise).** Inventory evidence; design presentation story; write timed demo script using Amina/Ravi fixtures; prepare demo recovery (screenshots/API fallback); rehearse Q&A cards; deliver and capture feedback; run retrospective with owned actions; score self-assessment against rubric and archive secret-free artifacts.
-
-**What success looks like.** Under `defense/`, you have `final-presentation.pdf` (or instructor-approved slides), `demo-script.md`, `evidence-index.md`, `technical-q-and-a.md`, `retrospective.md`, and `self-assessment.md`. Live (or transparent fallback) demo proves UI→API→DB→event for `CUS-1001` with `lab-request-001`, plus security deny path and release digest citation.
-
-**Depends on Labs 48–51.** Need architecture docs, backend-demo, UI→DB proof, pipeline/digest/rollback evidence. Finish gaps before the panel—do not invent claims.
-
-**CRM connection.** Demo fixtures remain `CUS-1001` Amina / `CUS-1002` Ravi / correlation `lab-request-001`. Every claim in slides maps to a row in `evidence-index.md`.
-
----
+This Module 52 lab is the Week 6 **final defense**: rehearse and deliver a business-to-technology narrative, a deterministic live demo, evidence-backed technical Q&A, a blameless retrospective, and a evidence-backed completion self-check—packaged for the review panel and portfolio.
 
 ## Learning Objectives
 
@@ -85,13 +92,6 @@ After completing this lab, you will be able to:
 * Explain decisions and trade-offs with ADR citations
 * Answer technical questions with evidence links
 * Conduct a blameless retrospective with measurable actions
-* Assess the team against a transparent rubric
-* Prepare demo recovery when infrastructure fails
-* Keep portfolio artifacts free of secrets
-* Separate facts, assumptions, and unknowns under Q&A pressure
-* Close Week 6 with owned residual risks
-
----
 
 ## Business Scenario
 
@@ -116,7 +116,6 @@ Use these fixtures consistently:
 ---
 
 ## Architecture Context
-
 ### NOW (this lab)
 
 ```mermaid
@@ -129,37 +128,11 @@ flowchart TB
   Idx --> Live["Live defense<br/>or fallback evidence"]
 ```
 
-### Lab flow (mermaid)
-
-```mermaid
-flowchart TD
-    A["Inventory evidence<br/>from Labs 48-51"] --> B["Design presentation<br/>story arc"]
-    B --> C["Write demo script<br/>fixtures + timing"]
-    C --> D["Prepare recovery<br/>screenshots / curl / rollback"]
-    D --> E["Rehearse Q&A<br/>claim->evidence"]
-    E --> F["Deliver defense<br/>capture feedback"]
-    F --> G["Blameless retro<br/>owned actions"]
-    G --> H["Self-assessment<br/>archive portfolio pack"]
-```
-
-### Architecture NOW vs LATER
-
-| Aspect | Lab 52 (NOW) | After bootcamp (LATER) |
-| ------ | ------------ | ---------------------- |
-| Goal | Defend Week 6 CRM | Production hardening backlog |
-| Evidence | Training artifacts | Org-specific compliance packs |
-| Fixtures | Synthetic Amina/Ravi | Real data under policy (not here) |
-| Outcome | Graded defense + retro | Continuous improvement |
-
-**Lab focus:** Narrative, rehearsal, evidence-linked defense, retrospective, self-assessment—not large new features.
-
-Do not open new product scope in Lab 52. If a gap is found, file it as a residual risk with an owner instead of coding through the rehearsal window.
-
----
-
 ## Prerequisites
 
-Complete [SETUP](../../../SETUP-INSTRUCTIONS.md), [Lab 0](../../../Week%201%20-%20Java%20and%20JVM%20Foundations/module-00/lab0/LAB-0-GUIDE.md), and Labs [48](../../module-48/lab48/LAB-48-GUIDE.md)–[51](../../module-51/lab51/LAB-51-GUIDE.md). Confirm:
+Prior labs: [48](../../module-48/lab48/LAB-48-GUIDE.md) · [51](../../module-51/lab51/LAB-51-GUIDE.md).
+
+Confirm (Lab 0 tools assumed):
 
 * Evidence packs from Labs 48–51 accessible
 * Demo environment reachable (UI/API/DB/Kafka or documented fallback)
@@ -171,77 +144,25 @@ Complete [SETUP](../../../SETUP-INSTRUCTIONS.md), [Lab 0](../../../Week%201%20-%
 ```bash
 java -version
 mvn -version
-docker --version
-git --version
-pwd
-ls ~/java-bootcamp/examples/customer-management-platform/docs
-curl -fsS "$CRM_URL/actuator/health/readiness" 2>/dev/null || echo "NOTE: demo URL not ready — prepare fallback"
 ```
 
-Confirm prior lab evidence hubs are present:
+## Worked example (read before you code)
+
+Study this pattern once before Step 1. Your job is to apply the same idea in the Steps — do not skip ahead to a full solution.
 
 ```bash
-ls docs/architecture/context.md docs/backend-demo.md docs/security-deploy-demo.md 2>/dev/null || true
-ls defense 2>/dev/null || mkdir -p defense
-mkdir -p ~/java-bootcamp/notes/screenshots/lab-52
+curl -fsS "$CRM_URL/actuator/health/readiness"
+curl -fsS "$CRM_URL/api/customers?email=amina.khan@example.test" \
+  -H "Authorization: Bearer $DEMO_TOKEN" | jq .
+curl -i -X POST "$CRM_URL/api/customers/$CUSTOMER_ID/interactions" \
+  -H "Authorization: Bearer $DEMO_TOKEN" -H 'Content-Type: application/json' \
+  -H 'X-Correlation-ID: lab-request-001' \
+  -d '{"channel":"CHAT","summary":"Resolved login question"}'
+kubectl get pods -l app=crm-api
+kubectl rollout history deployment/crm-api
 ```
 
-Inventory digest identity from Lab 51 before writing slides:
-
-```bash
-grep -n -i digest docs/security-deploy-demo.md 2>/dev/null | head
-```
-
-Branch and baseline:
-
-```bash
-cd ~/java-bootcamp/examples/customer-management-platform
-git switch -c lab/52-crm 2>/dev/null || git checkout -b lab/52-crm
-mkdir -p defense
-mkdir -p ~/java-bootcamp/notes/screenshots/lab-52
-./mvnw -B clean verify 2>/dev/null || mvn -B clean verify
-git status --short
-```
-
----
-
-## Suggested Project Files
-
-```text
-~/java-bootcamp/examples/customer-management-platform/
-├── defense/
-│   ├── final-presentation.pdf          # or .pptx / Marp export per instructor
-│   ├── demo-script.md
-│   ├── evidence-index.md
-│   ├── technical-q-and-a.md
-│   ├── retrospective.md
-│   ├── self-assessment.md
-│   ├── feedback-log.md
-│   └── notes/screenshots/
-├── docs/                               # Labs 48–51 sources
-├── reports/
-├── .gitignore
-└── README.md
-```
-
-If instructor requires `lab52-crm/defense/`, mirror the same files and link from the platform README.
-
----
-
-## Concepts to Discuss
-
-Write 2–3 sentences each in `defense/evidence-index.md` intro:
-
-1. Main demo flow the panel will see (Amina interaction)
-2. Trust boundary you will explain (JWT validation location)
-3. Success/failure contracts you will show (201 vs 401 vs Problem Details)
-4. Why stable fixtures beat improvising new customers live
-5. Idempotency story (consumer dedupe or submit guard)
-6. Why digest identity matters more than “we deployed”
-7. Evidence types (tests, SQL, Kafka, pipeline, ADR)
-8. Two environments: rehearsal vs panel room differences
-9. False-confidence answers (“it should work”) vs evidence
-10. What you will explicitly say is out of scope / residual risk
+**What to notice:** Match names, IDs, and failure behavior from the scenario — instructors check these.
 
 ---
 
@@ -255,7 +176,7 @@ Parts 1–8 map to Steps 1–8; Step 9 closes archival evidence.
 
 **Why:** Unindexed claims collapse under the first hard question.
 
-**Do this:** Create `defense/evidence-index.md` mapping requirements → features → tests → scans → pipeline → digest → deployment → monitoring. Every slide claim gets a link/path. State known limitations honestly.
+**Do this:** Fill the starter stub `defense/evidence-index.md` mapping requirements → features → tests → scans → pipeline → digest → deployment → monitoring. Every slide claim gets a link/path. State known limitations honestly.
 
 Minimum rows:
 
@@ -320,7 +241,7 @@ Export `defense/final-presentation.pdf` (or approved format). Keep fixtures `CUS
 
 Pre-seed checklist before the panel enters:
 
-_Mark each row **Pass** or **Fail** in your lab notes (GitHub markdown files are not interactive checklists)._
+_Mark **Pass** or **Fail** in your lab notes._
 
 | # | Confirm | Your notes |
 | - | ------- | ---------- |
@@ -369,7 +290,7 @@ Failover script language (practice aloud):
 
 **Why:** Architecture memorization without evidence structure fails Q&A.
 
-**Do this:** Populate `defense/technical-q-and-a.md` with practice answers using **claim → evidence → trade-off → next-step**. Cover security, consistency, Kafka, PostgreSQL, testing, CI/CD, probes, monitoring. Practice saying “unknown—here is how we would verify.”
+**Do this:** Fill the starter stub `defense/technical-q-and-a.md` with practice answers using **claim → evidence → trade-off → next-step**. Cover security, consistency, Kafka, PostgreSQL, testing, CI/CD, probes, monitoring. Practice saying “unknown—here is how we would verify.”
 
 Sample topics:
 
@@ -403,7 +324,7 @@ Card template:
 
 **Why:** Uncaptured panel questions become lost commitments.
 
-**Do this:** Respect presentation and demo timeboxes. Narrate outcomes while operating. Record questions and follow-ups in `defense/feedback-log.md` with owners/dates.
+**Do this:** Respect presentation and demo timeboxes. Narrate outcomes while operating. Record questions and follow-ups in the optional stub `defense/feedback-log.md` with owners/dates.
 
 **Expected result:** Completed delivery (or instructor-scheduled slot) with feedback log.
 
@@ -419,20 +340,26 @@ Card template:
 
 ```markdown
 ## Observation
+
 Frontend and backend contracts diverged.
 ## Impact
+
 Two stories missed staging rehearsal.
 ## Contributing conditions
+
 Examples were copied manually and no consumer test ran in CI.
 ## Action
+
 Add OpenAPI contract validation to pull requests.
 ## Owner and due date
+
 Backend lead — within two weeks.
 ## Success measure
+
 Three releases with no staging contract mismatch.
 ```
 
-**Expected result:** `defense/retrospective.md` with ≤5 actions, each owned.
+**Expected result:** Filled stub `defense/retrospective.md` with ≤5 actions, each owned.
 
 **If it fails:** More than five vague actions → cut to measurable few.
 
@@ -442,11 +369,11 @@ Three releases with no staging contract mismatch.
 
 **Why:** Ungrounded self-scores and unclean archives create portfolio risk.
 
-**Do this:** Complete `defense/self-assessment.md` against the Lab 52 rubric with evidence links. Reconcile team vs reviewer scores when available. Archive secret-free portfolio summary.
+**Do this:** Fill the starter stub `defense/self-assessment.md` with evidence links showing each required outcome is complete. Archive secret-free portfolio summary.
 
 Scrub checklist before archive:
 
-_Mark each row **Pass** or **Fail** in your lab notes (GitHub markdown files are not interactive checklists)._
+_Mark **Pass** or **Fail** in your lab notes._
 
 | # | Confirm | Your notes |
 | - | ------- | ---------- |
@@ -466,7 +393,7 @@ _Mark each row **Pass** or **Fail** in your lab notes (GitHub markdown files are
 
 **Why:** Defense quality includes graceful degradation of the demo itself.
 
-**Do this:** Complete [Failure Experiments](#failure-experiments). Rehearse one intentional failure beat. Confirm all six defense deliverables present. Peer reviews `evidence-index.md` for claim orphans.
+**Do this:** Complete Failure Experiments. Rehearse one intentional failure beat. Confirm all six defense deliverables present. Peer reviews `evidence-index.md` for claim orphans.
 
 **Expected result:** ≥3 experiments; six artifacts complete; peer sign-off noted.
 
@@ -478,7 +405,7 @@ _Mark each row **Pass** or **Fail** in your lab notes (GitHub markdown files are
 
 ### Checkpoint A — Evidence and story
 
-_Mark each row **Pass** or **Fail** in your lab notes (GitHub markdown files are not interactive checklists)._
+_Mark **Pass** or **Fail** in your lab notes._
 
 | # | Confirm | Your notes |
 | - | ------- | ---------- |
@@ -488,7 +415,7 @@ _Mark each row **Pass** or **Fail** in your lab notes (GitHub markdown files are
 
 ### Checkpoint B — Demo readiness
 
-_Mark each row **Pass** or **Fail** in your lab notes (GitHub markdown files are not interactive checklists)._
+_Mark **Pass** or **Fail** in your lab notes._
 
 | # | Confirm | Your notes |
 | - | ------- | ---------- |
@@ -498,7 +425,7 @@ _Mark each row **Pass** or **Fail** in your lab notes (GitHub markdown files are
 
 ### Checkpoint C — Defense quality
 
-_Mark each row **Pass** or **Fail** in your lab notes (GitHub markdown files are not interactive checklists)._
+_Mark **Pass** or **Fail** in your lab notes._
 
 | # | Confirm | Your notes |
 | - | ------- | ---------- |
@@ -508,7 +435,7 @@ _Mark each row **Pass** or **Fail** in your lab notes (GitHub markdown files are
 
 ### Checkpoint D — Close-out hygiene
 
-_Mark each row **Pass** or **Fail** in your lab notes (GitHub markdown files are not interactive checklists)._
+_Mark **Pass** or **Fail** in your lab notes._
 
 | # | Confirm | Your notes |
 | - | ------- | ---------- |
@@ -537,58 +464,6 @@ ls defense
 git status --short
 ```
 
-### Artifact map
-
-| Artifact | Role |
-| -------- | ---- |
-| `final-presentation.pdf` | Stakeholder narrative |
-| `demo-script.md` | Timed live demo |
-| `evidence-index.md` | Claim proof map |
-| `technical-q-and-a.md` | Defense cards |
-| `retrospective.md` | Learning + actions |
-| `self-assessment.md` | Rubric honesty |
-
-### Evidence-index row template
-
-```markdown
-| ID | Claim | Lab source | Artifact path | What it proves | What it does not prove |
-|----|-------|------------|---------------|----------------|------------------------|
-| E-12 | Interaction persists in PostgreSQL | 50 | ~/java-bootcamp/notes/screenshots/lab-52/amina-sql.png | UI write durable for CUS-1001 | Multi-region durability |
-```
-
-### Self-assessment scorecard stub
-
-```markdown
-| Rubric criteria | Self score / max | Evidence IDs | Gap / next action |
-|---|---:|---|---|
-| Environment and structure | /10 | | |
-| Core defense artifacts | /30 | | |
-| Live/fallback coherence | /15 | | |
-| Failure handling | /15 | | |
-| Verification citations | /10 | | |
-| Security awareness in Q&A | /10 | | |
-| Documentation (retro/self) | /10 | | |
-```
-
----
-
-## Manual Verification
-
-1. Evidence index has no orphan slide claims.
-2. Demo script fits timebox and includes failure path.
-3. Live or fallback proves UI→DB for Amina.
-4. Correlation `lab-request-001` shown in event/log evidence.
-5. Unauthorized path cited from Lab 51 (401/403).
-6. Digest + rollback cited from Lab 51.
-7. Q&A answers reference artifacts, not vibes.
-8. Retro actions are owned and measurable.
-9. Self-assessment links to evidence.
-10. Portfolio pack contains no secrets.
-11. Pre-seed checklist completed within 15 minutes of panel.
-12. Peer operator can run the demo script without the original author narrating setup.
-
----
-
 ## Failure Experiments
 
 | # | Experiment | Observe | Restore |
@@ -615,26 +490,17 @@ git status --short
 | Token on projector | Bad screenshot | Scrub and rotate training token |
 | “Works on my machine” | Env drift | Use same URL/digest as Lab 51 |
 | Incomplete Labs 48–51 | Skipped gates | Finish evidence before defense |
-| Kafka UI blank | Wrong topic/cluster | Bookmark working consumer command |
-| SQL client timeout | VPN/network | Pre-cache sanitized result screenshot |
-| Two speakers talk over | Role ambiguity | One speaker; one operator rule |
-
----
 
 ## Security and Production Review
 
-Answer in `defense/self-assessment.md`:
+Optional — jot brief notes in your README if useful for your progress check (not a separate essay):
 
 1. Which inputs remain untrusted in the demonstrated system?
 2. Where did you prove authn/authz/validation?
 3. Which sensitive values were excluded from the portfolio pack?
-4. What demo steps are safely retryable?
-5. What is the plan after a live demo partial failure?
-6. What should operators monitor post-release?
-7. Which demo habit is unacceptable (live coding secrets, real PII)?
-8. How will contract/ADR versions be maintained after the course?
 
 ---
+
 
 ## Cleanup
 
@@ -649,127 +515,17 @@ Keep sanitized defense pack; delete temporary credential files.
 
 **Keep `defense/`**—it is the primary portfolio and assessment packet for Week 6.
 
-Capstone grading should weigh evidence linked from `defense/evidence-index.md` over unrehearsed claims.
+Capstone progress checks should weigh evidence linked from `defense/evidence-index.md` over unrehearsed claims.
 
----
-
-## Expected Deliverables
-
-Same checklist as [What you'll submit](#what-youll-submit-read-this-first) above.
-
-* `defense/final-presentation.pdf` (or instructor-approved slide export)
-* `defense/demo-script.md`
-* `defense/evidence-index.md`
-* `defense/technical-q-and-a.md`
-* `defense/retrospective.md`
-* `defense/self-assessment.md`
-* Baseline/demo validation notes (health, smoke, or fallback)
-* One controlled failure-path demo beat result
-* Concise reproduction pointers for peer operators
-* Peer-review notes and resolved comments
-* Known limitations, residual risks, owners, and next actions
-
-Exclude real `.env` files, access tokens, database exports, private keys, kubeconfig, Terraform state, and sensitive screenshots.
-
----
-
-## Evaluation Rubric (100 Marks)
-
-| Criteria | Marks |
-| -------- | ----: |
-| Environment and project structure (`defense/` pack) | 10 |
-| Core implementation (story, demo script, evidence index) | 30 |
-| Integration/configuration correctness (live/fallback coherence) | 15 |
-| Failure handling (demo recovery + honest limitations) | 15 |
-| Automated verification citations (tests/pipeline/smoke) | 10 |
-| Security and production awareness in Q&A | 10 |
-| Documentation and evidence (retro + self-assessment) | 10 |
-
-**Notes:** Smooth demo with orphan claims → lose evidence marks. Blame-centric retro → documentation deduction. Secrets in portfolio → remediation required before scoring.
-
----
 
 ## Reflection Questions
 
-Write 3–6 sentence answers (may overlap self-assessment):
+Write **1–3 sentence** answers (not essays):
 
 1. Which design decision most affected the defense narrative?
-2. Which panel (or rehearsal) question was hardest?
-3. What evidence most strongly proves the CRM works?
-4. What breaks first if demo traffic multiplies?
-5. Which concern should become shared platform CI next?
-6. What must change before real customer data appears in demos?
-7. How do Labs 48–51 connect in the story you told?
-8. What metric should leadership watch after “go-live”?
-9. (Forward look) Which residual risk would you fund first post-bootcamp?
+2. What evidence most strongly proves the CRM works?
+3. Which panel (or rehearsal) question was hardest?
 
 ---
 
-## Bonus Challenges
 
-1. Answer ten panel questions in one minute each (timed peer drill).
-2. Rehearse complete demo fallback end-to-end without UI.
-3. Create a portfolio-safe one-page architecture summary.
-4. Compare self-score with peer score using evidence diffs.
-5. Convert retrospective learning into tracked backlog items in `docs/backlog.md`.
-6. Record a 3-minute captioned demo video as archive fallback.
-
----
-
-## Success Criteria
-
-You are finished when:
-
-* Presentation and demo script are rehearsal-proven
-* Evidence index links every major claim
-* Q&A uses artifacts; limitations are explicit
-* Retro actions are few, owned, and measurable
-* Self-assessment is evidence-based
-* Another teammate can operate the demo script
-* No production secret remains in the defense pack
-
----
-
-## Instructor Notes
-
-* **Live probe:** Interrupt with “Show the digest you rolled back from” and “Where is JWT enforced?” Require evidence-index hops, not memory. Ask for `lab-request-001` on the live or fallback event path.
-* **Assess:** Narrative clarity, deterministic demo, failure beat, Q&A evidence discipline, blameless retro, scrubbed artifacts, fixture consistency with Labs 48–51.
-* **Continuity:** Prefer `customer-management-platform/defense`. Fixtures must match Labs 48–51. Do not allow new feature coding to replace missing evidence.
-* **Common pitfalls:** Slide claims without artifacts; improvisational demo data; hiding outages instead of failover; blame retros; JWT screenshots; exceeding timebox; self-score without evidence IDs.
-* **Timing:** 5–6 hours prep + scheduled panel slot. Force a full rehearsal at hour 3. Cap slide count early so Q&A survives.
-* **Parity check:** Spot-check that CAP-12 acceptance criteria from Lab 48 still match what the demo actually shows.
-* **Quality bar:** Evidence-index completeness and transparent failover beat theatrical UI polish.
-
----
-
-### Quick peer rehearsal card
-
-```markdown
-Peer name:
-Story understandable without CRM jargon overload? Y/N
-Demo finished inside timebox? Y/N
-Failure beat included? Y/N
-Orphan claims found (list):
-Failover practiced? Y/N
-Secrets in slides/screenshots? Y/N
-Top two tough Qs still weak:
-```
-
-Store results in `defense/feedback-log.md` before the graded panel.
-
----
-
-### Suggested panel timebox (adapt)
-
-| Segment | Minutes |
-| ------- | ------: |
-| Business + architecture story | 8 |
-| Live / fallback demo | 12 |
-| Technical Q&A | 15 |
-| Residual risks / next steps | 5 |
-
-If the instructor shortens the window, cut architecture detail first—never cut the failure beat or unauthorized proof citation.
-
----
-
-*End of Lab 52 — Capstone Final Defense: Northstar CRM Presentation and Technical Defense. Retain sanitized `defense/` for portfolio and assessment.*

@@ -1,0 +1,6 @@
+# Rollout / rollback
+
+1. kubectl rollout status ...
+2. Introduce bad revision (`set image …:does-not-exist`) TODO
+3. kubectl rollout undo ...
+4. Re-smoke readiness + `GET /api/customers` (Host header)

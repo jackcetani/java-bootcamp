@@ -1,63 +1,45 @@
 # Module 47 — Pre-Lab Exercises
 
-> **Start here for Module 47:** [`../README.md`](../README.md) · **Clone + own repo:** [`../../../CLONE-AND-OWN-REPO-GUIDE.md`](../../../CLONE-AND-OWN-REPO-GUIDE.md)
+> **Start:** [`../README.md`](../README.md) · **Pacing:** [`../PACING.md`](../PACING.md)
 
 **Module:** 47 — Professional Communication and Collaboration  
-**Next:** [`../lab47/LAB-47-WINDOWS.md`](../lab47/LAB-47-WINDOWS.md) or [`../lab47/LAB-47-MACOS.md`](../lab47/LAB-47-MACOS.md) → [`../lab47/LAB-47-GUIDE.md`](../lab47/LAB-47-GUIDE.md)
+**Next:** [`../lab47/LAB-47-GUIDE.md`](../lab47/LAB-47-GUIDE.md)
 
-> Complete these exercises after the slides and before Lab 47.  
-> Use JDK 21 and the tools this module requires.  
-> These exercises design and test small pieces; Lab 47 builds the full graded deliverable.  
-> Exercise 4 includes a **TODO / fill-in-the-blank starter** (not a complete solution). Replace every `_____` and `// TODO` / `<!-- TODO -->` before moving on.
+Complete **in checkpoint order** after each slide pause. Notes under `examples/module-47-exercises/` — not the graded lab.
 
-## Scope boundary — do not build later technology yet
+## Practice order (interleaved)
 
-| Do now | Do not add yet |
+| Order | Ex | After CP | Deliverable |
+| --- | --- | --- | --- |
+| 1 | [Fact base](exercise-01-fact-base.md) | **A** | `notes/lab47-fact-base.md` |
+| 2 | [Stakeholder TODOs](exercise-04-stakeholder-todos.md) | **A** | `notes/lab47-stakeholder-todos.md` |
+| 3 | [PR description](exercise-03-pr-description.md) | **B** | `notes/lab47-pr-description.md` |
+| 4 | [Peer review practice](exercise-05-peer-review-practice.md) | **C** | `notes/lab47-peer-review-practice.md` |
+| 5 | [Incident update](exercise-02-incident-update.md) | **D** | `notes/lab47-incident-update.md` |
+| 6 | [Packet index](exercise-06-packet-index.md) | **D** | `notes/lab47-packet-index.md` |
+
+Then **checkpoint E** → Lab 47.
+
+> Numbered exercise files stay 01–06; **complete in the order above** (1→4→3→5→2→6).
+
+## Scope boundary
+
+| Do now | Do not yet |
 | --- | --- |
-| Collect one consistent fact base for a SEV-2 CRM scenario | Do not invent contradictory severity or root cause |
-| Draft audience-specific updates without contradictory facts | Do not blame individuals in incident updates |
-| Practice PR description structure with verify/rollback | Do not include secrets, tokens, or real customer data |
-| Plan stakeholder email in plain language | Do not treat this as finishing Labs 43–46 technical work |
-| Prepare peer-review rewrite habits and secrecy scrub | Do not skip the shared fact base before writing four artifacts |
+| One fact base; audience drafts; peer rewrites; secrecy scrub | Contradictory severity; blame; secrets |
+| Link prior lab evidence if available | Finish Labs 43–46 engineering inside this warmup |
 
 ## Workspace
 
-| Item | Windows | macOS |
-| ---- | ------- | ----- |
-| Exercises folder | `%USERPROFILE%\java-bootcamp\examples\module-47-exercises` | `~/java-bootcamp/examples/module-47-exercises` |
-| Notes / mini work | `notes\` | `notes/` |
-
-### Setup
-
-**Windows (PowerShell):**
+| | Windows | macOS |
+| --- | --- | --- |
+| Folder | `%USERPROFILE%\java-bootcamp\examples\module-47-exercises` | `~/java-bootcamp/examples/module-47-exercises` |
 
 ```powershell
 cd $env:USERPROFILE\java-bootcamp
-New-Item -ItemType Directory -Force -Path examples\module-47-exercises | Out-Null
-cd examples\module-47-exercises
-java -version
+New-Item -ItemType Directory -Force -Path examples\module-47-exercises\notes | Out-Null
 ```
 
-**macOS (zsh/bash):**
+## Done when
 
-```bash
-cd ~/java-bootcamp
-mkdir -p examples/module-47-exercises
-cd examples/module-47-exercises
-java -version
-```
-
-**Expected:** Java 21 is available (and any module-specific tools named in the exercises). If not, return to Lab 0 / setup before continuing.
-
-## Exercise index
-
-| # | Exercise | New skill | File |
-| --- | --- | --- | --- |
-| 1 | Build Shared Fact Base | Incident facts discipline | [`exercise-01-fact-base.md`](exercise-01-fact-base.md) |
-| 2 | Draft Incident Update Skeleton | Blameless status writing | [`exercise-02-incident-update.md`](exercise-02-incident-update.md) |
-| 3 | PR Description Outline | Reviewable change communication | [`exercise-03-pr-description.md`](exercise-03-pr-description.md) |
-| 4 | Fill Stakeholder Email TODOs | Hands-on plain-language draft | [`exercise-04-stakeholder-todos.md`](exercise-04-stakeholder-todos.md) |
-| 5 | Peer Review Rewrite Practice | Specific feedback | [`exercise-05-peer-review-practice.md`](exercise-05-peer-review-practice.md) |
-| 6 | Communication Packet Index | Submission readiness | [`exercise-06-packet-index.md`](exercise-06-packet-index.md) |
-
-Keep all work separate from `examples/lab47-crm` (or the lab’s named project folder); that project begins in the full lab.
+All six notes files exist; fact base + packet index self-mark **Pass**.

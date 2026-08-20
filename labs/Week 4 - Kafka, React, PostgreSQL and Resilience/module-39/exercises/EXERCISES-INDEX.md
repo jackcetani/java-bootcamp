@@ -1,63 +1,43 @@
 # Module 39 — Pre-Lab Exercises
 
-> **Start here for Module 39:** [`../README.md`](../README.md) · **Clone + own repo:** [`../../../CLONE-AND-OWN-REPO-GUIDE.md`](../../../CLONE-AND-OWN-REPO-GUIDE.md)
+> **Start:** [`../README.md`](../README.md) · **Pacing:** [`../PACING.md`](../PACING.md)
 
 **Module:** 39 — Spring Data JPA and PostgreSQL  
-**Next:** [`../lab39/LAB-39-WINDOWS.md`](../lab39/LAB-39-WINDOWS.md) or [`../lab39/LAB-39-MACOS.md`](../lab39/LAB-39-MACOS.md) → [`../lab39/LAB-39-GUIDE.md`](../lab39/LAB-39-GUIDE.md)
+**Next:** [`../lab39/LAB-39-GUIDE.md`](../lab39/LAB-39-GUIDE.md)
 
-> Complete these exercises **in order (1→6)** as they appear in the slides, then and before Lab 39.  
-> Use JDK 21 and the tools this module requires.  
-> These exercises design and test small pieces; Lab 39 builds the full graded deliverable.  
-> Exercise 3 includes a **TODO / fill-in-the-blank starter** (not a complete solution). Replace every `_____` and `// TODO` / `<!-- TODO -->` before moving on.
+Complete **in order** after each slide checkpoint. Notes under `examples/module-39-exercises/` — not the graded lab.
 
-## Scope boundary — do not build later technology yet
+## Practice order (interleaved)
 
-| Do now | Do not add yet |
+| Order | Ex | After CP | Deliverable |
+| --- | --- | --- | --- |
+| 1 | [Entity mapping](exercise-01-entity-mapping.md) | **A** | `notes/lab39-jpa.md` |
+| 2 | [Repository sketch](exercise-02-repository-sketch.md) | **B** | `notes/lab39-repository-sketch.md` |
+| 3 | [JPA TODOs](exercise-03-fill-jpa-todos.md) | **B** | `notes/lab39-todos.md` |
+| 4 | [Paging and locking](exercise-04-paging-locking.md) | **C** | `notes/lab39-paging-locking.md` |
+| 5 | [Flyway plan](exercise-05-flyway-plan.md) | **D** | `notes/lab39-flyway-plan.md` |
+| 6 | [Lab readiness](exercise-06-lab39-readiness.md) | **D** | `notes/lab39-prep-checklist.md` |
+
+Then **checkpoint E** → Lab 39.
+
+## Scope boundary
+
+| Do now | Do not yet |
 | --- | --- |
-| Map customer/account tables to JPA entity fields on paper | Do not run Spring Boot, Flyway, or Testcontainers in this pre-lab |
-| Plan Flyway versioned migrations for CRM schema | Do not use `ddl-auto=create` as the long-term strategy |
-| Sketch repository method names for Amina/Ravi lookups | Do not bypass repositories with string-concatenated SQL in services |
-| Note paging and optimistic locking fields (@Version) | Do not expose entities directly as public API DTOs without thought |
-| Align Spring datasource config names without starting the app | Do not store secrets in application.yml committed to git |
+| Entity/repo/Flyway/paging/@Version plans | Running Boot/Flyway/Testcontainers in pre-lab |
+| Env-based datasource names | `ddl-auto=create` long-term / H2-as-Postgres IT |
 
 ## Workspace
 
-| Item | Windows | macOS |
-| ---- | ------- | ----- |
-| Exercises folder | `%USERPROFILE%\java-bootcamp\examples\module-39-exercises` | `~/java-bootcamp/examples/module-39-exercises` |
-| Notes / mini work | `notes\` | `notes/` |
-
-### Setup
-
-**Windows (PowerShell):**
+| | Windows | macOS |
+| --- | --- | --- |
+| Folder | `%USERPROFILE%\java-bootcamp\examples\module-39-exercises` | `~/java-bootcamp/examples/module-39-exercises` |
 
 ```powershell
 cd $env:USERPROFILE\java-bootcamp
-New-Item -ItemType Directory -Force -Path examples\module-39-exercises | Out-Null
-cd examples\module-39-exercises
-java -version
+New-Item -ItemType Directory -Force -Path examples\module-39-exercises\notes | Out-Null
 ```
 
-**macOS (zsh/bash):**
+## Done when
 
-```bash
-cd ~/java-bootcamp
-mkdir -p examples/module-39-exercises
-cd examples/module-39-exercises
-java -version
-```
-
-**Expected:** Java 21 is available (and any module-specific tools named in the exercises). If not, return to Lab 0 / setup before continuing.
-
-## Exercise index
-
-Complete in this sequence (matches Module slide order):
-
-| # | Exercise | New skill | File |
-| --- | --- | --- | --- |
-| 1 | Entity Mapping | Map tables to entities | [`exercise-01-entity-mapping.md`](exercise-01-entity-mapping.md) |
-| 2 | Repository Sketch | Design Spring Data methods | [`exercise-02-repository-sketch.md`](exercise-02-repository-sketch.md) |
-| 3 | Fill JPA TODOs | Complete entity/repo blanks | [`exercise-03-fill-jpa-todos.md`](exercise-03-fill-jpa-todos.md) |
-| 4 | Paging and Locking Notes | Plan Pageable and @Version use | [`exercise-04-paging-locking.md`](exercise-04-paging-locking.md) |
-| 5 | Flyway Plan | Plan versioned migrations | [`exercise-05-flyway-plan.md`](exercise-05-flyway-plan.md) |
-| 6 | Lab 39 Readiness | Pre-lab self-check | [`exercise-06-lab39-readiness.md`](exercise-06-lab39-readiness.md) |
+All six notes files exist; readiness self-mark **Pass**; Postgres + Lab 37/38 DDL alignment ready.

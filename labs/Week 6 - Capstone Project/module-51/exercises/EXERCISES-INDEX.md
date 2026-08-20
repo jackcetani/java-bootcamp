@@ -1,63 +1,43 @@
 # Module 51 — Pre-Lab Exercises
 
-> **Start here for Module 51:** [`../README.md`](../README.md) · **Clone + own repo:** [`../../../CLONE-AND-OWN-REPO-GUIDE.md`](../../../CLONE-AND-OWN-REPO-GUIDE.md)
+> **Start:** [`../README.md`](../README.md) · **Pacing:** [`../PACING.md`](../PACING.md)
 
 **Module:** 51 — Capstone Security, CI/CD and Deployment  
-**Next:** [`../lab51/LAB-51-WINDOWS.md`](../lab51/LAB-51-WINDOWS.md) or [`../lab51/LAB-51-MACOS.md`](../lab51/LAB-51-MACOS.md) → [`../lab51/LAB-51-GUIDE.md`](../lab51/LAB-51-GUIDE.md)
+**Next:** [`../lab51/LAB-51-GUIDE.md`](../lab51/LAB-51-GUIDE.md)
 
-> Complete these exercises after the slides and before Lab 51.  
-> Use JDK 21 and the tools this module requires.  
-> These exercises design and test small pieces; Lab 51 builds the full graded deliverable.  
-> Exercise 4 includes a **TODO / fill-in-the-blank starter** (not a complete solution). Replace every `_____` and `// TODO` / `<!-- TODO -->` before moving on.
+Complete **in checkpoint order** after each slide pause. Notes under `examples/module-51-exercises/` — not the graded lab.
 
-## Scope boundary — do not build later technology yet
+## Practice order (interleaved)
 
-| Do now | Do not add yet |
+| Order | Ex | After CP | Deliverable |
+| --- | --- | --- | --- |
+| 1 | [Threat checklist](exercise-01-threat-checklist.md) | **A** | `notes/lab51-threat-checklist.md` |
+| 2 | [RBAC negatives](exercise-02-rbac-negative-plan.md) | **A** | `notes/lab51-rbac-negative-plan.md` |
+| 3 | [Pipeline gates](exercise-03-pipeline-gates.md) | **B** | `notes/lab51-pipeline-gates.md` |
+| 4 | [Deploy evidence](exercise-04-deploy-evidence-todos.md) | **C** | `notes/lab51-deploy-evidence-todos.md` |
+| 5 | [Rollback/smoke](exercise-05-rollback-smoke.md) | **D** | `notes/lab51-rollback-smoke.md` |
+| 6 | [Readiness scorecard](exercise-06-release-readiness.md) | **D** | `notes/lab51-prep-checklist.md` |
+
+Then **checkpoint E** → Lab 51.
+
+## Scope boundary
+
+| Do now | Do not yet |
 | --- | --- |
-| Threat-model capstone endpoints at a checklist level | Do not disable security tests to force a green pipeline |
-| Plan JWT/RBAC negative tests and deny-by-default notes | Do not commit kubeconfig, registry passwords, or `.env` |
-| Outline GitHub Actions gates including SAST | Do not deploy with `:latest` as the only identity |
-| Sketch immutable image + k3s deploy evidence list | Do not treat this warmup as completing Lab 51 release |
-| Prepare smoke and rollback proof checklist | Do not skip residual risk owners on accepted findings |
+| Threat/RBAC, gates, digest evidence, smoke/rollback, readiness | Commit secrets/kubeconfig; skip security tests |
+| Pin digests; deny-by-default | Treat warmup as finished release; Lab 52 defense packet |
 
 ## Workspace
 
-| Item | Windows | macOS |
-| ---- | ------- | ----- |
-| Exercises folder | `%USERPROFILE%\java-bootcamp\examples\module-51-exercises` | `~/java-bootcamp/examples/module-51-exercises` |
-| Notes / mini work | `notes\` | `notes/` |
-
-### Setup
-
-**Windows (PowerShell):**
+| | Windows | macOS |
+| --- | --- | --- |
+| Folder | `%USERPROFILE%\java-bootcamp\examples\module-51-exercises` | `~/java-bootcamp/examples/module-51-exercises` |
 
 ```powershell
 cd $env:USERPROFILE\java-bootcamp
-New-Item -ItemType Directory -Force -Path examples\module-51-exercises | Out-Null
-cd examples\module-51-exercises
-java -version
+New-Item -ItemType Directory -Force -Path examples\module-51-exercises\notes | Out-Null
 ```
 
-**macOS (zsh/bash):**
+## Done when
 
-```bash
-cd ~/java-bootcamp
-mkdir -p examples/module-51-exercises
-cd examples/module-51-exercises
-java -version
-```
-
-**Expected:** Java 21 is available (and any module-specific tools named in the exercises). If not, return to Lab 0 / setup before continuing.
-
-## Exercise index
-
-| # | Exercise | New skill | File |
-| --- | --- | --- | --- |
-| 1 | Capstone Threat Checklist | Threat modeling warmup | [`exercise-01-threat-checklist.md`](exercise-01-threat-checklist.md) |
-| 2 | Plan RBAC Negative Tests | Authorization proof | [`exercise-02-rbac-negative-plan.md`](exercise-02-rbac-negative-plan.md) |
-| 3 | Outline Delivery Gates | CI/CD gate planning | [`exercise-03-pipeline-gates.md`](exercise-03-pipeline-gates.md) |
-| 4 | Fill Deploy Evidence TODOs | Hands-on evidence checklist | [`exercise-04-deploy-evidence-todos.md`](exercise-04-deploy-evidence-todos.md) |
-| 5 | Rollback and Smoke Mini-Runbook | Recovery readiness | [`exercise-05-rollback-smoke.md`](exercise-05-rollback-smoke.md) |
-| 6 | Release Readiness Scorecard | Go/no-go warmup | [`exercise-06-release-readiness.md`](exercise-06-release-readiness.md) |
-
-Keep all work separate from `examples/lab51-crm` (or the lab’s named project folder); that project begins in the full lab.
+All six notes files exist; readiness scorecard self-mark **Pass**.

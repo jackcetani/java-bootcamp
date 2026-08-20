@@ -1,37 +1,129 @@
 # Exercise 2 — Plan .dockerignore and Env
 
-**Module 41** · Documentation exercise · [setup](EXERCISES-INDEX.md)
+## Activity card
 
-## Goal
+| | |
+| --- | --- |
+| **Time** | 10–12 minutes |
+| **Checkpoint** | **B** (after slides 46–49) |
+| **Deliverable** | `notes/lab41-dockerignore-env.md` |
+| **Fixtures** | Synthetic CUS-1001 smoke · no secrets in notes |
 
-List files that must never enter build context and how config is injected.
+### What you will learn
 
-## Steps
+List ignore rules and .env.example keys (no real secrets).
 
-### Step 1 — Ignore list
+### Enterprise context
+
+Huge contexts and leaked .env break enterprise builds.
+
+### Predict
+
+If .env is in the build context, where can the password appear?
+
+### Debug
+
+Ignoring nothing — why is build slow/huge?
+
+### Troubleshooting
+
+| Symptom | Fix |
+| --- | --- |
+| Committing .env | Commit .env.example only |
+| Ignoring the Dockerfile | Do not ignore Dockerfile itself |
+
+**Module 41** · Documentation exercise · [setup + file names](EXERCISES-INDEX.md)
+
+## Deliverable
+
+**Submit only** the file(s) below (not the graded lab).
+
+| Item | Path (under `examples/module-41-exercises/`) |
+| ---- | --------------------------------------------- |
+| Your notes file | `notes/lab41-dockerignore-env.md` |
+
+## Worked example (read first)
+
+Here is the shape of a complete answer for this exercise. Adapt the content — do not leave blanks.
+
+```markdown
+# Lab 41 — Plan .dockerignore and Env
+
+## Step 1 — Ignore list
 
 Draft `.dockerignore` candidates: `.git`, `target/`, `.env`, `*.tfstate`, `notes/`, IDE folders.
 
-### Step 2 — Check the reference
+## Step 2 — Check the reference
 
 Runtime config via env (DB URL, user, password)—never `ENV PASSWORD=...` in Dockerfile.
 
-### Step 3 — .env.example
+## Step 3 — .env.example
 
-List keys only (no values): `SPRING_DATASOURCE_URL`, username, password placeholders, Java opts.
+List keys only (no values): `CRM_DB_HOST`, `CRM_DB_PORT`, `CRM_DB_NAME`, `CRM_DB_USER`, `CRM_DB_PASSWORD` (empty in example), `SPRING_PROFILES_ACTIVE=docker`. Local compose user is `crm`.
 
-### Step 4 — Evidence path
+## Step 4 — Evidence path
 
 Note where Lab 41 will store `docker images` / inspect evidence under `notes/screenshots/lab-41/`.
 
+## Scope
+Pre-lab only — do not finish the full graded lab in this exercise.
+```
+
+Then follow **Steps** to create your own file.
+
+## Steps
+
+### Step 1 — Create the notes file
+
+From `examples/module-41-exercises/`, create `notes/` if needed, then create `notes/lab41-dockerignore-env.md`.
+
+### Step 2 — Paste and complete this template
+
+```markdown
+# Lab 41 — Plan .dockerignore and Env
+
+## Step 1 — Ignore list
+
+Draft `.dockerignore` candidates: `.git`, `target/`, `.env`, `*.tfstate`, `notes/`, IDE folders.
+
+## Step 2 — Check the reference
+
+Runtime config via env (DB URL, user, password)—never `ENV PASSWORD=...` in Dockerfile.
+
+## Step 3 — .env.example
+
+List keys only (no values): `CRM_DB_HOST`, `CRM_DB_PORT`, `CRM_DB_NAME`, `CRM_DB_USER`, `CRM_DB_PASSWORD` (empty in example), `SPRING_PROFILES_ACTIVE=docker`. Local compose user is `crm`.
+
+## Step 4 — Evidence path
+
+Note where Lab 41 will store `docker images` / inspect evidence under `notes/screenshots/lab-41/`.
+
+## Scope
+Pre-lab only — do not finish the full graded lab in this exercise.
+```
+
+### Step 3 — Self-check
+
+Confirm fixtures if used: Amina `CUS-1001`/`ACTIVE`, Ravi `CUS-1002`/`PROSPECT`, correlation `lab-request-001`. Replace every `_____` before Pass.
+
 ## Expected result
 
-Ignore list and .env.example key list without secrets.
+Ignore list and .env.example key list without secrets in `notes/lab41-dockerignore-env.md`.
+
+## If it fails
+
+| Problem | Fix |
+| --- | --- |
+| No file / wrong name | Must be `notes/lab41-dockerignore-env.md` |
+| Leaving blanks or skipping steps | Complete every step before claiming Pass |
+| Starting the full lab mid-exercise | Finish pre-lab notes first, then open Lab 41 |
 
 ## Pass criteria
 
-| # | Confirm | Notes |
-| --- | --- | --- |
-| 1 | .dockerignore candidates listed | Pass / Fail |
-| 2 | No password baked into Dockerfile plan | Pass / Fail |
-| 3 | .env.example keys only | Pass / Fail |
+Self-check before marking Pass:
+
+- [ ] File exists at `notes/lab41-dockerignore-env.md`
+- [ ] .dockerignore candidates listed
+- [ ] No password baked into Dockerfile plan
+- [ ] .env.example keys only
+

@@ -4,83 +4,103 @@
 **Primary IDE:** IntelliJ IDEA Community Edition  
 **Optional IDE:** VS Code  
 **Shell:** Windows PowerShell  
-**Stack hint:** JDK 21 · Maven · Docker as assigned · kubectl + kubeconfig · GitHub Actions · IntelliJ  
+**Stack hint:** Docker Desktop · k3d · kubectl · Lab 41 image `crm-api:lab41` · IntelliJ  
 **Full lab steps:** [LAB-42-GUIDE.md](LAB-42-GUIDE.md)  
-**Other OS:** [macOS guide](LAB-42-MACOS.md) · [IDE conventions](../../../Week%201%20-%20Java%20and%20JVM%20Foundations/_IDE-CONVENTIONS.md)
+**Pre-lab exercises:** [`../exercises/EXERCISES-INDEX.md`](../exercises/EXERCISES-INDEX.md)  
+**Other OS:** [macOS guide](LAB-42-MACOS.md) · [IDE conventions](../../../Week%201%20-%20Java%20and%20JVM%20Foundations/_IDE-CONVENTIONS.md)  
+**Two folders:** [Clone + own repo](../../../CLONE-AND-OWN-REPO-GUIDE.md)
+
 
 ## Prerequisites (Windows)
 
-- [Lab 0 (Windows)](../../../Week%201%20-%20Java%20and%20JVM%20Foundations/module-00/lab0/LAB-0-WINDOWS.md) complete (JDK 21, Maven when needed, Git)
-- IntelliJ IDEA Community with **Project SDK 21**
-- Optional: VS Code + Extension Pack for Java
-- Instructor shared Kafka / PostgreSQL credentials when this lab needs them ([FINAL-SETUP](../../../FINAL-SETUP-README.md))
-- Docker Desktop (or Engine) when the lab builds images
-- `kubectl` + your `studentNN.yaml` kubeconfig
-
-## Open this lab in IntelliJ (primary)
-
-1. Start **IntelliJ IDEA Community**.
-2. **File → Open…** → `%USERPROFILE%\java-bootcamp` (Lab 0 workspace root — same folder every lab).  
-   If `examples\lab42-crm` does not exist yet, create it as the lab GUIDE describes; keep the workspace open at `%USERPROFILE%\java-bootcamp`.
-3. Trust the project if prompted.
-4. **File → Project Structure → Project** → SDK = **21**, language level **21**.
-5. Maven labs: open the `pom.xml` under `examples/lab42-crm` so IntelliJ imports the project; wait for indexing.
-6. If there is a `src/main/java` tree, confirm it is marked as **Sources Root** (Maven usually does this).
-7. **View → Tool Windows → Terminal** (PowerShell) → `cd $env:USERPROFILE\java-bootcamp` then `cd examples\lab42-crm` when ready.
-
-## Optional: VS Code
-
-1. **File → Open Folder…** → `%USERPROFILE%\java-bootcamp` (same Lab 0 workspace).
-2. Confirm **Extension Pack for Java** (and Maven for Java when needed) are installed.
-3. **Terminal → New Terminal** (PowerShell) → `cd examples\lab42-crm` for this lab’s commands.
+- [Lab 0 (Windows)](../../../Week%201%20-%20Java%20and%20JVM%20Foundations/module-00/lab0/LAB-0-WINDOWS.md) complete
+- IntelliJ with **Project SDK 21** — open **`%USERPROFILE%\java-bootcamp`**, not the course clone
+- Docker Desktop engine running (`docker version` shows a Server)
+- Lab 41 image `crm-api:lab41` on this machine (`docker image inspect crm-api:lab41`)
+- `crm-postgres` running (Lab 37 compose) with host port **5432**
+- `k3d` and `kubectl` on PATH (this laptop: `%USERPROFILE%\bin`)
 
 ## Paths (Windows)
 
-| Item | Windows |
-| ---- | ------- |
-| Workspace (open in IDE) | `%USERPROFILE%\java-bootcamp` |
+| Item | Path |
+| ---- | ---- |
+| Course clone (read GUIDE / starter) | `%USERPROFILE%\bc-sw-engineer-java-participant\` (adjust if you cloned elsewhere) |
+| Your repo (write / run / commit) | `%USERPROFILE%\java-bootcamp` |
 | This lab project | `%USERPROFILE%\java-bootcamp\examples\lab42-crm` |
 | Evidence / screenshots | `%USERPROFILE%\java-bootcamp\notes\screenshots\lab-42` |
-| Shell | PowerShell inside IntelliJ |
-| Path style | Backslashes; quote paths with spaces |
+| k3d kubeconfig | `%USERPROFILE%\.config\k3d\kubeconfig-lab42.yaml` |
+| Shell | Windows PowerShell inside IntelliJ |
 
 ```powershell
 cd $env:USERPROFILE\java-bootcamp
-# Lab 0 layout: evidence at workspace root; code under examples\
 New-Item -ItemType Directory -Force -Path notes\screenshots\lab-42 | Out-Null
 cd examples\lab42-crm
 ```
 
 ### Commands this lab typically uses
 
-```text
-kubectl apply
+```powershell
+cd $env:USERPROFILE\java-bootcamp\examples\lab42-crm
+$env:Path = "$env:USERPROFILE\bin;" + $env:Path
+$env:KUBECONFIG = "$env:USERPROFILE\.config\k3d\kubeconfig-lab42.yaml"
+
+kubectl apply --dry-run=client -n crm-training `
+  -f k8s/configmap.yaml -f k8s/deployment.yaml -f k8s/service.yaml -f k8s/ingress.yaml
+
+kubectl apply -f k8s/configmap.yaml -n crm-training
+kubectl apply -f k8s/deployment.yaml -f k8s/service.yaml -f k8s/ingress.yaml -n crm-training
+kubectl rollout status deployment/crm-api -n crm-training --timeout=180s
+
+curl.exe -fsS -H "Host: crm-api.training.example.test" http://127.0.0.1:8088/actuator/health/readiness
+curl.exe -fsS -H "Host: crm-api.training.example.test" -H "X-Correlation-Id: lab-request-001" `
+  "http://127.0.0.1:8088/api/customers?status=ACTIVE"
 ```
 
-## Run configurations (IntelliJ)
+Do **not** `kubectl apply -f k8s/` — that applies `secret.example.yaml`.
 
-1. Open the class with `public static void main` (or use the Spring Boot run config when the lab uses Spring).
-2. Green ▶ → **Run**.
-3. **Run → Edit Configurations…** → set **Working directory** to the project root (`examples/lab42-crm`) when the lab reads relative files (`.env`, `application.properties`, logs).
-4. For Maven goals: right-click `pom.xml` → **Maven** → `clean` / `compile` / `test` / `package`, or use the Maven tool window.
+Verified on this laptop (2026-08-11), Docker Desktop 4.26.1 / Engine 24.0.7, k3d **5.9.0**, kubectl **1.28.2**:
+
+- **Copy starter** from the **course clone** into `java-bootcamp\examples\lab42-crm`. Do not grade files left under `labs\`. Starter is YAML only — not a CRM and not a cluster.
+- No instructor kubeconfig for `100.22.136.97:6443`. Local cluster: `k3d cluster create lab42 --image rancher/k3s:v1.28.15-k3s1 -p "8088:80@loadbalancer"`.
+- Default k3s **v1.35.5** fails: kubelet rejects **cgroup v1** on this Docker Desktop. Pin **v1.28.15-k3s1**.
+- Rewrite kubeconfig `server:` from `host.docker.internal` to **`https://127.0.0.1:<mapped-port>`** — otherwise kubectl hits a LAN IP and times out.
+- `k3d image import crm-api:lab41 -c lab42` then `imagePullPolicy: IfNotPresent`. Do not pin `@sha256:REPLACE_…` — Lab 41 `RepoDigests` is empty until push; record **Image Id**.
+- Isolated database **`crm_lab42`**. JDBC host from a k3d **pod** is **`host.k3d.internal`** (host-published 5432). `crm-postgres` is Docker-network DNS only — pods cannot use it. Compose user is **`crm` / `change-me`**, not `crm_app`.
+- ConfigMap **`SPRING_PROFILES_ACTIVE=docker`** so Lab 41 `application-docker.yml` maps `CRM_DB_*` and enables actuator probes. Profile `k8s` / `kubernetes` 404s probes and JDBC-connects to localhost.
+- Secret out-of-band (`kubectl create secret generic`). Never apply `secret.example.yaml`.
+- Ingress smoke: Host `crm-api.training.example.test` on **localhost:8088**. Do not curl the hostname without a hosts-file entry.
+- HTTP smoke on the Lab 41 API is **`GET /api/customers`**. There is no `/api/v1/interactions` and no Basic `admin:change-me`.
+- Rollback: `kubectl set image … crm-api=crm-api:does-not-exist` → `ErrImagePull` → `rollout undo`.
+- Namespace **`crm-training`** (`kubectl create namespace` if missing). Always pass `-n crm-training`.
+
+### If it fails
+
+| Symptom | Fix |
+| --- | --- |
+| kubelet cgroup v1 unsupported | Use `rancher/k3s:v1.28.15-k3s1` |
+| kubectl to `:8080` or LAN timeout | Set `KUBECONFIG` to the k3d file; rewrite `host.docker.internal` → `127.0.0.1` |
+| ImagePullBackOff | `k3d image import crm-api:lab41 -c lab42`; drop fake digest |
+| Readiness never UP / probe 404 | Profile `docker`; `CRM_DB_HOST=host.k3d.internal`; `CRM_DB_NAME=crm_lab42`; `CRM_DB_USER=crm` |
+| Password authentication failed | User is `crm`, not `crm_app` |
+| curl hostname NXDOMAIN | Host header + `http://127.0.0.1:8088` |
+| 404 `/api/v1/interactions` | Use `GET /api/customers` |
+| Work ended up in the course clone | Move to `java-bootcamp`; never push homework to the participant remote |
+
 
 ## Do the lab
 
-Complete **every step** in **[LAB-42-GUIDE.md](LAB-42-GUIDE.md)**.  
-Wherever that guide shows `~/java-bootcamp`, on Windows use `%USERPROFILE%\java-bootcamp`. Prefer IntelliJ for Java editing and runs; use VS Code only if you already prefer it.
+Complete every step in **[LAB-42-GUIDE.md](LAB-42-GUIDE.md)**. Wherever the GUIDE shows `~/java-bootcamp`, use `%USERPROFILE%\java-bootcamp`.
 
 ## Evidence / screenshots
 
-Save screenshots under `%USERPROFILE%\java-bootcamp\notes\screenshots\lab-42` (Lab 0 workspace layout). Capture IntelliJ (project tree + Run/Terminal) on Windows. Redact passwords, tokens, and kubeconfig contents.
+Save under `%USERPROFILE%\java-bootcamp\notes\screenshots\lab-42`. Redact secrets and kubeconfig.
 
 ## Pass criteria
 
-_Mark each row **Pass** or **Fail** in your lab notes (GitHub markdown files are not interactive checklists)._
-
 | # | Confirm | Your notes |
 | - | ------- | ---------- |
-| 1 | Workspace `%USERPROFILE%\java-bootcamp` open in IntelliJ with SDK **21** | Pass / Fail |
-| 2 | Lab project under `examples/lab42-crm` as in [LAB-42-GUIDE.md](LAB-42-GUIDE.md) | Pass / Fail |
-| 3 | Lab pass criteria / deliverables in the GUIDE are complete | Pass / Fail |
-| 4 | Commands above succeed in the IntelliJ terminal (or as the lab specifies) | Pass / Fail |
-| 5 | Screenshots (if required) saved under `notes/screenshots/lab-42/` | Pass / Fail |
+| 1 | Workspace `%USERPROFILE%\java-bootcamp` open in IntelliJ | Pass / Fail |
+| 2 | Lab project under `examples/lab42-crm` (not the course `labs/` tree) | Pass / Fail |
+| 3 | GUIDE deliverables / checkpoints complete | Pass / Fail |
+| 4 | Commands above succeed (or as the GUIDE specifies) | Pass / Fail |
+| 5 | Screenshots (if required) under `notes/screenshots/lab-42/` | Pass / Fail |

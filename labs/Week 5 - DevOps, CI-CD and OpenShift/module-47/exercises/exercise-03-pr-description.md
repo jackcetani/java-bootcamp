@@ -1,37 +1,129 @@
 # Exercise 3 — PR Description Outline
 
-**Module 47** · Documentation exercise · [setup](EXERCISES-INDEX.md)
+## Activity card
 
-## Goal
+| | |
+| --- | --- |
+| **Time** | 10–12 minutes |
+| **Checkpoint** | **B** (after slides 215–218) |
+| **Deliverable** | `notes/lab47-pr-description.md` |
+| **Fixtures** | CUS-1001/CUS-1002 synthetic · one fact base · no secrets |
 
-Structure a PR body for a mitigation/fix related to the incident.
+### What you will learn
 
-## Steps
+Outline PR description with verify steps, fixtures, and rollback note.
 
-### Step 1 — Sections
+### Enterprise context
+
+Reviewers cannot test without commands and CRM fixture IDs.
+
+### Predict
+
+What verification steps belong in a CRM fix PR?
+
+### Debug
+
+PR says 'fixed stuff' with no test plan — rewrite?
+
+### Troubleshooting
+
+| Symptom | Fix |
+| --- | --- |
+| No verify commands | Add mvn/test or curl steps |
+| Secrets in PR body | Scrub tokens/passwords |
+
+**Module 47** · Documentation exercise · [setup + file names](EXERCISES-INDEX.md)
+
+## Deliverable
+
+**Submit only** the file(s) below (not the graded lab).
+
+| Item | Path (under `examples/module-47-exercises/`) |
+| ---- | --------------------------------------------- |
+| Your notes file | `notes/lab47-pr-description.md` |
+
+## Worked example (read first)
+
+Here is the shape of a complete answer for this exercise. Adapt the content — do not leave blanks.
+
+```markdown
+# Lab 47 — PR Description Outline
+
+## Step 1 — Sections
 
 Why, what changed, how verified (`./mvnw -B test` / CI link placeholder), rollback, risks.
 
-### Step 2 — Check the reference
+## Step 2 — Check the reference
 
 PR must be reviewable without Slack archaeology.
 
-### Step 3 — Verify bullets
+## Step 3 — Verify bullets
 
 List two verification bullets using synthetic fixtures.
 
-### Step 4 — Scope
+## Step 4 — Scope
 
 Outline only—full packet is Lab 47.
 
+## Scope
+Pre-lab only — do not finish the full graded lab in this exercise.
+```
+
+Then follow **Steps** to create your own file.
+
+## Steps
+
+### Step 1 — Create the notes file
+
+From `examples/module-47-exercises/`, create `notes/` if needed, then create `notes/lab47-pr-description.md`.
+
+### Step 2 — Paste and complete this template
+
+```markdown
+# Lab 47 — PR Description Outline
+
+## Step 1 — Sections
+
+Why, what changed, how verified (`./mvnw -B test` / CI link placeholder), rollback, risks.
+
+## Step 2 — Check the reference
+
+PR must be reviewable without Slack archaeology.
+
+## Step 3 — Verify bullets
+
+List two verification bullets using synthetic fixtures.
+
+## Step 4 — Scope
+
+Outline only—full packet is Lab 47.
+
+## Scope
+Pre-lab only — do not finish the full graded lab in this exercise.
+```
+
+### Step 3 — Self-check
+
+Confirm fixtures if used: Amina `CUS-1001`/`ACTIVE`, Ravi `CUS-1002`/`PROSPECT`, correlation `lab-request-001`. Replace every `_____` before Pass.
+
 ## Expected result
 
-PR description outline with verify and rollback.
+PR description outline with verify and rollback in `notes/lab47-pr-description.md`.
+
+## If it fails
+
+| Problem | Fix |
+| --- | --- |
+| No file / wrong name | Must be `notes/lab47-pr-description.md` |
+| Leaving blanks or skipping steps | Complete every step before claiming Pass |
+| Starting the full lab mid-exercise | Finish pre-lab notes first, then open Lab 47 |
 
 ## Pass criteria
 
-| # | Confirm | Notes |
-| --- | --- | --- |
-| 1 | Five sections present | Pass / Fail |
-| 2 | Verify bullets use fixtures | Pass / Fail |
-| 3 | Rollback mentioned | Pass / Fail |
+Self-check before marking Pass:
+
+- [ ] File exists at `notes/lab47-pr-description.md`
+- [ ] Five sections present
+- [ ] Verify bullets use fixtures
+- [ ] Rollback mentioned
+

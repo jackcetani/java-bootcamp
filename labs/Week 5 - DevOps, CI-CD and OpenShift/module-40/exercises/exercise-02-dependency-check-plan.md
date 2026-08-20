@@ -1,37 +1,129 @@
 # Exercise 2 — Plan Dependency-Check Gate
 
-**Module 40** · Documentation exercise · [setup](EXERCISES-INDEX.md)
+## Activity card
 
-## Goal
+| | |
+| --- | --- |
+| **Time** | 10–12 minutes |
+| **Checkpoint** | **C** (after slides 19–22) |
+| **Deliverable** | `notes/lab40-dependency-check-plan.md` |
+| **Fixtures** | Synthetic CUS-1001 / CUS-1002 only · no real PII |
 
-Draft how Dependency-Check will run under JDK 21 / Maven without claiming a finished lab.
+### What you will learn
 
-## Steps
+Plan Maven `-Psecurity-scan` profile, pin version, fail CVSS threshold.
 
-### Step 1 — Profile sketch
+### Enterprise context
+
+SCA findings need triage — not silent suppressions.
+
+### Predict
+
+Where does the NVD DB live on first run?
+
+### Debug
+
+Unpinned plugin version — what drifts?
+
+### Troubleshooting
+
+| Symptom | Fix |
+| --- | --- |
+| API key in Git | Use env only for NVD key (`-DnvdApiKey`); never pom.xml |
+| Deleting the profile to go green | Triage/fix instead |
+
+**Module 40** · Documentation exercise · [setup + file names](EXERCISES-INDEX.md)
+
+## Deliverable
+
+**Submit only** the file(s) below (not the graded lab).
+
+| Item | Path (under `examples/module-40-exercises/`) |
+| ---- | --------------------------------------------- |
+| Your notes file | `notes/lab40-dependency-check-plan.md` |
+
+## Worked example (read first)
+
+Here is the shape of a complete answer for this exercise. Adapt the content — do not leave blanks.
+
+```markdown
+# Lab 40 — Plan Dependency-Check Gate
+
+## Step 1 — Profile sketch
 
 Write a bullet plan for a Maven profile `-Psecurity-scan`: plugin goal, HTML+JSON reports, and a CVSS fail threshold placeholder.
 
-### Step 2 — Check the reference
+## Step 2 — Check the reference
 
-Confirm JDK 21 + Maven Wrapper habits: `./mvnw -B -Psecurity-scan dependency-check:check` from the CRM module root.
+Confirm JDK 21 + Maven habits: from **`java-bootcamp/examples/lab40-crm`** (not the course clone) run `mvn -B -Psecurity-scan dependency-check:check` with `-DnvdApiKey` from env (plugin pin **10.0.4**). Lab 39 has no wrapper — use `mvn`.
 
-### Step 3 — Suppression policy draft
+## Step 3 — Suppression policy draft
 
 Write three required fields for any suppression: CVE id, owner, expiry date. State that silent suppressions fail the gate.
 
-### Step 4 — Folder prep
+## Step 4 — Folder prep
 
 Create note paths for sanitized HTML/JSON under `notes/screenshots/lab-40/` (do not run the full scan yet unless instructor says smoke only).
 
+## Scope
+Pre-lab only — do not finish the full graded lab in this exercise.
+```
+
+Then follow **Steps** to create your own file.
+
+## Steps
+
+### Step 1 — Create the notes file
+
+From `examples/module-40-exercises/`, create `notes/` if needed, then create `notes/lab40-dependency-check-plan.md`.
+
+### Step 2 — Paste and complete this template
+
+```markdown
+# Lab 40 — Plan Dependency-Check Gate
+
+## Step 1 — Profile sketch
+
+Write a bullet plan for a Maven profile `-Psecurity-scan`: plugin goal, HTML+JSON reports, and a CVSS fail threshold placeholder.
+
+## Step 2 — Check the reference
+
+Confirm JDK 21 + Maven habits: from **`java-bootcamp/examples/lab40-crm`** (not the course clone) run `mvn -B -Psecurity-scan dependency-check:check` with `-DnvdApiKey` from env (plugin pin **10.0.4**). Lab 39 has no wrapper — use `mvn`.
+
+## Step 3 — Suppression policy draft
+
+Write three required fields for any suppression: CVE id, owner, expiry date. State that silent suppressions fail the gate.
+
+## Step 4 — Folder prep
+
+Create note paths for sanitized HTML/JSON under `notes/screenshots/lab-40/` (do not run the full scan yet unless instructor says smoke only).
+
+## Scope
+Pre-lab only — do not finish the full graded lab in this exercise.
+```
+
+### Step 3 — Self-check
+
+Confirm fixtures if used: Amina `CUS-1001`/`ACTIVE`, Ravi `CUS-1002`/`PROSPECT`, correlation `lab-request-001`. Replace every `_____` before Pass.
+
 ## Expected result
 
-A written scan-gate plan and suppression policy exist for Lab 40.
+A written scan-gate plan and suppression policy exist for Lab 40 in `notes/lab40-dependency-check-plan.md`.
+
+## If it fails
+
+| Problem | Fix |
+| --- | --- |
+| No file / wrong name | Must be `notes/lab40-dependency-check-plan.md` |
+| Leaving blanks or skipping steps | Complete every step before claiming Pass |
+| Starting the full lab mid-exercise | Finish pre-lab notes first, then open Lab 40 |
 
 ## Pass criteria
 
-| # | Confirm | Notes |
-| --- | --- | --- |
-| 1 | Profile goal and report formats named | Pass / Fail |
-| 2 | CVSS threshold placeholder present | Pass / Fail |
-| 3 | Suppression fields include owner + expiry | Pass / Fail |
+Self-check before marking Pass:
+
+- [ ] File exists at `notes/lab40-dependency-check-plan.md`
+- [ ] Profile goal and report formats named
+- [ ] CVSS threshold placeholder present
+- [ ] Suppression fields include owner + expiry
+

@@ -1,8 +1,6 @@
 # Lab 47: Professional Communication for a CRM Release — Northstar Stakeholder Pack
 
 **Module:** 47 — Professional Communication for a CRM Release  
-**Lab folder:** `labs/Week 5 - DevOps, CI-CD and OpenShift/module-47/lab47/`  
-**Difficulty:** Intermediate  
 **Duration:** ~45 minutes (timed path with starter) · Full path: 3–4 Hours
 
 **Primary IDE:** IntelliJ IDEA Community Edition · **Optional IDE:** VS Code
@@ -12,11 +10,38 @@
 | Windows | [LAB-47-WINDOWS.md](LAB-47-WINDOWS.md) |
 | macOS | [LAB-47-MACOS.md](LAB-47-MACOS.md) |
 
-> **Environment reminder:** Complete the [Module 47 pre-lab exercises](../exercises/EXERCISES-INDEX.md) after the slides and before this lab.  Finish [Lab 0](../../../Week%201%20-%20Java%20and%20JVM%20Foundations/module-00/lab0/LAB-0-GUIDE.md). This is primarily a **documentation / communication** lab in **IntelliJ IDEA Community** (or optional VS Code) under `~/java-bootcamp` (Windows: `%USERPROFILE%\java-bootcamp`). Keep prior CRM evidence nearby.
+---
+
+## Activity card
+
+| | |
+| --- | --- |
+| **Time** | ~45 min timed · full path 3–4 h |
+| **Checkpoint** | **E** (after Ex 1→4→3→5→2→6) |
+| **Must prove** | Shared facts · four artifacts · consistent severity/next update · secrecy scrub · ≥2 peer rewrites |
+| **Hard gate** | Pre-lab Pass · one fact base before drafting |
+
+### What you will learn
+
+Communicate one CRM release/incident consistently to responders, reviewers, and stakeholders.
+
+### Enterprise context
+
+Clarity under time pressure is a deliverable equal to code—contradictory facts fail.
+
+### Predict
+
+Incident SEV-2 vs email SEV-1 — what do you fix first?
+
+### Debug
+
+Peer review file says only "LGTM" — pass criteria?
 
 ---
 
 ## 45-minute timed path (use starter)
+
+> **Pacing reminder:** [PACING.md](../PACING.md) checkpoint **E**. Homework: full packet polish + briefing notes. Optional Week 5 review 234–244.
 
 In class, use the starter templates so the **core** objectives fit **~45 minutes**. The full Steps below remain for homework / extended depth.
 
@@ -33,45 +58,28 @@ In class, use the starter templates so the **core** objectives fit **~45 minutes
 
 ---
 
-## How to follow this lab
-
-1. **In class (timed path):** prefer [`starter/README.md`](starter/README.md) — copy starter → `java-bootcamp/examples/lab47-crm`, fill TODOs, run smoke test (~45 min).
-2. Open the **Windows** or **macOS** how-to (links above) in a second tab for OS-specific commands.
-3. Create/work only under your `java-bootcamp/examples/…` folder from the steps (not inside this `labs/` git clone unless a step says otherwise).
-4. For each **Step N** (full path / homework): read **Why** (if present) → do the actions → confirm **Expected** / **Expected result** → then continue.
-5. When stuck, use **Failure Experiments** / troubleshooting in this guide before asking for help.
-6. Capture evidence under `notes/screenshots/lab-47/` (workspace root under `java-bootcamp`; redact secrets). Use the **Pass criteria** tables — write **Pass** or **Fail** in your notes. GitHub file view does not support clickable checkboxes.
-
 ## What you'll submit (read this first)
 
-Keep this checklist visible while you work. Full detail is under [Expected Deliverables](#expected-deliverables) at the end.
+Keep this checklist visible while you work.
 
 | # | Deliverable |
 | - | ----------- |
-| 1 | `communications/incident-update.md` |
-| 2 | `communications/pull-request-description.md` |
-| 3 | `communications/stakeholder-release-email.md` |
-| 4 | `communications/peer-review.md` |
+| 1 | `communications/shared-facts.md` |
+| 2 | `communications/incident-update.md` |
+| 3 | `communications/pull-request-description.md` |
+| 4 | `communications/stakeholder-release-email.md` |
+| 5 | `communications/peer-review.md` |
 | 5 | Release briefing notes + shared facts |
 | 6 | Consistent, secret-free packet |
 | 7 | Optional: links to Labs 43–46 evidence |
 
+**Must submit:** the items in the table above (sources + evidence + short notes).
+
+**Do not submit:** `target/`, `node_modules/`, secrets, heap dumps, or a verbatim instructor `solution/`.
 
 ## Lab Overview
 
 This Module 47 lab teaches you to communicate a CRM release clearly to engineers, responders, reviewers, and business stakeholders through an **incident update**, **pull-request description**, **stakeholder email**, and **peer review**. You will produce files under `communications/` plus release briefing notes that share one consistent fact base.
-
-**Purpose.** Leadership freezes a communication rule: during CRM 1.4 (example) release stress, different audiences need different depth—but never contradictory facts. Blame, invented root cause, and leaked credentials are unacceptable. Clarity under time pressure is a deliverable equal to code.
-
-**What you build (exercise).** Create `lab47-crm` docs workspace; collect shared facts from prior labs; define audience and purpose; write incident update; write technical follow-up; draft PR description; draft stakeholder email; run peer review with concrete rewrites; finalize the packet (dates, links, secrecy scrub). Optionally verify CRM still builds with `mvn -q test`.
-
-**What success looks like.** Under `~/java-bootcamp/examples/lab47-crm/` a peer can read all four communication artifacts, confirm they agree on severity/impact/next update, find no secrets, and reuse fixture language consistently (`CUS-1001` Amina, `CUS-1002` Ravi, `lab-request-001`).
-
-**Depends on prior CRM lab notes.** Ideal inputs: Lab 43 CI runbook, Lab 44 release/rollback docs, Lab 46 lag/DLT evidence. If those are thin, use the fictional but **internally consistent** scenario in Business Scenario—label assumptions explicitly.
-
-**CRM connection.** Communications may reference agents failing to open profiles for `CUS-1001` / `CUS-1002` with correlation `lab-request-001` after a `crm-api` 1.4.0 rollout—synthetic only. This lab closes the week’s delivery narrative before later specialized modules.
-
----
 
 ## Learning Objectives
 
@@ -82,11 +90,6 @@ After completing this lab, you will be able to:
 * Create reviewable PR descriptions with verification and rollback
 * Translate technical risk into business impact in plain language
 * Separate confirmed facts, assumptions, and unknowns
-* Give specific, respectful peer-review feedback with rewrite suggestions
-* Scrub secrets and personal data from communication packets
-* Align CI/CD/Kafka evidence from Labs 43–46 into one narrative
-
----
 
 ## Business Scenario
 
@@ -114,7 +117,6 @@ Use this **lab scenario** (adapt only with instructor approval—do not invent c
 ---
 
 ## Architecture Context
-
 ### NOW (this lab)
 
 ```mermaid
@@ -130,106 +132,36 @@ flowchart TB
   Peer --> Pack["finalized communications/ packet"]
 ```
 
-### Lab flow (mermaid)
-
-```mermaid
-flowchart TD
-    A["Collect shared facts<br/>from Labs 43-46"] --> B["Audience + purpose<br/>channel + ask"]
-    B --> C["Incident update<br/>SEV + next update"]
-    C --> D["Technical follow-up<br/>timeline + signals"]
-    D --> E["PR description<br/>why/risk/rollback"]
-    E --> F["Stakeholder email<br/>plain impact"]
-    F --> G["Peer review<br/>rewrite feedback"]
-    G --> H["Finalize packet<br/>scrub secrets"]
-```
-
-### Architecture NOW vs LATER
-
-| Aspect | Lab 47 (NOW) | Production comms |
-| ------ | ------------ | ---------------- |
-| Channels | Markdown files as stand-ins | Slack/Statuspage/ServiceNow/email |
-| Facts | Lab scenario + prior evidence | Live telemetry + change tickets |
-| Review | Peer student review | Comms + on-call commander approval |
-| Tone | Practiced blameless updates | Same skill under real pressure |
-
-**Lab focus:** Professional communication—incident update, PR description, stakeholder email, peer review for a CRM release.
-
----
-
 ## Prerequisites
 
-Complete [SETUP](../../../SETUP-INSTRUCTIONS.md), [Lab 0](../../../Week%201%20-%20Java%20and%20JVM%20Foundations/module-00/lab0/LAB-0-GUIDE.md), and gather notes from Labs 43–46 when available. Confirm:
+Confirm (Lab 0 tools assumed):
 
 * Prior CRM lab notes and release context (or use the lab scenario table)
 * Markdown editing in VS Code
-* Optional: CRM tree that still builds (`mvn -q test`)
+* Optional: prior CRM tree available for context (this lab is markdown-only)
 * No secrets (keys, tokens, passwords) committed to Git
 
 ### Pre-flight
 
 ```bash
 java -version
-./mvnw --version 2>/dev/null || mvn -version
-git --version
-pwd
-ls ~/java-bootcamp/examples
-mkdir -p ~/java-bootcamp/examples/lab47-crm/communications \
-         ~/java-bootcamp/examples/lab47-crm/docs \
-         ~/java-bootcamp/examples/lab47-crm/notes
+mvn -version
 ```
 
----
+## Worked example (read before you code)
 
-## Suggested Project Files
+Study this pattern once before Step 1. Your job is to apply the same idea in the Steps — do not skip ahead to a full solution.
 
-Primary training layout:
+| Field | Lab value |
+| ----- | --------- |
+| Severity | SEV-2 (example) |
+| Symptom | Some agents see HTTP 503 opening profiles |
+| Started | Document a UTC start (e.g. 13:52 UTC) |
+| Suspected change | `crm-api` 1.4.0 rollout (Lab 44 artifact) |
+| Mitigation example | Roll back toward 1.3.2 digest; watch readiness + Kafka lag (Lab 46) |
+| Fixtures | `CUS-1001` Amina Khan; `CUS-1002` Ravi Singh; `lab-request-001` |
 
-```text
-~/java-bootcamp/examples/lab47-crm/
-├── communications/
-│   ├── shared-facts.md
-│   ├── incident-update.md
-│   ├── technical-follow-up.md
-│   ├── pull-request-description.md
-│   ├── stakeholder-release-email.md
-│   └── peer-review.md
-├── docs/
-│   └── release-briefing-notes.md
-├── notes/
-│   └── (optional links to Lab 43–46 evidence)
-├── .gitignore
-└── README.md
-```
-
-Platform secondary paths:
-
-```text
-~/java-bootcamp/examples/customer-management-platform/
-└── communications/
-    ├── incident-update.md
-    ├── pull-request-description.md
-    ├── stakeholder-release-email.md
-    └── peer-review.md
-```
-
-Ignore secrets, raw pager dumps with PII, and unrelated binary noise.
-
----
-
-## Concepts to Discuss
-
-Write 2–3 sentences each in `communications/shared-facts.md`:
-
-1. Main narrative arc (release → symptom → mitigation → next update)
-2. Trust boundary: what you may claim without telemetry links
-3. Success/failure contracts of a comms update (clarity, accuracy, ask)
-4. Stable fixture IDs vs naming real customers
-5. Idempotency of posting a corrected update (say what changed)
-6. Why audience splitting matters without fact splitting
-7. Evidence stakeholders vs engineers need
-8. Two writers editing drafts: conflict / consistency control
-9. False confidence: sounding certain about unknown root cause
-10. How Labs 43–46 evidence supports or limits your wording
+**What to notice:** Use these fixtures consistently in Main, tests, and screenshots.
 
 ---
 
@@ -243,18 +175,22 @@ Complete each step in order. Paths assume `~/java-bootcamp/examples/lab47-crm`. 
 
 **Why:** Beautiful prose cannot fix contradictory severity across channels.
 
-**Do this:** Create `communications/shared-facts.md`. Review scope, evidence, defects, deployment state, owners, and dates from Labs 43–46 (or the lab scenario). Label **confirmed facts**, **assumptions**, and **unknowns**. Do not invent status or root cause.
+**Do this:** Fill the starter stub `communications/shared-facts.md`. Review scope, evidence, defects, deployment state, owners, and dates from Labs 43–46 (or the lab scenario). Label **confirmed facts**, **assumptions**, and **unknowns**. Do not invent status or root cause.
 
 Minimum fields:
 
 ```markdown
 ## Confirmed
+
 - ...
 ## Assumptions
+
 - ...
 ## Unknowns
+
 - ...
 ## Owners / next update time
+
 - ...
 ```
 
@@ -268,7 +204,7 @@ Minimum fields:
 
 **Why:** The wrong channel and urgency create either panic or silence.
 
-**Do this:** In `docs/release-briefing-notes.md`, for each audience (on-call engineers, PR reviewers, business stakeholders, peer reviewer), state what they know, what they must decide, channel, urgency, and the clear ask / next update time.
+**Do this:** In your notes (or optionally `docs/release-briefing-notes.md` — not a starter submit file), for each audience (on-call engineers, PR reviewers, business stakeholders, peer reviewer), state what they know, what they must decide, channel, urgency, and the clear ask / next update time.
 
 **Expected result:** Audience matrix with purpose and ask.
 
@@ -280,7 +216,7 @@ Minimum fields:
 
 **Why:** Responders need scannable severity, impact, and next touch time.
 
-**Do this:** Create `communications/incident-update.md`. State severity, impact, start time, symptoms, mitigation, owner, and next update. Avoid blame and unsupported cause claims. Use UTC. Quantify impact only where evidence exists.
+**Do this:** Fill the starter stub `communications/incident-update.md`. State severity, impact, start time, symptoms, mitigation, owner, and next update. Avoid blame and unsupported cause claims. Use UTC. Quantify impact only where evidence exists.
 
 ```markdown
 # CRM Incident Update — SEV-2
@@ -307,7 +243,7 @@ Adapt to your fact sheet. Fixtures may appear sparingly (“synthetic checks on 
 
 **Why:** Engineers need timeline and signals without changing the public facts.
 
-**Do this:** Create `communications/technical-follow-up.md`. Add timeline, signals (CI digest from Lab 43/44, lag from Lab 46), hypotheses, actions, and results. Distinguish correlation from causation. Link dashboards/runbooks without exposing secrets. Cite `lab-request-001` only in diagnostic context.
+**Do this (optional / full-path):** If you need a deeper engineering timeline beyond the incident update, add `communications/technical-follow-up.md` (not in the five-file starter submit list). Add timeline, signals (CI digest from Lab 43/44, lag from Lab 46), hypotheses, actions, and results. Distinguish correlation from causation. Link dashboards/runbooks without exposing secrets. Cite `lab-request-001` only in diagnostic context.
 
 **Expected result:** Technical doc aligned with incident update; no secret URLs with tokens.
 
@@ -319,19 +255,22 @@ Adapt to your fact sheet. Fixtures may appear sparingly (“synthetic checks on 
 
 **Why:** Reviewers cannot review “fix” with no risk or test story.
 
-**Do this:** Create `communications/pull-request-description.md` for a plausible mitigation/fix PR (rollback automation, DLT handling, health check, etc.—pick one consistent with your facts).
+**Do this:** Fill the starter stub `communications/pull-request-description.md` for a plausible mitigation/fix PR (rollback automation, DLT handling, health check, etc.—pick one consistent with your facts).
 
 ```markdown
 ## Why
+
 State the customer or operational problem.
 
 ## What changed
+
 - Backend:
 - Messaging/data:
 - Deployment/configuration:
 
 ## Verification
-_Mark each row **Pass** or **Fail** in your lab notes (GitHub markdown files are not interactive checklists)._
+
+_Mark **Pass** or **Fail** in your lab notes._
 
 | # | Confirm | Your notes |
 | - | ------- | ---------- |
@@ -340,9 +279,11 @@ _Mark each row **Pass** or **Fail** in your lab notes (GitHub markdown files are
 | 3 | Happy and failure paths (CUS-1001 / CUS-1002) | Pass / Fail |
 
 ## Risk and rollback
+
 State compatibility, observability, and exact rollback action.
 
 ## Reviewer focus
+
 Ask two or three precise questions.
 ```
 
@@ -356,7 +297,7 @@ Ask two or three precise questions.
 
 **Why:** Business readers will not parse Kafka consumer groups; they will parse impact and action.
 
-**Do this:** Create `communications/stakeholder-release-email.md` in plain language. Lead with outcome and user impact. Explain schedule, disruption, risk, and support route. Avoid implementation detail that does not support a decision.
+**Do this:** Fill the starter stub `communications/stakeholder-release-email.md` in plain language. Lead with outcome and user impact. Explain schedule, disruption, risk, and support route. Avoid implementation detail that does not support a decision.
 
 ```text
 Subject: CRM 1.4 release planned for Tuesday, 18:00 UTC
@@ -383,7 +324,7 @@ If you are mid-incident instead of pre-release, rewrite subject/body to match **
 
 **Why:** Solo authors miss tone/fact drift; peer review is the QA gate for words.
 
-**Do this:** Exchange packets with a peer (or self-review with a written checklist if solo). Create `communications/peer-review.md`. Check fact, audience, action, tone, and consistency. Suggest concrete rewrites (before/after sentences). Author accepts or declines with rationale.
+**Do this:** Exchange packets with a peer (or self-review with a written checklist if solo). Fill the starter stub `communications/peer-review.md`. Check fact, audience, action, tone, and consistency. Suggest concrete rewrites (before/after sentences). Author accepts or declines with rationale.
 
 **Expected result:** Peer-review file with ≥2 concrete rewrite suggestions and dispositions.
 
@@ -414,11 +355,12 @@ git status --short
 
 **Why:** Communication failure modes are as real as pipeline failure modes.
 
-**Do this:** Complete [Failure Experiments](#failure-experiments). Keep the packet internally consistent after each experiment’s restore. Add a final consistency scan note to `docs/release-briefing-notes.md`:
+**Do this:** Complete Failure Experiments. Keep the packet internally consistent after each experiment’s restore. Add a final consistency scan note to `docs/release-briefing-notes.md`:
 
 ```markdown
 ## Final consistency scan
-_Mark each row **Pass** or **Fail** in your lab notes (GitHub markdown files are not interactive checklists)._
+
+_Mark **Pass** or **Fail** in your lab notes._
 
 | # | Confirm | Your notes |
 | - | ------- | ---------- |
@@ -439,7 +381,7 @@ _Mark each row **Pass** or **Fail** in your lab notes (GitHub markdown files are
 
 ### Checkpoint A — Tooling
 
-_Mark each row **Pass** or **Fail** in your lab notes (GitHub markdown files are not interactive checklists)._
+_Mark **Pass** or **Fail** in your lab notes._
 
 | # | Confirm | Your notes |
 | - | ------- | ---------- |
@@ -449,7 +391,7 @@ _Mark each row **Pass** or **Fail** in your lab notes (GitHub markdown files are
 
 ### Checkpoint B — Core artifacts
 
-_Mark each row **Pass** or **Fail** in your lab notes (GitHub markdown files are not interactive checklists)._
+_Mark **Pass** or **Fail** in your lab notes._
 
 | # | Confirm | Your notes |
 | - | ------- | ---------- |
@@ -459,7 +401,7 @@ _Mark each row **Pass** or **Fail** in your lab notes (GitHub markdown files are
 
 ### Checkpoint C — Audience + review
 
-_Mark each row **Pass** or **Fail** in your lab notes (GitHub markdown files are not interactive checklists)._
+_Mark **Pass** or **Fail** in your lab notes._
 
 | # | Confirm | Your notes |
 | - | ------- | ---------- |
@@ -469,7 +411,7 @@ _Mark each row **Pass** or **Fail** in your lab notes (GitHub markdown files are
 
 ### Checkpoint D — Hygiene
 
-_Mark each row **Pass** or **Fail** in your lab notes (GitHub markdown files are not interactive checklists)._
+_Mark **Pass** or **Fail** in your lab notes._
 
 | # | Confirm | Your notes |
 | - | ------- | ---------- |
@@ -485,21 +427,30 @@ _Mark each row **Pass** or **Fail** in your lab notes (GitHub markdown files are
 
 ```markdown
 # Shared facts — CRM 1.4 lab scenario
+
+
 ## Confirmed
+
 - Symptom:
 - Start (UTC):
 - Mitigation in progress:
 ## Assumptions
+
 -
 ## Unknowns
+
 - Root cause:
 ## Owners
+
 - Release commander:
 ## Next update
+
 - Time (UTC):
 ## Fixtures (synthetic only)
+
 - CUS-1001 Amina Khan; CUS-1002 Ravi Singh; lab-request-001
 ## Links to prior labs (paths only)
+
 - Lab 43 ci-runbook:
 - Lab 44 rollback-runbook:
 - Lab 46 dlt-replay-runbook:
@@ -524,15 +475,18 @@ _Mark each row **Pass** or **Fail** in your lab notes (GitHub markdown files are
 
 ```markdown
 ## Why
+
 State the customer or operational problem.
 
 ## What changed
+
 - Backend:
 - Messaging/data:
 - Deployment/configuration:
 
 ## Verification
-_Mark each row **Pass** or **Fail** in your lab notes (GitHub markdown files are not interactive checklists)._
+
+_Mark **Pass** or **Fail** in your lab notes._
 
 | # | Confirm | Your notes |
 | - | ------- | ---------- |
@@ -541,9 +495,11 @@ _Mark each row **Pass** or **Fail** in your lab notes (GitHub markdown files are
 | 3 | Happy and failure paths (CUS-1001 / CUS-1002 / lab-request-001) | Pass / Fail |
 
 ## Risk and rollback
+
 State compatibility, observability, and exact rollback digest/action.
 
 ## Reviewer focus
+
 1.
 2.
 3.
@@ -570,15 +526,19 @@ CRM Release Team
 # Peer review — Lab 47
 Reviewer / date:
 ## Consistency with shared-facts.md
+
 -
 ## Audience fit
+
 -
 ## Concrete rewrites
+
 1. Before: ...
    After: ...
 2. Before: ...
    After: ...
 ## Author disposition
+
 - Accept / decline + rationale
 ```
 
@@ -600,6 +560,7 @@ git status --short
 - Scenario used (lab table / real prior evidence):
 - Peer reviewer:
 ## Results
+
 | Check | Result | Evidence |
 | ----- | ------ | -------- |
 | Shared facts labeled | PASS/FAIL | |
@@ -621,21 +582,6 @@ git status --short
 | `stakeholder-release-email.md` | Business / support |
 | `peer-review.md` | Author quality gate |
 | `release-briefing-notes.md` | Owners + archive |
-
----
-
-## Manual Verification
-
-1. Shared fact sheet separates facts, assumptions, unknowns.
-2. Incident update includes severity, impact, mitigation, owner, next update.
-3. Technical follow-up does not invent root cause.
-4. PR description includes tests, risk, rollback, reviewer questions.
-5. Stakeholder email is plain language and decision-oriented.
-6. All docs agree on status and times (or explicitly versioned corrections).
-7. Peer review contains concrete rewrites, not vague praise.
-8. Fixtures `CUS-1001` / `CUS-1002` / `lab-request-001` used only as synthetics.
-9. No secrets, tokens, or real customer PII appear.
-10. A peer can brief from the packet without asking “which is true?”
 
 ---
 
@@ -663,25 +609,17 @@ git status --short
 | Secret in markdown | Log paste | Delete; rotate if real |
 | Empty peer review | Skipped critique | Require two rewrites |
 | Conflicting next-update times | Copy/paste drift | Single source in shared-facts.md |
-| Oversharing fixture emails | Treat fixtures as real PII | Use IDs only in external email |
-| Statuspage vs Slack mismatch | Dual drafts | Always edit from shared facts first |
-
----
 
 ## Security and Production Review
 
-Answer in `docs/release-briefing-notes.md`:
+Optional — jot brief notes in your README if useful for your progress check (not a separate essay):
 
 1. Which inputs are untrusted (chat rumors vs telemetry)?
 2. Where are approval gates for external stakeholder email?
 3. Which values are sensitive in incident pastes?
-4. What can be safely corrected after sending (correction update)?
-5. What happens after partial communication failure (wrong channel)?
-6. What would an operator monitor (update cadence, conflict)?
-7. Which local default is unacceptable (invented RCA, secret paste)?
-8. How are communication templates versioned with release process?
 
 ---
+
 
 ## Cleanup
 
@@ -694,87 +632,15 @@ Remove any accidental secret pastes. Keep the finalized packet for portfolio. No
 
 **Keep `lab47-crm`**—Capstone presentations often reuse these templates.
 
----
-
-## Expected Deliverables
-
-Same checklist as [What you'll submit](#what-youll-submit-read-this-first) above.
-
-* `communications/incident-update.md`
-* `communications/pull-request-description.md`
-* `communications/stakeholder-release-email.md`
-* `communications/peer-review.md`
-* Release briefing notes + shared facts
-* Consistent, secret-free packet
-* Optional: links to Labs 43–46 evidence
-
----
-
-## Evaluation Rubric (100 Marks)
-
-| Criteria | Marks |
-| -------- | ----: |
-| Environment and project structure | 10 |
-| Core implementation (four communications + facts) | 30 |
-| Integration/configuration correctness (cross-doc consistency) | 15 |
-| Failure handling (corrections, peer-caught issues) | 15 |
-| Verification (peer can brief; optional build check) | 10 |
-| Security and production awareness (scrub, blameless) | 10 |
-| Documentation and evidence | 10 |
-
-**Notes:** Invented root cause stated as fact → lose failure/security marks. Secrets in packet → must remediate. Audience-inappropriate dump of Kafka internals to executives → lose core marks.
-
----
 
 ## Reflection Questions
 
-Write 3–6 sentence answers:
+Write **1–3 sentence** answers (not essays):
 
 1. Which design decision most affected clarity (fact sheet vs tone)?
-2. Which failure was hardest to diagnose (contradiction type)?
-3. What evidence proves the packet is internally consistent?
-4. What breaks first at ten concurrent update authors?
-5. Which concern should move to shared org templates?
-6. What must change before real customer names appear (spoiler: don’t)?
-7. How does this lab connect to Labs 43–46?
-8. What metric matters most for incident communications (update cadence)?
-9. (Forward look) How would Statuspage wording differ from Slack war-room notes?
+2. What evidence proves the packet is internally consistent?
+3. Which failure was hardest to diagnose (contradiction type)?
 
 ---
 
-## Bonus Challenges
 
-1. Write a 60-second executive briefing.
-2. Create a correction for an inaccurate earlier update.
-3. Turn a vague review comment into actionable feedback.
-4. Write a blameless incident handoff between shifts.
-5. Compare technical and stakeholder versions for consistency in a table.
-6. Draft a Statuspage-style customer notice from the same fact sheet.
-
----
-
-## Success Criteria
-
-You are finished when:
-
-* Four audience-appropriate artifacts share one fact base
-* Incident update is scannable and timed
-* PR description is reviewable with rollback
-* Stakeholder email is plain and honest
-* Peer review produced concrete improvements
-* Secrets and real PII are absent
-* Another student can brief from the packet alone
-
----
-
-## Instructor Notes
-
-* **Live probe:** Ask the student to reconcile the stakeholder email and incident update in 60 seconds. Then ask which assumption they labeled (not stated as fact).
-* **Assess:** Fact hygiene, audience fit, blameless tone, peer-review quality, secret scrubbing, fixture discipline.
-* **Continuity:** Prefer `examples/lab47-crm`. Keep fixture IDs aligned with Labs 43–46 narratives.
-* **Common pitfalls:** Invented RCA; blame; secret pastes; contradictory severity; stakeholder jargon; empty peer review.
-* **Timing:** Timed path ~45 minutes with starter; full path remains 3–4 hours. Peer-review scheduling often burns 30 minutes—pair students early.
-
----
-
-*End of Lab 47 — Professional Communication for a CRM Release: Northstar Stakeholder Pack. Keep `lab47-crm` for capstone and portfolio communication evidence.*

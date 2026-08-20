@@ -1,14 +1,73 @@
 # Exercise 4 — Fill Stakeholder Email TODOs
 
-**Module 47** · Hands-on exercise · [setup](EXERCISES-INDEX.md)
+## Activity card
 
-## Goal
+| | |
+| --- | --- |
+| **Time** | 10–12 minutes |
+| **Checkpoint** | **A** (after slides 205–210) |
+| **Deliverable** | `notes/lab47-stakeholder-todos.md` |
+| **Fixtures** | CUS-1001/CUS-1002 synthetic · one fact base · no secrets |
 
-Complete blanks for a business-readable email.
+### What you will learn
+
+Fill plain-language stakeholder email TODOs from the same fact base.
+
+### Enterprise context
+
+Business audience needs impact and actions—not stack traces.
+
+### Predict
+
+Should stakeholder email include raw Kafka exception stacks?
+
+### Debug
+
+Email uses real customer emails as examples — fix?
+
+### Troubleshooting
+
+| Symptom | Fix |
+| --- | --- |
+| Too much jargon | Lead with customer/agent impact |
+| Oversharing fixture emails | Use CUS-1001 IDs only |
+
+**Module 47** · Hands-on exercise · [setup + file names](EXERCISES-INDEX.md)
+
+## Deliverable
+
+**Submit only** the file(s) below (not the graded lab).
+
+| Item | Path (under `examples/module-47-exercises/`) |
+| ---- | --------------------------------------------- |
+| Your notes file | `notes/lab47-stakeholder-todos.md` |
+
+## Worked example (read first)
+
+Here is the shape of a complete answer for this exercise. Adapt the content — do not leave blanks.
+
+```markdown
+# Lab 47 — Fill Stakeholder Email TODOs
+
+## Step 1 — Template
+
+Fill:
+```
+
+Then follow **Steps** to create your own file.
 
 ## Steps
 
-### Step 1 — Template
+### Step 1 — Create the notes file
+
+From `examples/module-47-exercises/`, create `notes/` if needed, then create `notes/lab47-stakeholder-todos.md`.
+
+### Step 2 — Paste and complete this template
+
+```markdown
+# Lab 47 — Fill Stakeholder Email TODOs
+
+## Step 1 — Template
 
 Fill:
 ```
@@ -19,26 +78,44 @@ When next update: _____
 What we need from you: _____
 ```
 
-### Step 2 — Translate
+## Step 2 — Translate
 
 Replace jargon (DLT, digest) with plain language or short gloss.
 
-### Step 3 — Consistency
+## Step 3 — Consistency
 
 Ensure severity/impact matches the fact base—no contradictions.
 
-### Step 4 — Scrub
+## Step 4 — Scrub
 
 Remove any token-looking strings or real emails.
 
+## Scope
+Pre-lab only — do not finish the full graded lab in this exercise.
+```
+
+### Step 3 — Self-check
+
+Confirm fixtures if used: Amina `CUS-1001`/`ACTIVE`, Ravi `CUS-1002`/`PROSPECT`, correlation `lab-request-001`. Replace every `_____` before Pass.
+
 ## Expected result
 
-Stakeholder email TODO sheet filled and scrubbed.
+Stakeholder email TODO sheet filled and scrubbed in `notes/lab47-stakeholder-todos.md`.
+
+## If it fails
+
+| Problem | Fix |
+| --- | --- |
+| No file / wrong name | Must be `notes/lab47-stakeholder-todos.md` |
+| Leaving blanks or skipping steps | Complete every step before claiming Pass |
+| Starting the full lab mid-exercise | Finish pre-lab notes first, then open Lab 47 |
 
 ## Pass criteria
 
-| # | Confirm | Notes |
-| --- | --- | --- |
-| 1 | All blanks filled | Pass / Fail |
-| 2 | Plain language used | Pass / Fail |
-| 3 | Consistent with fact base | Pass / Fail |
+Self-check before marking Pass:
+
+- [ ] File exists at `notes/lab47-stakeholder-todos.md`
+- [ ] All blanks filled
+- [ ] Plain language used
+- [ ] Consistent with fact base
+

@@ -1,44 +1,129 @@
 # Exercise 5 — Rollout and Rollback Checklist
 
-**Module 42** · Documentation exercise · [setup](EXERCISES-INDEX.md)
+## Activity card
 
-## Goal
+| | |
+| --- | --- |
+| **Time** | 10–12 minutes |
+| **Checkpoint** | **B** (after slides 74–77) |
+| **Deliverable** | `notes/lab42-rollout-rollback.md` |
+| **Fixtures** | CUS-1001 list smoke · Lab 41 image `crm-api:lab41` · no Secret values |
 
-List commands/checks for rollout success and undo rehearsal.
+### What you will learn
 
-## Steps
+List rollout status checks and rollout undo rehearsal steps.
 
-### Step 1 — Rollout watch
+### Enterprise context
 
-List: `kubectl rollout status`, pod Ready, Ingress HTTP check, CRM get `CUS-1001`.
+Verified rollback is part of the definition of done.
 
-### Step 2 — Check the reference
+### Predict
 
-Rollback rehearses a bad revision then `rollout undo` to known-good digest.
+Undo with only one revision — what happens?
 
-### Step 3 — Evidence
+### Debug
+
+Starting Lab 43 deploy workflows early — park?
+
+### Troubleshooting
+
+| Symptom | Fix |
+| --- | --- |
+| No second revision | Change image/annotation before undo demo |
+| Skipping smoke after rollback | Re-check readiness + CUS-1001 |
+
+**Module 42** · Documentation exercise · [setup + file names](EXERCISES-INDEX.md)
+
+## Deliverable
+
+**Submit only** the file(s) below (not the graded lab).
+
+| Item | Path (under `examples/module-42-exercises/`) |
+| ---- | --------------------------------------------- |
+| Your notes file | `notes/lab42-rollout-rollback.md` |
+
+## Worked example (read first)
+
+Here is the shape of a complete answer for this exercise. Adapt the content — do not leave blanks.
+
+```markdown
+# Lab 42 — Rollout and Rollback Checklist
+
+## Step 1 — Rollout watch
+
+List: `kubectl rollout status`, pod Ready, Host-header Ingress check on `:8088`, `GET /api/customers`.
+
+## Step 2 — Check the reference
+
+Rollback rehearses a bad image tag then `rollout undo` to `crm-api:lab41`.
+
+## Step 3 — Evidence
 
 Name screenshot folders under `notes/screenshots/lab-42/` for before/after.
 
-### Step 4 — Correlation
+## Step 4 — Correlation
 
 Include header `lab-request-001` on smoke calls in the checklist.
 
+## Scope
+Pre-lab only — do not finish the full graded lab in this exercise.
+```
+
+Then follow **Steps** to create your own file.
+
+## Steps
+
+### Step 1 — Create the notes file
+
+From `examples/module-42-exercises/`, create `notes/` if needed, then create `notes/lab42-rollout-rollback.md`.
+
+### Step 2 — Paste and complete this template
+
+```markdown
+# Lab 42 — Rollout and Rollback Checklist
+
+## Step 1 — Rollout watch
+
+List: `kubectl rollout status`, pod Ready, Host-header Ingress check on `:8088`, `GET /api/customers`.
+
+## Step 2 — Check the reference
+
+Rollback rehearses a bad image tag then `rollout undo` to `crm-api:lab41`.
+
+## Step 3 — Evidence
+
+Name screenshot folders under `notes/screenshots/lab-42/` for before/after.
+
+## Step 4 — Correlation
+
+Include header `lab-request-001` on smoke calls in the checklist.
+
+## Scope
+Pre-lab only — do not finish the full graded lab in this exercise.
+```
+
+### Step 3 — Self-check
+
+Confirm fixtures if used: Amina `CUS-1001`/`ACTIVE`, Ravi `CUS-1002`/`PROSPECT`, correlation `lab-request-001`. Replace every `_____` before Pass.
+
 ## Expected result
 
-Rollout/rollback checklist with evidence paths.
+Rollout/rollback checklist with evidence paths in `notes/lab42-rollout-rollback.md`.
 
 ## If it fails
 
 | Problem | Fix |
 | --- | --- |
+| No file / wrong name | Must be `notes/lab42-rollout-rollback.md` |
 | Committing kubeconfig | Keep credentials out of Git |
 | Skipping rollback rehearsal | Practice undo before claiming done |
 
 ## Pass criteria
 
-| # | Confirm | Notes |
-| --- | --- | --- |
-| 1 | Rollout checks listed | Pass / Fail |
-| 2 | Undo rehearsal included | Pass / Fail |
-| 3 | Correlation header noted | Pass / Fail |
+Self-check before marking Pass:
+
+- [ ] File exists at `notes/lab42-rollout-rollback.md`
+- [ ] Rollout checks listed
+- [ ] Undo rehearsal included
+- [ ] Correlation header noted
+

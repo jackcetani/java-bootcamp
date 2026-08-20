@@ -1,37 +1,129 @@
 # Exercise 6 — Plan Container Smoke
 
-**Module 41** · Documentation exercise · [setup](EXERCISES-INDEX.md)
+## Activity card
 
-## Goal
+| | |
+| --- | --- |
+| **Time** | 8–10 minutes |
+| **Checkpoint** | **D** (after slides 55–56) |
+| **Deliverable** | `notes/lab41-smoke-plan.md` |
+| **Fixtures** | Synthetic CUS-1001 smoke · no secrets in notes |
 
-Plan a post-start smoke that uses synthetic customers only.
+### What you will learn
 
-## Steps
+Plan build/run/readiness/CUS-1001 smoke + graceful stop checks.
 
-### Step 1 — Steps
+### Enterprise context
 
-Order: health ready → create/get `CUS-1001` → correlation header `lab-request-001` → stop container.
+Hard gate evidence before k3s deploy.
 
-### Step 2 — Check the reference
+### Predict
+
+Bad DB URL at runtime — what should you observe?
+
+### Debug
+
+Starting Lab 43 Actions package job early — park it?
+
+### Troubleshooting
+
+| Symptom | Fix |
+| --- | --- |
+| No Lab 39/40 app | Need bootable JAR + health first |
+| Fixtures with real PII | Synthetic Amina/Ravi only |
+
+**Module 41** · Documentation exercise · [setup + file names](EXERCISES-INDEX.md)
+
+## Deliverable
+
+**Submit only** the file(s) below (not the graded lab).
+
+| Item | Path (under `examples/module-41-exercises/`) |
+| ---- | --------------------------------------------- |
+| Your notes file | `notes/lab41-smoke-plan.md` |
+
+## Worked example (read first)
+
+Here is the shape of a complete answer for this exercise. Adapt the content — do not leave blanks.
+
+```markdown
+# Lab 41 — Plan Container Smoke
+
+## Step 1 — Steps
+
+Order: health ready → `GET /api/customers` (optional CUS-1001 row) → correlation header `lab-request-001` → stop container.
+
+## Step 2 — Check the reference
 
 Evidence is screenshots/logs under lab-41 notes—not production dumps.
 
-### Step 3 — Failure case
+## Step 3 — Failure case
 
 One planned negative: wrong DB URL should fail readiness.
 
-### Step 4 — Scope line
+## Step 4 — Scope line
 
 State this is a plan; full docker build/run is Lab 41.
 
+## Scope
+Pre-lab only — do not finish the full graded lab in this exercise.
+```
+
+Then follow **Steps** to create your own file.
+
+## Steps
+
+### Step 1 — Create the notes file
+
+From `examples/module-41-exercises/`, create `notes/` if needed, then create `notes/lab41-smoke-plan.md`.
+
+### Step 2 — Paste and complete this template
+
+```markdown
+# Lab 41 — Plan Container Smoke
+
+## Step 1 — Steps
+
+Order: health ready → `GET /api/customers` (optional CUS-1001 row) → correlation header `lab-request-001` → stop container.
+
+## Step 2 — Check the reference
+
+Evidence is screenshots/logs under lab-41 notes—not production dumps.
+
+## Step 3 — Failure case
+
+One planned negative: wrong DB URL should fail readiness.
+
+## Step 4 — Scope line
+
+State this is a plan; full docker build/run is Lab 41.
+
+## Scope
+Pre-lab only — do not finish the full graded lab in this exercise.
+```
+
+### Step 3 — Self-check
+
+Confirm fixtures if used: Amina `CUS-1001`/`ACTIVE`, Ravi `CUS-1002`/`PROSPECT`, correlation `lab-request-001`. Replace every `_____` before Pass.
+
 ## Expected result
 
-Smoke plan with happy and negative paths.
+Smoke plan with happy and negative paths in `notes/lab41-smoke-plan.md`.
+
+## If it fails
+
+| Problem | Fix |
+| --- | --- |
+| No file / wrong name | Must be `notes/lab41-smoke-plan.md` |
+| Leaving blanks or skipping steps | Complete every step before claiming Pass |
+| Starting the full lab mid-exercise | Finish pre-lab notes first, then open Lab 41 |
 
 ## Pass criteria
 
-| # | Confirm | Notes |
-| --- | --- | --- |
-| 1 | Happy path ordered | Pass / Fail |
-| 2 | Negative readiness case listed | Pass / Fail |
-| 3 | Pre-lab scope stated | Pass / Fail |
+Self-check before marking Pass:
+
+- [ ] File exists at `notes/lab41-smoke-plan.md`
+- [ ] Happy path ordered
+- [ ] Negative readiness case listed
+- [ ] Pre-lab scope stated
+

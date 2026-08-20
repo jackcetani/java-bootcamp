@@ -1,8 +1,6 @@
 # Lab 43: GitHub CI/CD Pipeline for the CRM — Northstar Delivery Gates
 
 **Module:** 43 — GitHub CI/CD Pipeline for the CRM  
-**Lab folder:** `labs/Week 5 - DevOps, CI-CD and OpenShift/module-43/lab43/`  
-**Difficulty:** Intermediate  
 **Duration:** ~45 minutes (timed path with starter) · Full path: 3–4 Hours
 
 **Primary IDE:** IntelliJ IDEA Community Edition · **Optional IDE:** VS Code
@@ -12,11 +10,38 @@
 | Windows | [LAB-43-WINDOWS.md](LAB-43-WINDOWS.md) |
 | macOS | [LAB-43-MACOS.md](LAB-43-MACOS.md) |
 
-> **Environment reminder:** Complete the [Module 43 pre-lab exercises](../exercises/EXERCISES-INDEX.md) after the slides and before this lab.  Finish [Lab 0](../../../Week%201%20-%20Java%20and%20JVM%20Foundations/module-00/lab0/LAB-0-GUIDE.md). Use **IntelliJ IDEA Community** (primary; optional VS Code) on your laptop with **JDK 21**, **Maven 3.9+**, and a **GitHub** repo with **Actions** enabled. Work under `~/java-bootcamp` (Windows: `%USERPROFILE%\java-bootcamp`).
+---
+
+## Activity card
+
+| | |
+| --- | --- |
+| **Time** | ~45 min timed · full path 3–4 h |
+| **Checkpoint** | **E** (after Ex 1→4→2→3→5→6) |
+| **Must prove** | PR/main triggers · verify no skipTests · package-once SHA · secrets not in YAML · runbook |
+| **Hard gate** | Pre-lab Pass · CRM Maven green locally · Actions enabled |
+
+### What you will learn
+
+Ship a reviewable GitHub Actions workflow: verify, optional scan, package-once identity, secrets hygiene, peer runbook.
+
+### Enterprise context
+
+Green demo without artifact identity and secret discipline is not a delivery gate.
+
+### Predict
+
+Should the deploy job rebuild the JAR with Maven?
+
+### Debug
+
+Checksum artifact empty after package job — what failed upstream?
 
 ---
 
 ## 45-minute timed path (use starter)
+
+> **Pacing reminder:** [PACING.md](../PACING.md) checkpoint **E**. Homework: PR evidence, failure path, package-once checksum, full runbook.
 
 In class, use the starter templates so the **core** objectives fit **~45 minutes**. The full Steps below remain for homework / extended depth.
 
@@ -33,18 +58,9 @@ In class, use the starter templates so the **core** objectives fit **~45 minutes
 
 ---
 
-## How to follow this lab
-
-1. **In class (timed path):** prefer [`starter/README.md`](starter/README.md) — copy starter → `java-bootcamp/examples/lab43-crm`, fill TODOs, run smoke test (~45 min).
-2. Open the **Windows** or **macOS** how-to (links above) in a second tab for OS-specific commands.
-3. Create/work only under your `java-bootcamp/examples/…` folder from the steps (not inside this `labs/` git clone unless a step says otherwise).
-4. For each **Step N** (full path / homework): read **Why** (if present) → do the actions → confirm **Expected** / **Expected result** → then continue.
-5. When stuck, use **Failure Experiments** / troubleshooting in this guide before asking for help.
-6. Capture evidence under `notes/screenshots/lab-43/` (workspace root under `java-bootcamp`; redact secrets). Use the **Pass criteria** tables — write **Pass** or **Fail** in your notes. GitHub file view does not support clickable checkboxes.
-
 ## What you'll submit (read this first)
 
-Keep this checklist visible while you work. Full detail is under [Expected Deliverables](#expected-deliverables) at the end.
+Keep this checklist visible while you work.
 
 | # | Deliverable |
 | - | ----------- |
@@ -56,22 +72,13 @@ Keep this checklist visible while you work. Full detail is under [Expected Deliv
 | 6 | Controlled failure-path result then restore |
 | 7 | No secrets or real customer records in Git |
 
+**Must submit:** the items in the table above (sources + evidence + short notes).
+
+**Do not submit:** `target/`, `node_modules/`, secrets, heap dumps, or a verbatim instructor `solution/`.
 
 ## Lab Overview
 
 This Module 43 lab gives the **Customer Management Platform** a reviewable **GitHub Actions** workflow: verify, scan, package once, protect secrets, and document how peers re-run CI. You will produce `.github/workflows/ci.yml`, publish Surefire/Failsafe (and scan) reports, pass an immutable JAR + SHA-256 between isolated steps, and write `docs/ci-runbook.md`.
-
-**Purpose.** Leadership freezes a delivery rule: pull requests get fast feedback; `main` and version tags get stronger gates; deployment credentials never live in Git; the JAR verified in CI is the JAR promoted later—not a silently rebuilt binary. A green demo without evidence is not enough.
-
-**What you build (exercise).** Copy or branch into `lab43-crm`; define pipeline policy for PR / main / tags; pin Maven image or Wrapper; cache `~/.m2`; run `clean verify` without skipping tests; add quality gates (dependency scan / available SAST); package once with checksum and commit identity; configure branch behavior and secured variables; force one safe test failure, restore, and document the runbook.
-
-**What success looks like.** Under `~/java-bootcamp/examples/lab43-crm/` a peer can open `.github/workflows/ci.yml` + `docs/ci-runbook.md`, understand which steps deploy, where secrets live, how to re-run a failed verify step, and locate a JAR checksum tied to a commit—using fixtures `CUS-1001` / `CUS-1002` / correlation `lab-request-001` only as synthetic CRM identity in any smoke evidence.
-
-**Depends on Labs 41–42 (and prior CRM).** Need a CRM module that compiles and tests under Maven. GitHub account/repository with Actions; Docker available for pipeline/agent steps as instructed. Finish inherited build failures before claiming CI credit.
-
-**CRM connection.** Fixtures `CUS-1001` (Amina Khan) / `CUS-1002` (Ravi Singh) / correlation `lab-request-001` may appear in integration-test or smoke evidence only as fictional IDs—never real customer data. Lab 44 promotes the **same** immutable artifact identity you freeze here.
-
----
 
 ## Reference GitHub Actions workflow
 
@@ -134,11 +141,6 @@ After completing this lab, you will be able to:
 * Publish Surefire, Failsafe, and security-scan reports as artifacts
 * Use branch and pull-request pipelines with distinct rigor
 * Pass immutable artifacts (JAR + checksum + commit) between isolated steps
-* Protect deployment and registry variables as secured, scoped secrets
-* Force a safe pipeline failure, interpret evidence, and document rerun policy
-* Write a peer-usable `docs/ci-runbook.md` for the CRM delivery path
-
----
 
 ## Business Scenario
 
@@ -160,7 +162,6 @@ Use these examples consistently:
 ---
 
 ## Architecture Context
-
 ### NOW (this lab)
 
 ```mermaid
@@ -176,35 +177,11 @@ flowchart TB
   Sec --> Doc["docs/ci-runbook.md"]
 ```
 
-### Lab flow (mermaid)
-
-```mermaid
-flowchart TD
-    A["Policy: PR / main / tags<br/>gates + approvers"] --> B["Pin Maven image<br/>or Wrapper"]
-    B --> C["Cache + verify<br/>publish reports"]
-    C --> D["Quality gates<br/>scan / SAST fail threshold"]
-    D --> E["Package once<br/>JAR + SHA-256 + commit"]
-    E --> F["Branch workflows<br/>PR vs main vs tag"]
-    F --> G["Secured variables<br/>no echo"]
-    G --> H["Force fail -> fix<br/>+ ci-runbook.md"]
-```
-
-### Architecture NOW vs LATER
-
-| Aspect | Lab 43 (NOW) | Lab 44 / production CD |
-| ------ | ------------ | ---------------------- |
-| Scope | Build, test, scan, package, secret hygiene | Promote same digest test → staging → prod |
-| Artifact | JAR + SHA-256 + commit in pipeline artifacts | Image digest / manifest; no rebuild on promote |
-| Deploy | Manual/tag step sketch only (optional) | Formal release plan, gates, rollback runbook |
-| AI | Optional YAML draft + human review | Same discipline for release docs |
-
-**Lab focus:** GitHub Actions for CRM CI—gates, cache, secrets, immutable package, `ci-runbook.md`.
-
----
-
 ## Prerequisites
 
-Complete [SETUP](../../../SETUP-INSTRUCTIONS.md), [Lab 0](../../../Week%201%20-%20Java%20and%20JVM%20Foundations/module-00/lab0/LAB-0-GUIDE.md), and preferably Labs [41](../../module-41/lab41/LAB-41-GUIDE.md)–[42](../../module-42/lab42/LAB-42-GUIDE.md). Confirm:
+Prior labs: [41](../../module-41/lab41/LAB-41-GUIDE.md) · [42](../../module-42/lab42/LAB-42-GUIDE.md).
+
+Confirm (Lab 0 tools assumed):
 
 * JDK 21; Maven or Maven Wrapper; Git
 * GitHub account/repository with Actions enabled
@@ -216,64 +193,40 @@ Complete [SETUP](../../../SETUP-INSTRUCTIONS.md), [Lab 0](../../../Week%201%20-%
 
 ```bash
 java -version
-./mvnw --version 2>/dev/null || mvn -version
-docker --version
-git --version
-pwd
-ls ~/java-bootcamp/examples
+mvn -version
 ```
 
-If Actions will use a Maven image, note the image tag you will pin. Record GitHub organization or repository/repo names in notes (not secrets).
+## Worked example (read before you code)
 
----
+Study this pattern once before Step 1. Your job is to apply the same idea in the Steps — do not skip ahead to a full solution.
 
-## Suggested Project Files
-
-Primary training layout (prefer this):
-
-```text
-~/java-bootcamp/examples/lab43-crm/
-├── .github/workflows/ci.yml
-├── src/main/java/com/northstar/crm/...
-├── src/test/java/com/northstar/crm/...
-├── scripts/
-│   └── deploy.sh                 (stub or lab-safe deploy; no embedded secrets)
-├── docs/
-│   └── ci-runbook.md
-├── notes/screenshots/            (sanitized pipeline + report excerpts)
-├── pom.xml                       (or Maven Wrapper)
-├── .gitignore
-└── README.md
+```yaml
+  package:
+    needs: verify
+    if: github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/tags/')
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "21"
+          cache: maven
+      - name: Package once + checksum
+        run: |
+          ./mvnw -B -ntp -DskipTests package
+          sha256sum target/*.jar > target/SHA256SUMS
+          echo "commit=${GITHUB_SHA}" >> target/SHA256SUMS
+          echo "run=${GITHUB_RUN_NUMBER}" >> target/SHA256SUMS
+      - uses: actions/upload-artifact@v4
+        with:
+          name: crm-jar
+          path: |
+            target/*.jar
+            target/SHA256SUMS
 ```
 
-Platform / monorepo secondary paths (adapt if your cohort uses the larger CRM layout):
-
-```text
-~/java-bootcamp/examples/customer-management-platform/
-├── backend/
-├── .github/workflows/ci.yml
-├── docs/ci-runbook.md
-└── reports/                      (sanitized generated evidence)
-```
-
-Ignore `target/`, IDE metadata, `.env`, tokens, passwords, and raw pipeline logs that contain secrets.
-
----
-
-## Concepts to Discuss
-
-Write 2–3 sentences each in `docs/ci-runbook.md` (or a short concepts section):
-
-1. Main CI flow for the CRM (commit → verify → artifact → optional tag deploy)
-2. Trust boundary: what Actions proves vs what it assumes about GitHub runners and caches
-3. Success/failure contracts (verify red, scan threshold, missing artifact)
-4. Stable fixtures (`CUS-1001`) in tests vs random CI data that breaks flakes
-5. Idempotency of re-running a verify step on the same commit
-6. Why PR gates differ from `main` / tag gates
-7. Evidence operators need (Surefire, checksum, commit SHA)
-8. Two machines / two workflow runs: same YAML, same image pin, same gate
-9. False confidence: green pipeline that skipped tests or rebuilt on deploy
-10. What Lab 44 will change (promotion of this artifact) without changing fixture IDs
+**What to notice:** Match names, IDs, and failure behavior from the scenario — instructors check these.
 
 ---
 
@@ -373,7 +326,7 @@ jobs:
 
 **Why:** Compile-only green builds miss vulnerable dependencies; reports must survive a failed gate for triage.
 
-**Do this:** Add a dependency-scan and/or available SAST step (Maven profile, OWASP Dependency-Check, or instructor-provided scanner). Fail at the agreed threshold. Preserve reports even when the gate fails (separate artifact paths or `after-script` as GitHub allows).
+**Do this:** Add a dependency-scan and/or available SAST step (Maven profile, OWASP Dependency-Check, or instructor-provided scanner). Fail at the agreed threshold. Preserve reports even when the gate fails (use `if: always()` on upload-artifact steps).
 
 ```bash
 # Local analogue (adjust profile/plugin to cohort tooling)
@@ -423,17 +376,28 @@ Add a `package` job that depends on `verify` and uploads a checksummed JAR:
 **Do this:** After verify on `main` (or release path), calculate SHA-256, record commit identity, and attach JAR + `SHA256SUMS` as artifacts. Do **not** rebuild in deployment steps.
 
 ```yaml
-  branches:
-    main:
-      - step: *verify
-      - step:
-          name: Checksum artifact
-          script:
-            - sha256sum target/*.jar > target/SHA256SUMS
-            - echo "commit=${GITHUB_SHA}" >> target/SHA256SUMS
-          artifacts:
-            - target/*.jar
-            - target/SHA256SUMS
+  package:
+    needs: verify
+    if: github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/tags/')
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "21"
+          cache: maven
+      - name: Package once + checksum
+        run: |
+          mvn -B -DskipTests package
+          sha256sum target/*.jar > target/SHA256SUMS
+          echo "commit=${GITHUB_SHA}" >> target/SHA256SUMS
+      - uses: actions/upload-artifact@v4
+        with:
+          name: crm-jar
+          path: |
+            target/*.jar
+            target/SHA256SUMS
 ```
 
 **Expected result:** Artifact pack includes JAR + checksum lines + commit reference.
@@ -449,15 +413,8 @@ Add a `package` job that depends on `verify` and uploads a checksummed JAR:
 **Do this:** Keep focused validation on pull requests; complete gates on `main`; use version tags (`v*`) and **manual** environment deployment where required.
 
 ```yaml
-  tags:
-    'v*':
-      - step: *verify
-      - step:
-          name: Deploy to test
-          deployment: test
-          trigger: manual
-          script:
-            - ./scripts/deploy.sh "$GITHUB_REF_NAME"
+# Tag / release behavior is the same package job above (gated by startsWith(github.ref, 'refs/tags/')).
+# Deploy belongs in Lab 44 `.github/workflows/cd.yml` (workflow_dispatch + Environments) — not in verify CI.
 ```
 
 Ensure `scripts/deploy.sh` reads credentials from environment variables—never hard-codes them.
@@ -511,11 +468,12 @@ git status --short
 
 **Why:** Flaky cache myths and secret leakage are the cultural failure modes of this lab.
 
-**Do this:** Complete [Failure Experiments](#failure-experiments). Capture sanitized pipeline screenshots under `notes/screenshots/lab-43/`. Confirm `git status` has no secrets or huge binary dumps. Paste a short “definition of done” into `docs/ci-runbook.md`:
+**Do this:** Complete Failure Experiments. Capture sanitized pipeline screenshots under `notes/screenshots/lab-43/`. Confirm `git status` has no secrets or huge binary dumps. Paste a short “definition of done” into `docs/ci-runbook.md`:
 
 ```markdown
 ## Definition of done
-_Mark each row **Pass** or **Fail** in your lab notes (GitHub markdown files are not interactive checklists)._
+
+_Mark **Pass** or **Fail** in your lab notes._
 
 | # | Confirm | Your notes |
 | - | ------- | ---------- |
@@ -536,7 +494,7 @@ _Mark each row **Pass** or **Fail** in your lab notes (GitHub markdown files are
 
 ### Checkpoint A — Tooling
 
-_Mark each row **Pass** or **Fail** in your lab notes (GitHub markdown files are not interactive checklists)._
+_Mark **Pass** or **Fail** in your lab notes._
 
 | # | Confirm | Your notes |
 | - | ------- | ---------- |
@@ -546,7 +504,7 @@ _Mark each row **Pass** or **Fail** in your lab notes (GitHub markdown files are
 
 ### Checkpoint B — Core pipeline
 
-_Mark each row **Pass** or **Fail** in your lab notes (GitHub markdown files are not interactive checklists)._
+_Mark **Pass** or **Fail** in your lab notes._
 
 | # | Confirm | Your notes |
 | - | ------- | ---------- |
@@ -556,7 +514,7 @@ _Mark each row **Pass** or **Fail** in your lab notes (GitHub markdown files are
 
 ### Checkpoint C — Gates + secrets
 
-_Mark each row **Pass** or **Fail** in your lab notes (GitHub markdown files are not interactive checklists)._
+_Mark **Pass** or **Fail** in your lab notes._
 
 | # | Confirm | Your notes |
 | - | ------- | ---------- |
@@ -566,7 +524,7 @@ _Mark each row **Pass** or **Fail** in your lab notes (GitHub markdown files are
 
 ### Checkpoint D — Hygiene
 
-_Mark each row **Pass** or **Fail** in your lab notes (GitHub markdown files are not interactive checklists)._
+_Mark **Pass** or **Fail** in your lab notes._
 
 | # | Confirm | Your notes |
 | - | ------- | ---------- |
@@ -606,9 +564,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: test-reports
-          path: |
-            **/target/surefire-reports/**
-            **/target/failsafe-reports/**
+// ... see Steps for full sample
 ```
 
 ### Local equivalent checks
@@ -621,23 +577,24 @@ sha256sum target/*.jar
 git status --short
 ```
 
-### `docs/ci-runbook.md` minimum outline
-
-```markdown
-# CI Runbook — lab43-crm
 ## Policy
+
 - PR: verify only
 - main: verify + checksum
 - tags v*: verify + manual deploy
 ## Re-run
+
 1. Open Actions → failed job → Re-run jobs
 2. Prefer rerun on same commit (no silent code drift)
 ## Gates
+
 - Surefire/Failsafe must be green
 - Scan threshold: <document>
 ## Secrets
+
 - Names only: CRM_REGISTRY_USER, CRM_REGISTRY_TOKEN (secured)
 ## Troubleshooting
+
 - See lab README Troubleshooting table
 ```
 
@@ -660,7 +617,9 @@ echo "Would deploy artifact for tag=${TAG} commit=${GITHUB_SHA:-local}"
 - Branch/commit:
 - Pipeline build URL (sanitized):
 - Java/Maven versions:
+
 ## Results
+
 | Check | Result | Evidence |
 | ----- | ------ | -------- |
 | Baseline verify | PASS/FAIL | |
@@ -669,6 +628,7 @@ echo "Would deploy artifact for tag=${TAG} commit=${GITHUB_SHA:-local}"
 | Forced test failure | PASS/FAIL | |
 | Restore green | PASS/FAIL | |
 ## Residual risks
+
 - Risk / owner / date:
 ```
 
@@ -683,21 +643,6 @@ echo "Would deploy artifact for tag=${TAG} commit=${GITHUB_SHA:-local}"
 | `docs/ci-runbook.md` | Peer reproduction + rerun policy |
 | `scripts/deploy.sh` | Manual deploy stub (env secrets only) |
 | `notes/screenshots/lab-43/` | Sanitized pipeline evidence |
-
----
-
-## Manual Verification
-
-1. PR pipeline runs verify without deploying production.
-2. `main` (or release path) produces JAR + checksum + commit reference.
-3. Maven cache is configured; second run is faster or logs show cache hit (as environment allows).
-4. Quality gate fails or warns at documented threshold; report path exists.
-5. Secured variables are used for deploy/registry—no secrets in Git.
-6. Tag or manual deploy consumes prior artifact (no rebuild).
-7. Controlled test failure produced Surefire evidence, then restored green.
-8. Fixtures `CUS-1001` / `CUS-1002` / `lab-request-001` appear only as synthetic CRM data if at all.
-9. Peer can follow `docs/ci-runbook.md` without Slack archaeology.
-10. You can point to the commit SHA that produced the checksummed JAR.
 
 ---
 
@@ -727,23 +672,22 @@ echo "Would deploy artifact for tag=${TAG} commit=${GITHUB_SHA:-local}"
 | PR slower than laptop | Cold cache / parallel limits | Warm cache on `main`; document expected time |
 | Tag deploy missing vars | Variable not scoped to deployment | Attach secured vars to `test` deployment |
 | Checksum file empty | No JAR produced / wrong glob | Confirm `package` phase ran in verify |
+| Full CD promotions in this lab | Wrong module | Lab 44 |
+| kubeconfig committed | Secret leak | Actions secrets only; never Git |
+| -DskipTests on main verify | False green | Forbid skip on default verify |
 
 ---
 
 ## Security and Production Review
 
-Answer in README or `docs/ci-runbook.md`:
+Optional — jot brief notes in your README if useful for your progress check (not a separate essay):
 
 1. Which inputs are untrusted (PR branch code vs secured variables)?
 2. Where are authn/authz for deploy enforced (GitHub deployments, approvals)?
 3. Which values are sensitive—never in YAML or screenshots?
-4. What can be retried safely (verify on same commit)?
-5. What happens after partial failure (failed scan vs failed tests)?
-6. What would an operator monitor (pipeline duration, flake rate, gate fails)?
-7. Which local default is unacceptable (skipTests, plaintext tokens, `latest` image forever)?
-8. How is artifact identity versioned for Lab 44 promotion?
 
 ---
+
 
 ## Cleanup
 
@@ -757,87 +701,15 @@ Delete temporary plaintext secret files. Keep sanitized screenshots. Do not comm
 
 **Keep `lab43-crm`**—Lab 44 promotes the immutable artifact identity and CI evidence practices established here.
 
----
-
-## Expected Deliverables
-
-Same checklist as [What you'll submit](#what-youll-submit-read-this-first) above.
-
-* `.github/workflows/ci.yml` with PR / main / tag behavior
-* Test reports (Surefire/Failsafe) evidence
-* Security / scan report evidence (or documented residual risk)
-* JAR and SHA-256 checksum tied to commit
-* `docs/ci-runbook.md` with policy, rerun, and troubleshooting
-* Controlled failure-path result then restore
-* No secrets or real customer records in Git
-
----
-
-## Evaluation Rubric (100 Marks)
-
-| Criteria | Marks |
-| -------- | ----: |
-| Environment and project structure | 10 |
-| Core implementation (`.github/workflows/ci.yml`, cache, package-once) | 30 |
-| Integration/configuration correctness (gates, branch workflows) | 15 |
-| Failure handling (forced fail + restore) | 15 |
-| Automated verification | 10 |
-| Security and production awareness (secured vars, no secret leakage) | 10 |
-| Documentation and evidence (`ci-runbook.md`) | 10 |
-
-**Notes:** Green pipeline that skips tests or rebuilds on deploy → lose security/operability marks. Committed secrets → honor violation until remediated.
-
----
 
 ## Reflection Questions
 
-Write 3–6 sentence answers:
+Write **1–3 sentence** answers (not essays):
 
 1. Which design decision most affected correctness (cache, image pin, or package-once)?
-2. Which failure was hardest to diagnose?
-3. What evidence proves the JAR matches the commit?
-4. What breaks first at ten times the pipeline concurrency?
-5. Which concern should move to shared org pipeline templates?
-6. What must change before real customer data appears in CI logs (spoiler: don’t)?
-7. How does this lab connect to Labs 41–42 and Lab 44?
-8. What metric matters most on the CI dashboard for this gate?
-9. (Forward look) What changes when promotion becomes formal CD without changing fixtures?
+2. What evidence proves the JAR matches the commit?
+3. Which failure was hardest to diagnose?
 
 ---
 
-## Bonus Challenges
 
-1. Split unit and integration tests with explicit artifacts.
-2. Publish a dependency-scan report artifact on every `main` build.
-3. Publish a container image only on version tags (digest recorded).
-4. Add parallel backend and frontend check steps.
-5. Document a safe pipeline rerun policy (what is idempotent vs not).
-6. Fail PRs on JaCoCo regression if your CRM already has Lab 17 gates.
-
----
-
-## Success Criteria
-
-You are finished when:
-
-* GitHub Actions verify the CRM with caching and published reports
-* An immutable JAR + checksum + commit identity exist for promotion
-* PR / main / tag behaviors match the written policy
-* Secrets are secured and never committed
-* A controlled failure was observed and restored
-* Another student can follow `docs/ci-runbook.md`
-* No production secret or real customer PII is hard-coded
-
----
-
-## Instructor Notes
-
-* **Live probe:** Ask the student to open the checksum artifact and match it to `GITHUB_SHA`. Then ask which step is allowed to deploy and whether it rebuilds.
-* **Assess:** Package-once discipline, secured variables, honest scan gate, forced-failure evidence, usable runbook.
-* **Continuity:** Prefer `examples/lab43-crm`. Keep fixture IDs. Lab 44 consumes this artifact identity—do not invent a parallel “staging rebuild.”
-* **Common pitfalls:** `skipTests` on main; secrets in YAML; wrong artifact globs; deploy `mvn package`; unpinned `maven:latest`; PR auto-deploy to prod.
-* **Timing:** Timed path ~45 minutes with starter; full path remains 3–4 hours. YAML debugging and GitHub UI permissions often burn 45 minutes—ensure Actions are enabled before the lab session.
-
----
-
-*End of Lab 43 — GitHub CI/CD Pipeline for the CRM: Northstar Delivery Gates. Keep `lab43-crm` for Lab 44 promotion evidence.*

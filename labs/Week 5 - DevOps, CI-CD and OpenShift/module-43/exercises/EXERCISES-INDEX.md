@@ -1,63 +1,45 @@
 # Module 43 — Pre-Lab Exercises
 
-> **Start here for Module 43:** [`../README.md`](../README.md) · **Clone + own repo:** [`../../../CLONE-AND-OWN-REPO-GUIDE.md`](../../../CLONE-AND-OWN-REPO-GUIDE.md)
+> **Start:** [`../README.md`](../README.md) · **Pacing:** [`../PACING.md`](../PACING.md)
 
 **Module:** 43 — GitHub Actions and CI/CD Integration  
-**Next:** [`../lab43/LAB-43-WINDOWS.md`](../lab43/LAB-43-WINDOWS.md) or [`../lab43/LAB-43-MACOS.md`](../lab43/LAB-43-MACOS.md) → [`../lab43/LAB-43-GUIDE.md`](../lab43/LAB-43-GUIDE.md)
+**Next:** [`../lab43/LAB-43-GUIDE.md`](../lab43/LAB-43-GUIDE.md)
 
-> Complete these exercises after the slides and before Lab 43.  
-> Use JDK 21 and the tools this module requires.  
-> These exercises design and test small pieces; Lab 43 builds the full graded deliverable.  
-> Exercise 4 includes a **TODO / fill-in-the-blank starter** (not a complete solution). Replace every `_____` and `// TODO` / `<!-- TODO -->` before moving on.
+Complete **in checkpoint order** after each slide pause. Notes under `examples/module-43-exercises/` — not the graded lab.
 
-## Scope boundary — do not build later technology yet
+## Practice order (interleaved)
 
-| Do now | Do not add yet |
+| Order | Ex | After CP | Deliverable |
+| --- | --- | --- | --- |
+| 1 | [Pipeline policy](exercise-01-pipeline-policy.md) | **A** | `notes/lab43-pipeline-policy.md` |
+| 2 | [ci.yml TODOs](exercise-04-workflow-todos.md) | **B** | `notes/lab43-workflow-todos.md` |
+| 3 | [JDK 21 verify](exercise-02-java21-verify.md) | **C** | `notes/lab43-java21-verify.md` |
+| 4 | [Package-once](exercise-03-immutable-jar.md) | **C** | `notes/lab43-immutable-jar.md` |
+| 5 | [Secrets checklist](exercise-05-secrets-checklist.md) | **D** | `notes/lab43-secrets-checklist.md` |
+| 6 | [CI runbook outline](exercise-06-ci-runbook-outline.md) | **D** | `notes/lab43-ci-runbook-outline.md` |
+
+Then **checkpoint E** → Lab 43.
+
+> Numbered exercise files stay 01–06; **complete in the order above** (1→4→2→3→5→6).
+
+## Scope boundary
+
+| Do now | Do not yet |
 | --- | --- |
-| Draft PR vs main vs tag pipeline policy for CRM | Do not treat a green Actions run as finishing Lab 43 |
-| Plan JDK 21 setup, Maven cache, and `clean verify` | Do not put deploy credentials or kubeconfig in workflow YAML |
-| Sketch package-once + SHA-256 artifact identity | Do not skip tests with `-DskipTests` on the verify job |
-| List secret handling rules for Actions variables | Do not implement full continuous delivery promotions (Lab 44) |
-| Outline `docs/ci-runbook.md` for peer re-runs | Do not apply Terraform from CI in this pre-lab (Lab 45) |
+| Triggers, verify, package-once, secrets rules, runbook | Deploy creds / kubeconfig in YAML |
+| Controlled failure plan | Full CD promotions (Lab 44) / Terraform CI (Lab 45) |
 
 ## Workspace
 
-| Item | Windows | macOS |
-| ---- | ------- | ----- |
-| Exercises folder | `%USERPROFILE%\java-bootcamp\examples\module-43-exercises` | `~/java-bootcamp/examples/module-43-exercises` |
-| Notes / mini work | `notes\` | `notes/` |
-
-### Setup
-
-**Windows (PowerShell):**
+| | Windows | macOS |
+| --- | --- | --- |
+| Folder | `%USERPROFILE%\java-bootcamp\examples\module-43-exercises` | `~/java-bootcamp/examples/module-43-exercises` |
 
 ```powershell
 cd $env:USERPROFILE\java-bootcamp
-New-Item -ItemType Directory -Force -Path examples\module-43-exercises | Out-Null
-cd examples\module-43-exercises
-java -version
+New-Item -ItemType Directory -Force -Path examples\module-43-exercises\notes | Out-Null
 ```
 
-**macOS (zsh/bash):**
+## Done when
 
-```bash
-cd ~/java-bootcamp
-mkdir -p examples/module-43-exercises
-cd examples/module-43-exercises
-java -version
-```
-
-**Expected:** Java 21 is available (and any module-specific tools named in the exercises). If not, return to Lab 0 / setup before continuing.
-
-## Exercise index
-
-| # | Exercise | New skill | File |
-| --- | --- | --- | --- |
-| 1 | Define Pipeline Triggers | CI policy design | [`exercise-01-pipeline-policy.md`](exercise-01-pipeline-policy.md) |
-| 2 | Plan JDK 21 Verify Job | Maven CI habits | [`exercise-02-java21-verify.md`](exercise-02-java21-verify.md) |
-| 3 | Package-Once Identity | Artifact immutability | [`exercise-03-immutable-jar.md`](exercise-03-immutable-jar.md) |
-| 4 | Fill ci.yml TODOs | Hands-on workflow draft | [`exercise-04-workflow-todos.md`](exercise-04-workflow-todos.md) |
-| 5 | Actions Secrets Checklist | Secret hygiene | [`exercise-05-secrets-checklist.md`](exercise-05-secrets-checklist.md) |
-| 6 | Outline CI Runbook | Peer operability | [`exercise-06-ci-runbook-outline.md`](exercise-06-ci-runbook-outline.md) |
-
-Keep all work separate from `examples/lab43-crm` (or the lab’s named project folder); that project begins in the full lab.
+All six notes files exist; secrets checklist + runbook self-mark **Pass**; CRM verifies locally.

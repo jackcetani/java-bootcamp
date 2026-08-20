@@ -1,8 +1,6 @@
 # Lab 37: PostgreSQL Design for Customers and Accounts
 
 **Module:** 37 — PostgreSQL Design for Customers and Accounts  
-**Lab folder:** `labs/Week 4 - Kafka, React, PostgreSQL and Resilience/module-37/lab37/`  
-**Difficulty:** Intermediate  
 **Duration:** ~45 minutes (timed path with starter) · Full path: 4–5 Hours
 
 **Primary IDE:** IntelliJ IDEA Community Edition · **Optional IDE:** VS Code
@@ -12,11 +10,41 @@
 | Windows | [LAB-37-WINDOWS.md](LAB-37-WINDOWS.md) |
 | macOS | [LAB-37-MACOS.md](LAB-37-MACOS.md) |
 
-> **Environment reminder:** Complete the [Module 37 pre-lab exercises](../exercises/EXERCISES-INDEX.md) after the slides and before this lab.  Finish [Lab 0](../../../Week%201%20-%20Java%20and%20JVM%20Foundations/module-00/lab0/LAB-0-GUIDE.md). Use **IntelliJ IDEA Community** (primary; optional VS Code) on your laptop with **psql** or pgAdmin and instructor **shared PostgreSQL** credentials. Work under `~/java-bootcamp` (Windows: `%USERPROFILE%\java-bootcamp`).
+---
+
+## Activity card
+
+| | |
+| --- | --- |
+| **Time** | ~45 min timed · full path 4–5 h |
+| **Checkpoint** | **E** (after Ex 1→2→3→4→5→6) |
+| **Must prove** | Schema + named constraints · Amina/Ravi seeds · one negative check |
+| **Hard gate** | Pre-lab Pass · Docker/shared Postgres · no secrets in Git |
+
+### What you will learn
+
+Implement a repeatable PostgreSQL CRM schema with constraints and fixture seeds.
+
+### Enterprise context
+
+Freeze identifiers and integrity rules before SQL tuning (38) and JPA (39).
+
+### Predict
+
+Inserting ACCOUNT before its CUSTOMER — which constraint fails?
+
+### Debug
+
+Re-running CREATE without drop — name already exists — what script first?
 
 ---
 
 ## 45-minute timed path (use starter)
+
+> **Timed-path schema contract (`starter/database/02_schema.sql`):** column `email` (UNIQUE), `account.balance_cents BIGINT`, status CHECK without `SUSPENDED` (`PROSPECT`/`ACTIVE`/`CLOSED`). Full GUIDE/solution samples below may still demonstrate `email_normalized` + `NUMERIC(19,2)` money — do not mix tracks on the timed path. **Lab 39** maps these tables via JPA/Flyway.
+
+
+> **Pacing reminder:** [PACING.md](../PACING.md) checkpoint **E**. Homework: full negatives + drop/recreate + design-decisions.md.
 
 In class, use the starter templates so the **core** objectives fit **~45 minutes**. The full Steps below remain for homework / extended depth.
 
@@ -33,18 +61,9 @@ In class, use the starter templates so the **core** objectives fit **~45 minutes
 
 ---
 
-## How to follow this lab
-
-1. **In class (timed path):** prefer [`starter/README.md`](starter/README.md) — copy starter → `java-bootcamp/examples/lab37-crm`, fill TODOs, run smoke test (~45 min).
-2. Open the **Windows** or **macOS** how-to (links above) in a second tab for OS-specific commands.
-3. Create/work only under your `java-bootcamp/examples/…` folder from the steps (not inside this `labs/` git clone unless a step says otherwise).
-4. For each **Step N** (full path / homework): read **Why** (if present) → do the actions → confirm **Expected** / **Expected result** → then continue.
-5. When stuck, use **Failure Experiments** / troubleshooting in this guide before asking for help.
-6. Capture evidence under `notes/screenshots/lab-37/` (workspace root under `java-bootcamp`; redact secrets). Use the **Pass criteria** tables — write **Pass** or **Fail** in your notes. GitHub file view does not support clickable checkboxes.
-
 ## What you'll submit (read this first)
 
-Keep this checklist visible while you work. Full detail is under [Expected Deliverables](#expected-deliverables) at the end.
+Keep this checklist visible while you work.
 
 | # | Deliverable |
 | - | ----------- |
@@ -57,22 +76,13 @@ Keep this checklist visible while you work. Full detail is under [Expected Deliv
 | 7 | Drop/recreate proof |
 | 8 | Design decisions + screenshots |
 
+**Must submit:** the items in the table above (sources + evidence + short notes).
+
+**Do not submit:** `target/`, `node_modules/`, secrets, heap dumps, or a verbatim instructor `solution/`.
 
 ## Lab Overview
 
 This Module 37 lab designs and implements the **PostgreSQL** CRM schema: ER cardinalities, stable identifiers, PostgreSQL in Docker, least-privileged `CRM_APP` user, DDL for `CUSTOMER` / `ACCOUNT` / `ADDRESS` / `CUSTOMER_STATUS_HISTORY`, named constraints, money/timestamp types, FK indexes, seed data for Amina and Ravi, negative constraint tests, and dependency-ordered cleanup scripts.
-
-**Purpose.** Leadership freezes a data model gate before JPA mapping labs: public business ids (`CUS-1001`) are immutable, money uses exact decimal types, status is constrained, history is append-only, and the lab user is not DBA. Schema scripts must be repeatable after cleanup.
-
-**What you build (exercise).** Create `lab37-crm` with ER notes/diagram; run PostgreSQL with a named volume; create `CRM_APP`; author `02_schema.sql` (all four entities + indexes); seed Amina (`CUS-1001` ACTIVE with account) and Ravi (`CUS-1002` PROSPECT, no account); run negative checks with savepoints; prove drop/recreate; document design decisions.
-
-**What success looks like.** Under `~/java-bootcamp/examples/lab37-crm/` PostgreSQL crm database / assigned schema is ready, tables exist with named constraints, seeds verify, invalid status/duplicate email/orphan FK fail with constraint/SQLSTATE errors, cleanup recreates cleanly, and passwords stay out of Git.
-
-**Depends on Labs Setup / Docker.** No React lab is strictly required, but CRM fixture IDs must align with Labs 33–36. Prior Spring/JPA modules help contextually.
-
-**CRM connection.** Seed `CUS-1001` Amina Khan ACTIVE and `CUS-1002` Ravi Singh PROSPECT; use correlation `lab-request-001` in history `reason` or notes when recording a sample transition. Later JPA labs map these tables—keep names stable.
-
----
 
 ## Learning Objectives
 
@@ -83,25 +93,12 @@ After completing this lab, you will be able to:
 * Create a least-privileged CRM schema user (no DBA)
 * Write CUSTOMER, ACCOUNT, ADDRESS, and status-history DDL
 * Apply named primary, unique, foreign-key, and check constraints
-* Choose PostgreSQL money (`NUMERIC(19,2)`) and `TIMESTAMPTZ` types
-* Index foreign keys and timeline access paths
-* Seed and verify representative Amina/Ravi cases
-* Prove constraints with negative tests and savepoints
-* Write repeatable cleanup scripts in dependency order
-
----
 
 ## Business Scenario
 
 The CRM stores customer identity, contact details, lifecycle status, postal addresses, and financial accounts. React (Labs 33–36) talks to Spring; Spring will persist to PostgreSQL. This lab defines **tables before ORM**—wrong money types or missing history cannot be patched by UI security alone.
 
 Leadership freezes:
-
-**No merge of CRM persistence without named constraints, exact money decimals, UTC timestamps, least-privileged schema user, and seed fixtures `CUS-1001` / `CUS-1002`.**
-
-You own that gate for ER design, shared (or local) PostgreSQL, DDL, seeds, and negative constraint proofs.
-
-Use these examples consistently:
 
 | ID | Name | Notes |
 | -- | ---- | ----- |
@@ -112,10 +109,7 @@ Use these examples consistently:
 
 **Security note for evidence.** Lab passwords (`POSTGRES_PASSWORD` / schema password, `CRM_APP`) are **lab-only**—never reuse in production; prefer `.env` / Docker env not committed. Do not seed real PII. Do not commit PostgreSQL data volumes.
 
----
-
 ## Architecture Context
-
 ### NOW (this lab)
 
 ```mermaid
@@ -130,35 +124,9 @@ flowchart TB
   Seed["Seed -> verify -> negative tests"] -.-> PG
 ```
 
-### Lab flow (mermaid)
-
-```mermaid
-flowchart TD
-    A["ER cardinalities<br/>+ identifier rules"] --> B["PostgreSQL Docker<br/>volume + crm database / assigned schema"]
-    B --> C["Create CRM_APP<br/>least privilege"]
-    C --> D["DDL CUSTOMER<br/>ACCOUNT ADDRESS HISTORY"]
-    D --> E["FK indexes"]
-    E --> F["Seed Amina/Ravi"]
-    F --> G["Negative savepoint<br/>constraint tests"]
-    G --> H["Drop order + recreate<br/>+ evidence pack"]
-```
-
-### Architecture NOW vs LATER
-
-| Aspect | Lab 37 (NOW) | JPA / later labs |
-| ------ | ------------ | ---------------- |
-| Access | SQL scripts + psql | Spring Data JPA entities |
-| IDs | Identity + `public_id` | Same columns mapped |
-| Migrations | Hand DDL | Flyway/Liquibase later |
-| Authz | DB user grants | App roles still required |
-
-**Lab focus:** normalized CRM entities, PostgreSQL data types, keys, constraints, relationships, audit history, and DDL.
-
----
-
 ## Prerequisites
 
-Complete [SETUP](../../../SETUP-INSTRUCTIONS.md) and [Lab 0](../../../Week%201%20-%20Java%20and%20JVM%20Foundations/module-00/lab0/LAB-0-GUIDE.md). Confirm:
+Confirm (Lab 0 tools assumed):
 
 * Docker with enough RAM/disk for PostgreSQL (often ≥2–4 GB free)
 * psql or pgAdmin
@@ -168,57 +136,39 @@ Complete [SETUP](../../../SETUP-INSTRUCTIONS.md) and [Lab 0](../../../Week%201%2
 ### Pre-flight
 
 ```bash
-docker --version
-docker ps
-git --version
-pwd
-mkdir -p ~/java-bootcamp/examples/lab37-crm
-ls ~/java-bootcamp/examples
+java -version
+mvn -version
 ```
 
-Pulling the PostgreSQL image the first time can take several minutes—start early.
+## Worked example (read before you code)
 
----
+Study this pattern once before Step 1. Your job is to apply the same idea in the Steps — do not skip ahead to a full solution.
 
-## Suggested Project Files
+```sql
+INSERT INTO customer (public_id, full_name, email_normalized, phone, status)
+VALUES ('CUS-1001', 'Amina Khan', 'amina@example.com', '+1-555-0101', 'ACTIVE');
 
-```text
-~/java-bootcamp/examples/lab37-crm/
-├── database/
-│   ├── design-decisions.md
-│   ├── er-diagram.png            (or er-diagram.md mermaid)
-│   ├── 01_create_user.sql
-│   ├── 02_schema.sql
-│   ├── 03_seed.sql
-│   ├── 04_verify.sql
-│   └── 05_drop.sql
-├── compose.yaml                  (optional PostgreSQL service)
-├── .env.example                  (POSTGRES password placeholder only)
-├── docs/
-│   └── postgres-notes.md
-├── notes/screenshots/
-├── .gitignore
-└── README.md
+INSERT INTO customer (public_id, full_name, email_normalized, phone, status)
+VALUES ('CUS-1002', 'Ravi Singh', 'ravi@example.com', '+1-555-0102', 'PROSPECT');
+
+INSERT INTO account (account_number, customer_id, account_type, balance, currency)
+SELECT 'ACCT-1001-01', customer_id, 'CHECKING', 2500.00, 'CAD'
+FROM customer WHERE public_id = 'CUS-1001';
+
+INSERT INTO address (customer_id, address_type, line1, city, region, postal_code, country_code)
+SELECT customer_id, 'HOME', '100 Maple St', 'Toronto', 'ON', 'M5V 2T6', 'CA'
+FROM customer WHERE public_id = 'CUS-1001';
+
+INSERT INTO customer_status_history (
+  customer_id, old_status, new_status, changed_by, reason, correlation_id
+)
+SELECT customer_id, 'PROSPECT', 'ACTIVE', 'lab37', 'Activation', 'lab-request-001'
+FROM customer WHERE public_id = 'CUS-1001';
+
+COMMIT;
 ```
 
-Ignore PostgreSQL volume data, real passwords, and local `.env`.
-
----
-
-## Concepts to Discuss
-
-Write 2–3 sentences each in `database/design-decisions.md`:
-
-1. Main data flow (API later → CRM_APP → tables)
-2. Trust boundary: app user least privilege; browser never touches DB
-3. Success/failure contracts (constraint ORA vs business 4xx later)
-4. Stable identity: `public_id` vs surrogate `customer_id`
-5. Idempotency of seed scripts (re-run after drop)
-6. Local shared (or local) PostgreSQL vs managed production PDB/service
-7. Evidence operators need (DESC, constraint names, seed SELECTs)
-8. Two app instances: same schema; transactions isolate writes
-9. False confidence: FLOAT for money
-10. What JPA labs will map without renaming public ids
+**What to notice:** Match names, IDs, and failure behavior from the scenario — instructors check these.
 
 ---
 
@@ -376,7 +326,7 @@ CREATE TABLE customer (
 CREATE TABLE account (
   account_id     BIGINT GENERATED BY DEFAULT AS IDENTITY,
   account_number VARCHAR(34) NOT NULL,
-  customer_id    NUMBER NOT NULL,
+  customer_id    BIGINT NOT NULL,
   account_type   VARCHAR(20) NOT NULL,
   status         VARCHAR(20) DEFAULT 'OPEN' NOT NULL,
   balance        NUMERIC(19, 2) DEFAULT 0 NOT NULL,
@@ -410,7 +360,7 @@ CREATE TABLE account (
 ```sql
 CREATE TABLE address (
   address_id   BIGINT GENERATED BY DEFAULT AS IDENTITY,
-  customer_id  NUMBER NOT NULL,
+  customer_id  BIGINT NOT NULL,
   address_type VARCHAR(20) NOT NULL,
   line1        VARCHAR(100) NOT NULL,
   line2        VARCHAR(100),
@@ -442,7 +392,7 @@ CREATE TABLE address (
 ```sql
 CREATE TABLE customer_status_history (
   history_id   BIGINT GENERATED BY DEFAULT AS IDENTITY,
-  customer_id  NUMBER NOT NULL,
+  customer_id  BIGINT NOT NULL,
   old_status   VARCHAR(20),
   new_status   VARCHAR(20) NOT NULL,
   changed_by   VARCHAR(100) NOT NULL,
@@ -583,7 +533,7 @@ DROP TABLE account CASCADE CONSTRAINTS PURGE;
 DROP TABLE customer CASCADE CONSTRAINTS PURGE;
 ```
 
-Re-run `02_schema.sql` + `03_seed.sql` from empty to prove repeatability. Complete [Failure Experiments](#failure-experiments). Screenshot DESCs and seed SELECTs. Document connect strings **without** committing real passwords (use `.env.example`).
+Re-run `02_schema.sql` + `03_seed.sql` from empty to prove repeatability. Complete Failure Experiments. Screenshot DESCs and seed SELECTs. Document connect strings **without** committing real passwords (use `.env.example`).
 
 Optional stop (keep volume unless resetting):
 
@@ -601,7 +551,7 @@ docker stop crm-postgres
 
 ### Checkpoint A — Design + runtime
 
-_Mark each row **Pass** or **Fail** in your lab notes (GitHub markdown files are not interactive checklists)._
+_Mark **Pass** or **Fail** in your lab notes._
 
 | # | Confirm | Your notes |
 | - | ------- | ---------- |
@@ -611,7 +561,7 @@ _Mark each row **Pass** or **Fail** in your lab notes (GitHub markdown files are
 
 ### Checkpoint B — Schema
 
-_Mark each row **Pass** or **Fail** in your lab notes (GitHub markdown files are not interactive checklists)._
+_Mark **Pass** or **Fail** in your lab notes._
 
 | # | Confirm | Your notes |
 | - | ------- | ---------- |
@@ -621,7 +571,7 @@ _Mark each row **Pass** or **Fail** in your lab notes (GitHub markdown files are
 
 ### Checkpoint C — Data + proofs
 
-_Mark each row **Pass** or **Fail** in your lab notes (GitHub markdown files are not interactive checklists)._
+_Mark **Pass** or **Fail** in your lab notes._
 
 | # | Confirm | Your notes |
 | - | ------- | ---------- |
@@ -631,7 +581,7 @@ _Mark each row **Pass** or **Fail** in your lab notes (GitHub markdown files are
 
 ### Checkpoint D — Hygiene
 
-_Mark each row **Pass** or **Fail** in your lab notes (GitHub markdown files are not interactive checklists)._
+_Mark **Pass** or **Fail** in your lab notes._
 
 | # | Confirm | Your notes |
 | - | ------- | ---------- |
@@ -642,44 +592,6 @@ _Mark each row **Pass** or **Fail** in your lab notes (GitHub markdown files are
 ---
 
 ## Reference Commands, Configuration, and Code
-
-### CUSTOMER excerpt
-
-```sql
-CREATE TABLE customer (
-  customer_id      BIGINT GENERATED BY DEFAULT AS IDENTITY,
-  public_id        VARCHAR(36) NOT NULL,
-  full_name        VARCHAR(150) NOT NULL,
-  email_normalized VARCHAR(254) NOT NULL,
-  status           VARCHAR(20) DEFAULT 'PROSPECT' NOT NULL,
-  version_no       INTEGER DEFAULT 0 NOT NULL,
-  created_at       TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP NOT NULL,
-  CONSTRAINT pk_customer PRIMARY KEY (customer_id),
-  CONSTRAINT uk_customer_public UNIQUE (public_id),
-  CONSTRAINT uk_customer_email UNIQUE (email_normalized),
-  CONSTRAINT ck_customer_status CHECK (
-    status IN ('PROSPECT', 'ACTIVE', 'SUSPENDED', 'CLOSED')
-  )
-);
-```
-
-### ACCOUNT excerpt
-
-```sql
-CREATE TABLE account (
-  account_id     BIGINT GENERATED BY DEFAULT AS IDENTITY,
-  account_number VARCHAR(34) NOT NULL,
-  customer_id    NUMBER NOT NULL,
-  account_type   VARCHAR(20) NOT NULL,
-  balance        NUMERIC(19, 2) DEFAULT 0 NOT NULL,
-  currency       CHAR(3) DEFAULT 'CAD' NOT NULL,
-  CONSTRAINT pk_account PRIMARY KEY (account_id),
-  CONSTRAINT uk_account_number UNIQUE (account_number),
-  CONSTRAINT fk_account_customer FOREIGN KEY (customer_id)
-    REFERENCES customer (customer_id)
-);
-CREATE INDEX ix_account_customer ON account (customer_id);
-```
 
 ### Docker
 
@@ -699,34 +611,6 @@ docker logs crm-postgres --tail 100
 # run SQL scripts via psql / pgAdmin as CRM_APP
 git status
 ```
-
-### Script map
-
-| Script | Role |
-| ------ | ---- |
-| `01_create_user.sql` | Least-privilege user |
-| `02_schema.sql` | Tables + constraints + indexes |
-| `03_seed.sql` | Amina / Ravi fixtures |
-| `04_verify.sql` | Negative constraint proofs |
-| `05_drop.sql` | Dependency-ordered cleanup |
-| `design-decisions.md` | ER + type rationale |
-
----
-
-## Manual Verification
-
-1. PostgreSQL ready; connected to crm database / assigned schema as `CRM_APP`.
-2. Four tables exist with named PK/UK/FK/CK constraints.
-3. Money columns are `NUMERIC(19,2)`; timestamps are WITH TIME ZONE.
-4. Amina `CUS-1001` ACTIVE with account + address + history (`lab-request-001`).
-5. Ravi `CUS-1002` PROSPECT with zero accounts.
-6. Invalid status → SQLSTATE/02290; duplicate email → SQLSTATE/00001; orphan FK → SQLSTATE/02291.
-7. Drop order works; schema+seed recreate cleanly.
-8. `CRM_APP` is not DBA.
-9. No passwords committed; volume not in Git.
-10. You can explain why `public_id` is not the surrogate PK.
-
----
 
 ## Failure Experiments
 
@@ -751,23 +635,18 @@ git status
 | SQLSTATE/02292 child records | Delete/drop order | Children before parent |
 | Listener refuse | Port 5432 busy | Stop other PostgreSQL; change publish port |
 | Quota exceeded | Small quota | Raise QUOTA on USERS |
-
----
+| FLOAT/double for money | Rounding risk | Use NUMERIC/DECIMAL |
 
 ## Security and Production Review
 
-Answer in README:
+Optional — jot brief notes in your README if useful for your progress check (not a separate essay):
 
 1. Which inputs are untrusted (any SQL from apps; never expose DB to browser)?
 2. Where are authn/authz/validation enforced (DB constraints + app authz)?
 3. Which values are sensitive—DB passwords, PII—and where stored?
-4. What can be retried safely (read queries; seeds after drop)?
-5. What happens after partial failure (transaction rollback; savepoints in tests)?
-6. What would an operator monitor (tablespace, constraint violations, slow FK scans)?
-7. Which local default is unacceptable (DBA app user, FLOAT money, real PII seeds)?
-8. How are schema contracts versioned with API/JPA (Flyway later; keep public_id stable)?
 
 ---
+
 
 ## Cleanup
 
@@ -784,93 +663,17 @@ docker stop crm-postgres
 
 Remove lab passwords from shell history where practical. Recheck `git status`.
 
-**Keep `lab37-crm` scripts**—later JPA/PostgreSQL labs should map these table/column names rather than inventing a parallel model.
+**Keep `lab37-crm` scripts**—**Lab 39** (JPA/Flyway) should map these table/column names rather than inventing a parallel model.
 
----
-
-## Expected Deliverables
-
-Same checklist as [What you'll submit](#what-youll-submit-read-this-first) above.
-
-* ER notes/diagram with cardinalities and identifier rules
-* PostgreSQL Docker runtime with persistent volume
-* `CRM_APP` least-privilege user script
-* Full DDL for CUSTOMER, ACCOUNT, ADDRESS, HISTORY + indexes
-* Seed script for Amina/Ravi (+ history correlation)
-* Negative verification script with ORA evidence
-* Drop/recreate proof
-* Design decisions + screenshots
-* README runbook
-* No secrets or data volumes committed
-
----
-
-## Evaluation Rubric (100 Marks)
-
-| Criteria | Marks |
-| -------- | ----: |
-| Environment and project structure | 10 |
-| Core implementation (ER + DDL + seeds) | 30 |
-| Integration/configuration correctness (Docker, grants, types) | 15 |
-| Failure handling (negatives + drop order) | 15 |
-| Automated/scripted verification | 10 |
-| Security and production awareness (least privilege, no PII) | 10 |
-| Documentation and evidence | 10 |
-
-**Notes:** DBA grants to `CRM_APP` → honor violation. FLOAT/BINARY money → lose core marks. Missing Ravi zero-account case → incomplete seeds.
-
----
 
 ## Reflection Questions
 
-Write 3–6 sentence answers:
+Write **1–3 sentence** answers (not essays):
 
 1. Which design decision most affected correctness?
-2. Which failure was hardest to diagnose?
-3. What evidence proves the implementation works?
-4. What breaks first at ten times the row count?
-5. Which concern should move to shared infrastructure?
-6. What must change before real customer data is used?
-7. How does this lab connect to Labs 33–36 and later JPA labs?
-8. What metric matters most on the DBA dashboard for this gate?
-9. (Forward look) Which columns must remain stable when Spring entities are mapped?
+2. What evidence proves the implementation works?
+3. Which failure was hardest to diagnose?
 
 ---
 
-## Bonus Challenges
 
-1. Add a partial uniqueness rule thought experiment (one BILLING address)—document PostgreSQL approach.
-2. Flashback / auditing note for HISTORY vs UPDATE.
-3. Partitioning thought experiment for history by `changed_at`.
-4. Flyway baseline script wrapping `02_schema.sql`.
-5. Document rollback if someone grants DBA to `CRM_APP`.
-6. `EXPLAIN PLAN` screenshot for history timeline query using `ix_history_customer_time`.
-
----
-
-## Success Criteria
-
-You are finished when:
-
-* ER + identifier rules are documented
-* PostgreSQL is usable with `CRM_APP` least privilege
-* All four entity tables exist with proper types and constraints
-* Amina/Ravi seeds verify (account vs no-account)
-* Negative ORA tests and drop/recreate succeed
-* Another student can follow your SQL runbook
-* No production secret or real PII is committed
-* You can explain the handoff to JPA mapping labs
-
----
-
-## Instructor Notes
-
-* **Live probe:** `SELECT` Amina/Ravi join accounts (Ravi NULL). Ask for ORA code on bad status. Ask why `CRM_APP` must not be DBA. Ask money type.
-* **Assess:** Cardinalities, named constraints, NUMERIC(19,2), history append-only, seeds, negatives, drop order.
-* **Continuity:** Prefer `examples/lab37-crm/database`. Keep `CUS-1001` / `CUS-1002`. Later ORM labs should reuse column names.
-* **Common pitfalls:** FLOAT money; email as PK; missing FK indexes; DBA grants; committing passwords; dropping parent first; mandatory account in ER.
-* **Timing:** Timed path ~45 minutes with starter; full path remains 4–5 hours. PostgreSQL first boot often burns 30–60 minutes—start Docker pull at lab open.
-
----
-
-*End of Lab 37 — PostgreSQL Design for Customers and Accounts. Keep `lab37-crm` for persistence/JPA labs and portfolio evidence.*

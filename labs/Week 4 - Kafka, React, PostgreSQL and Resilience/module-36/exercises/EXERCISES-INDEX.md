@@ -1,63 +1,43 @@
 # Module 36 — Pre-Lab Exercises
 
-> **Start here for Module 36:** [`../README.md`](../README.md) · **Clone + own repo:** [`../../../CLONE-AND-OWN-REPO-GUIDE.md`](../../../CLONE-AND-OWN-REPO-GUIDE.md)
+> **Start:** [`../README.md`](../README.md) · **Pacing:** [`../PACING.md`](../PACING.md)
 
 **Module:** 36 — Frontend Security  
-**Next:** [`../lab36/LAB-36-WINDOWS.md`](../lab36/LAB-36-WINDOWS.md) or [`../lab36/LAB-36-MACOS.md`](../lab36/LAB-36-MACOS.md) → [`../lab36/LAB-36-GUIDE.md`](../lab36/LAB-36-GUIDE.md)
+**Next:** [`../lab36/LAB-36-GUIDE.md`](../lab36/LAB-36-GUIDE.md)
 
-> Complete these exercises **in order (1→6)** as they appear in the slides, then and before Lab 36.  
-> Use JDK 21 and the tools this module requires.  
-> These exercises design and test small pieces; Lab 36 builds the full graded deliverable.  
-> Exercise 5 includes a **TODO / fill-in-the-blank starter** (not a complete solution). Replace every `_____` and `// TODO` / `<!-- TODO -->` before moving on.
+Complete **in order** after each slide checkpoint. Notes under `examples/module-36-exercises/` — not the graded lab.
 
-## Scope boundary — do not build later technology yet
+## Practice order (interleaved)
 
-| Do now | Do not add yet |
+| Order | Ex | After CP | Deliverable |
+| --- | --- | --- | --- |
+| 1 | [Threat sketch](exercise-01-threat-sketch.md) | **A** | `notes/lab36-security.md` |
+| 2 | [Token storage](exercise-02-token-storage.md) | **B** | `notes/lab36-token-storage.md` |
+| 3 | [XSS and CSP](exercise-03-xss-csp.md) | **C** | `notes/lab36-xss-csp.md` |
+| 4 | [CSRF notes](exercise-04-csrf-notes.md) | **C** | `notes/lab36-csrf-notes.md` |
+| 5 | [Route guard TODOs](exercise-05-fill-guard-todos.md) | **D** | `notes/lab36-todos.md` |
+| 6 | [Lab readiness](exercise-06-lab36-readiness.md) | **D** | `notes/lab36-prep-checklist.md` |
+
+Then **checkpoint E** → Lab 36.
+
+## Scope boundary
+
+| Do now | Do not yet |
 | --- | --- |
-| Identify XSS risks in CRM UI rendering | Do not run the SPA or IdP login flows in this pre-lab |
-| Plan token storage tradeoffs (memory vs localStorage) | Do not hardcode real secrets or production tokens |
-| Sketch route-guard logic for authenticated pages | Do not disable browser security for convenience |
-| Note CSRF and CSP ideas for the SPA | Do not implement full OAuth/OIDC provider setup here |
-| Document what never belongs in frontend code | Do not skip backend authorization (UI guards are not enough) |
+| Threat model, memory tokens, XSS/CSRF notes, guard UX | localStorage tokens (this lab) / full OIDC provider |
+| Plan origin-scoped Authorization | Treating UI guards as server authorization |
 
 ## Workspace
 
-| Item | Windows | macOS |
-| ---- | ------- | ----- |
-| Exercises folder | `%USERPROFILE%\java-bootcamp\examples\module-36-exercises` | `~/java-bootcamp/examples/module-36-exercises` |
-| Notes / mini work | `notes\` | `notes/` |
-
-### Setup
-
-**Windows (PowerShell):**
+| | Windows | macOS |
+| --- | --- | --- |
+| Folder | `%USERPROFILE%\java-bootcamp\examples\module-36-exercises` | `~/java-bootcamp/examples/module-36-exercises` |
 
 ```powershell
 cd $env:USERPROFILE\java-bootcamp
-New-Item -ItemType Directory -Force -Path examples\module-36-exercises | Out-Null
-cd examples\module-36-exercises
-java -version
+New-Item -ItemType Directory -Force -Path examples\module-36-exercises\notes | Out-Null
 ```
 
-**macOS (zsh/bash):**
+## Done when
 
-```bash
-cd ~/java-bootcamp
-mkdir -p examples/module-36-exercises
-cd examples/module-36-exercises
-java -version
-```
-
-**Expected:** Java 21 is available (and any module-specific tools named in the exercises). If not, return to Lab 0 / setup before continuing.
-
-## Exercise index
-
-Complete in this sequence (matches Module slide order):
-
-| # | Exercise | New skill | File |
-| --- | --- | --- | --- |
-| 1 | Threat Sketch | Spot SPA security risks | [`exercise-01-threat-sketch.md`](exercise-01-threat-sketch.md) |
-| 2 | Token Storage Options | Compare storage choices | [`exercise-02-token-storage.md`](exercise-02-token-storage.md) |
-| 3 | XSS and CSP Notes | Prevent unsafe HTML | [`exercise-03-xss-csp.md`](exercise-03-xss-csp.md) |
-| 4 | CSRF Notes | Document CSRF relevance | [`exercise-04-csrf-notes.md`](exercise-04-csrf-notes.md) |
-| 5 | Fill Route Guard TODOs | Complete guard pseudocode | [`exercise-05-fill-guard-todos.md`](exercise-05-fill-guard-todos.md) |
-| 6 | Lab 36 Readiness | Pre-lab self-check | [`exercise-06-lab36-readiness.md`](exercise-06-lab36-readiness.md) |
+All six notes files exist; readiness self-mark **Pass**; Lab 35 http boundary (or starter) ready.

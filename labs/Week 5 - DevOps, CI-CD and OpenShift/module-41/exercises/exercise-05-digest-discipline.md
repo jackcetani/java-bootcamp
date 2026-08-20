@@ -1,44 +1,129 @@
 # Exercise 5 — Digest vs Latest
 
-**Module 41** · Analysis exercise · [setup](EXERCISES-INDEX.md)
+## Activity card
 
-## Goal
+| | |
+| --- | --- |
+| **Time** | 10–12 minutes |
+| **Checkpoint** | **D** (after slides 55–56) |
+| **Deliverable** | `notes/lab41-digest-discipline.md` |
+| **Fixtures** | Synthetic CUS-1001 smoke · no secrets in notes |
 
-Explain why `:latest` is insufficient for later k3s deploys.
+### What you will learn
 
-## Steps
+Explain why :latest-only is rejected; plan digest pinning notes.
 
-### Step 1 — Define
+### Enterprise context
+
+Lab 42/44 pull reproducible digests — not floating latest.
+
+### Predict
+
+Two engineers pull :latest a week apart — same bits?
+
+### Debug
+
+Pushing only :latest with secrets — gate fail reasons?
+
+### Troubleshooting
+
+| Symptom | Fix |
+| --- | --- |
+| Skipping digest capture | Record image id/digest in runbook |
+| Registry auth in Git | Auth outside repo |
+
+**Module 41** · Analysis exercise · [setup + file names](EXERCISES-INDEX.md)
+
+## Deliverable
+
+**Submit only** the file(s) below (not the graded lab).
+
+| Item | Path (under `examples/module-41-exercises/`) |
+| ---- | --------------------------------------------- |
+| Your notes file | `notes/lab41-digest-discipline.md` |
+
+## Worked example (read first)
+
+Here is the shape of a complete answer for this exercise. Adapt the content — do not leave blanks.
+
+```markdown
+# Lab 41 — Digest vs Latest
+
+## Step 1 — Define
 
 In two sentences, define image digest vs mutable tag.
 
-### Step 2 — Check the reference
+## Step 2 — Check the reference
 
 Lab 42/44 promote by digest; `:latest` can drift between staging and prod.
 
-### Step 3 — CRM example
+## Step 3 — CRM example
 
-Write an example tag scheme: `crm-api:lab41` plus digest note placeholder `sha256:_____`.
+Write an example tag scheme: `crm-api:lab41` plus digest note placeholder `sha256:(your note here)`.
 
-### Step 4 — Runbook heading
+## Step 4 — Runbook heading
 
 Add a `docs/container-runbook.md` heading list: build, inspect user, run, stop, digest capture.
 
+## Scope
+Pre-lab only — do not finish the full graded lab in this exercise.
+```
+
+Then follow **Steps** to create your own file.
+
+## Steps
+
+### Step 1 — Create the notes file
+
+From `examples/module-41-exercises/`, create `notes/` if needed, then create `notes/lab41-digest-discipline.md`.
+
+### Step 2 — Paste and complete this template
+
+```markdown
+# Lab 41 — Digest vs Latest
+
+## Step 1 — Define
+
+In two sentences, define image digest vs mutable tag.
+
+## Step 2 — Check the reference
+
+Lab 42/44 promote by digest; `:latest` can drift between staging and prod.
+
+## Step 3 — CRM example
+
+Write an example tag scheme: `crm-api:lab41` plus digest note placeholder `sha256:_____`.
+
+## Step 4 — Runbook heading
+
+Add a `docs/container-runbook.md` heading list: build, inspect user, run, stop, digest capture.
+
+## Scope
+Pre-lab only — do not finish the full graded lab in this exercise.
+```
+
+### Step 3 — Self-check
+
+Confirm fixtures if used: Amina `CUS-1001`/`ACTIVE`, Ravi `CUS-1002`/`PROSPECT`, correlation `lab-request-001`. Replace every `_____` before Pass.
+
 ## Expected result
 
-Digest discipline and runbook headings documented.
+Digest discipline and runbook headings documented in `notes/lab41-digest-discipline.md`.
 
 ## If it fails
 
 | Problem | Fix |
 | --- | --- |
+| No file / wrong name | Must be `notes/lab41-digest-discipline.md` |
 | Pushing only :latest | Record digest for promotion |
 | Embedding .env in image | Inject at run/deploy time |
 
 ## Pass criteria
 
-| # | Confirm | Notes |
-| --- | --- | --- |
-| 1 | Digest vs tag explained | Pass / Fail |
-| 2 | Example tag scheme written | Pass / Fail |
-| 3 | Runbook headings listed | Pass / Fail |
+Self-check before marking Pass:
+
+- [ ] File exists at `notes/lab41-digest-discipline.md`
+- [ ] Digest vs tag explained
+- [ ] Example tag scheme written
+- [ ] Runbook headings listed
+
