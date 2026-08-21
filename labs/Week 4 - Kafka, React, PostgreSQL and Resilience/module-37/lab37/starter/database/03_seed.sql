@@ -1,3 +1,0 @@
--- TODO: insert CUS-1001 Amina ACTIVE + one account
--- TODO: insert CUS-1002 Ravi PROSPECT (no account)
--- Prefer public_id values CUS-1001 / CUS-1002

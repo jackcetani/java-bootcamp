@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="3795775e-a458-43ce-a25f-8acc5190abe6" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/lab37.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lab37-crm/database/01_create_user.sql" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lab37-crm/database/02_schema.sql" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lab37-crm/database/03_seed.sql" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lab37-crm/database/04_verify.sql" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lab37-crm/database/05_drop.sql" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lab37-crm/database/06_negative_tests.sql" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lab37-crm/database/design-decisions.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lab37-crm/database/er-diagram.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lab37-crm/docs/postgres-notes.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lab37-crm/notes/lab37-answers.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lab37-crm/notes/screenshots/all evidence.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../lab37.zip" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/starter/.env.example" beforeDir="false" afterPath="$PROJECT_DIR$/lab37-crm/.env.example" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/starter/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/lab37-crm/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/starter/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/lab37-crm/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/starter/compose.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/lab37-crm/compose.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/starter/database/01_create_user.sql" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/starter/database/02_schema.sql" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/starter/database/03_seed.sql" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/starter/database/04_verify.sql" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/starter/database/05_drop.sql" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/starter/database/design-decisions.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/starter/database/er-diagram.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/starter/docs/postgres-notes.md" beforeDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="CopilotPersistence">
+    <persistenceIdMap>
+      <entry key="_C:/Users/jackc/Desktop/PNC Training/java-bootcamp/labs/Week 4 - Kafka, React, PostgreSQL and Resilience/module-37/lab37" value="3IEVgxh5c7gbF8uu9YETjr0xOs6" />
+    </persistenceIdMap>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../../../.." />
+  </component>
+  <component name="ProjectColorInfo"><![CDATA[{
+  "associatedIndex": 5,
+  "fromUser": false
+}]]></component>
+  <component name="ProjectId" id="3IEVgzLmywR3SJCo8bsTflIiFNT" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "RunOnceActivity.typescript.service.memoryLimit.init": "true",
+    "codeWithMe.voiceChat.enabledByDefault": "false",
+    "copilot.chat.legacySessionMetadata.migrated": "true",
+    "git-widget-placeholder": "main",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/Users/jackc/Desktop/PNC Training/java-bootcamp/labs/Week 4 - Kafka, React, PostgreSQL and Resilience/module-37/lab37",
+    "node.js.detected.package.jshint": "true",
+    "node.js.selected.package.jshint": "",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "configurable.group.appearance"
+  }
+}]]></component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-jdk-30f59d01ecdd-63390994e64e-intellij.indexing.shared.core-IU-262.8665.258" />
+        <option value="bundled-js-predefined-d6986cc7102b-4abd2a77f808-JavaScript-IU-262.8665.258" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="3795775e-a458-43ce-a25f-8acc5190abe6" name="Changes" comment="" />
+      <created>1787329829430</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1787329829430</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+</project>
