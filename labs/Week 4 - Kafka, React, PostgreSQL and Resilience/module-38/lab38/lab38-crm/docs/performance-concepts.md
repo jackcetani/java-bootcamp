@@ -1,0 +1,3 @@
+# Lab 38 — Performance concepts
+
+Email lookup access path never showed a sequential scan even at baseline. Lab 37's `uk_customer_email` UNIQUE constraint already creates a backing index, so `ux_customer_email_norm` is functionally redundant with it, just extra write overhead. The real cardinality pitfall showed up in Step 8 instead. The `TRUNC`-style cast estimated 250 rows against an actual 555, while the sargable range form estimated 533. Same result set, but the planner's cost-based estimate was far more accurate once the predicate wasn't hidden behind a function.

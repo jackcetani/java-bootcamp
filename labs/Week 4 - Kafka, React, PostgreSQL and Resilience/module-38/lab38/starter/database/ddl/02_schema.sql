@@ -1,2 +1,0 @@
--- Paste/adapt Lab 37 schema here for a self-contained performance lab.
--- Do not silently rename columns Lab 39 will map.

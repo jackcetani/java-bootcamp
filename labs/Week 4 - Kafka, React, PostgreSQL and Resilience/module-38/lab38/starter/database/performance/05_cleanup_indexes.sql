@@ -1,1 +1,0 @@
--- TODO: DROP INDEX ... to challenge each index; re-EXPLAIN; restore afterward

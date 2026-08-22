@@ -1,2 +1,0 @@
--- TODO: UNIQUE index on customer.email_normalized (if not already)
--- TODO: index supporting (status, created_at, customer_id) list queries
