@@ -1,8 +1,8 @@
 # Activated by SPRING_PROFILES_ACTIVE=docker
-# Maps Lab 42-style CRM_DB_* keys. Lab 37 Postgres user is crm / change-me.
+# Maps Lab 42-style CRM_DB_* keys. Real container: lab39-postgres, user crm / change-me.
 spring:
   datasource:
-    url: jdbc:postgresql://${CRM_DB_HOST:crm-postgres}:${CRM_DB_PORT:5432}/${CRM_DB_NAME:crm_lab41}
+    url: jdbc:postgresql://${CRM_DB_HOST:lab39-postgres}:${CRM_DB_PORT:5432}/${CRM_DB_NAME:crm_lab41}
     username: ${CRM_DB_USER:crm}
     password: ${CRM_DB_PASSWORD}
   lifecycle:
