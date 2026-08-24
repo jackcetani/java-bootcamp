@@ -6,7 +6,7 @@
 
 | Folder | You… |
 | ------ | ---- |
-| **Course clone** (this `starter/` directory) | Read / copy **from** here |
+| **Course clone** (this `/` directory) | Read / copy **from** here |
 | **`java-bootcamp`** | Copy these YAML stubs **to** `examples/lab42-crm`, fill TODOs, apply to **local k3d**, commit |
 
 Do **not** grade work inside the course `labs/` tree. IntelliJ stays on `java-bootcamp`. Starter is **not** a Spring app and **not** a cluster.

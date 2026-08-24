@@ -70,8 +70,8 @@ IntelliJ stays on `java-bootcamp`. Keep the course clone in a browser tab or a s
 
 > **Pacing reminder:** [PACING.md](../PACING.md) checkpoint **E**. Homework: live apply + Host-header smoke + rollback evidence.
 
-1. Open [`starter/README.md`](starter/README.md) **in the course clone**.
-2. In **`java-bootcamp`**, copy `starter/` → `examples/lab42-crm`. Starter is YAML only — not a cluster and not a CRM.
+1. Open [`lab42-crm/README.md`](lab42-crm/README.md) **in the course clone**.
+2. In **`java-bootcamp`**, copy `lab42-crm/` → `examples/lab42-crm`. Starter is YAML only — not a cluster and not a CRM.
 3. Fill every `TODO` — do **not** work under `labs/`.
 4. Dry-run from `examples/lab42-crm`; evidence under `notes/screenshots/lab-42/`.
 5. Mark timed-path Pass criteria in the starter README. Continue remaining GUIDE steps as homework if needed.
@@ -209,7 +209,7 @@ Complete each step in order. **Write** under `java-bootcamp`. **Read** starter f
 
 ### Step 1 — Copy starter into your repo, create k3d, import the Lab 41 image
 
-**Why:** Graded work belongs in `java-bootcamp`. The course `starter/` is YAML, not a cluster. Half of failed labs are wrong context or ImagePullBackOff because the image never landed in k3d.
+**Why:** Graded work belongs in `java-bootcamp`. The course `lab42-crm/` is YAML, not a cluster. Half of failed labs are wrong context or ImagePullBackOff because the image never landed in k3d.
 
 **Where:** IntelliJ Terminal in **`java-bootcamp`**. Starter copy source is the **course clone**.
 

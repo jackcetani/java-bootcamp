@@ -11,5 +11,4 @@ spec:
   ports:
     - name: http
       port: 80
-      # TODO(lab42): Align targetPort with container port name/number
       targetPort: http
