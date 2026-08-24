@@ -6,7 +6,7 @@
 
 | Folder | You… |
 | ------ | ---- |
-| **Course clone** (this `starter/` directory) | Read / copy **from** here |
+| **Course clone** (this `/` directory) | Read / copy **from** here |
 | **`java-bootcamp`** | Copy Lab 39 **to** `examples/lab40-crm`, merge these stubs, run Maven, commit |
 
 Do **not** grade work inside the course `labs/` tree. IntelliJ stays on `java-bootcamp`.
@@ -22,7 +22,7 @@ Do **not** grade work inside the course `labs/` tree. IntelliJ stays on `java-bo
 ## Copy into your workspace
 
 1. Copy **your** Lab 39 CRM into `java-bootcamp/examples/lab40-crm`.
-2. Merge **this** `starter/` on top (docs + POM snippet). Starter is **not** a full Spring app.
+2. Merge **this** `/` on top (docs + POM snippet). Starter is **not** a full Spring app.
 
 **Windows (PowerShell)** — run from this lab folder in the **course clone**, or set `$courseLab40` to it:
 

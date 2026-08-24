@@ -1,0 +1,6 @@
+finding_id,source,package_or_location,cve_or_rule,cvss,classification,owner,due_date,notes
+lab40-001,dependency-check,org.apache.tomcat.embed:tomcat-embed-core:10.1.31,CVE-2026-43512,9.8,mitigated,student,2026-10-01,Fixed by Boot 3.5.16/Tomcat 10.1.57 upgrade; confirmed absent from post-upgrade re-scan
+lab40-002,manual-sast,com.northstar.crm.customer.CustomerController#list,N/A,0.0,confirmed,student,2026-10-01,GET /api/customers has no authentication at all; no GET /api/customers/{id} exists; object-level authz entirely absent; out of scope for this lab (feeds Lab 41)
+lab40-003,dependency-check,org.apache.tomcat.embed:tomcat-embed-core:10.1.57,CVE-2026-66299,7.5,accepted,student,2026-10-15,New finding on the latest available Tomcat patch itself; no newer version exists yet; monitor for next patch release
+lab40-004,dependency-check,org.apache.logging.log4j:log4j-api:2.24.3,"CVE-2026-34477,CVE-2026-34478,CVE-2026-34479,CVE-2026-34480,CVE-2026-34481,CVE-2026-49844",7.5,accepted,student,2026-10-15,Transitive via spring-boot-starter-logging; no newer log4j-api version pinned by Boot 3.5.16 yet; monitor Boot's dependency management for next patch
+lab40-005,dependency-check,org.eclipse.angus:angus-activation:2.0.3,CVE-2025-7962,7.5,accepted,student,2026-10-15,Transitive via hibernate-core/jaxb-runtime; not directly declared; monitor Boot's dependency management

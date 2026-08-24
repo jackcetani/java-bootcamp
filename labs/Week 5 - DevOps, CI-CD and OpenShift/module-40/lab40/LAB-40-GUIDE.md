@@ -68,8 +68,8 @@ IntelliJ stays on `java-bootcamp`. Keep the course clone in a browser tab or a s
 
 In class, use the starter stubs so the **core** objectives fit **~45 minutes**. The full Steps below remain for homework / extended depth.
 
-1. Open [`starter/README.md`](starter/README.md) **in the course clone**.
-2. In **`java-bootcamp`**, copy your Lab 39 CRM to `examples/lab40-crm`, then merge `starter/` from the course clone (commands in the starter README).
+1. Open [`lab40-crm/README.md`](lab40-crm/README.md) **in the course clone**.
+2. In **`java-bootcamp`**, copy your Lab 39 CRM to `examples/lab40-crm`, then merge `lab40-crm/` from the course clone (commands in the starter README).
 3. Fill every `TODO` in the merged docs / POM snippet — do **not** work under `labs/`.
 4. Run the starter smoke test from `examples/lab40-crm`; evidence under `notes/screenshots/lab-40/`.
 5. Mark timed-path Pass criteria in the starter README. Continue remaining GUIDE steps as homework if needed.
@@ -206,7 +206,7 @@ Complete each step in order. **Write** under `java-bootcamp`. **Read** starter X
 
 ### Step 1 — Copy Lab 39 into your repo, then merge starter stubs
 
-**Why:** Graded work belongs in `java-bootcamp`. The course `starter/` is docs + a POM snippet, not a CRM.
+**Why:** Graded work belongs in `java-bootcamp`. The course `lab40-crm/` is docs + a POM snippet, not a CRM.
 
 **Where:** IntelliJ Terminal in **`java-bootcamp`**. Starter copy source is the **course clone**.
 
