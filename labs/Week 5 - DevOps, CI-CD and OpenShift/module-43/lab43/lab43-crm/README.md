@@ -12,7 +12,7 @@
 
 ## Copy into your workspace
 
-Do **not** grade work only inside the course `labs/` clone. Copy this `starter/` into your bootcamp examples tree as `lab43-crm`.
+Do **not** grade work only inside the course `labs/` clone. Copy this `../starter` into your bootcamp examples tree as `lab43-crm`.
 
 **Windows (PowerShell)** — from this lab folder:
 
@@ -32,11 +32,11 @@ cd ~/java-bootcamp/examples/lab43-crm
 
 ## 45-minute checklist
 
-- [ ] Complete TODOs in `.github/workflows/ci.yml` (PR vs main/tag gates)
+- [ ] Complete TODOs in `../starter/.github/workflows/ci.yml` (PR vs main/tag gates)
 - [ ] Wire Maven cache + `clean verify` (no silent `-DskipTests` on verify)
 - [ ] Upload Surefire reports; package-once JAR + SHA-256 on main/tags
 - [ ] Optional: add `-Psecurity-scan` step (document residual risk if skipped)
-- [ ] Fill `docs/ci-runbook.md` (rerun policy, secrets location)
+- [ ] Fill `../starter/docs/ci-runbook.md` (rerun policy, secrets location)
 
 ## Smoke test
 
