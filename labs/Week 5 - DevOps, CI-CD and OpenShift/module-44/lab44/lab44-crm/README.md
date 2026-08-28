@@ -12,7 +12,7 @@
 
 ## Copy into your workspace
 
-Do **not** grade work only inside the course `labs/` clone. Copy this `starter/` into your bootcamp examples tree as `lab44-crm`.
+Do **not** grade work only inside the course `labs/` clone. Copy this `../starter` into your bootcamp examples tree as `lab44-crm`.
 
 **Windows (PowerShell)** — from this lab folder:
 
@@ -32,11 +32,11 @@ cd ~/java-bootcamp/examples/lab44-crm
 
 ## 45-minute checklist
 
-- [ ] Fill `artifact-manifest.json` with commit + SHA-256 / image digest (no secrets)
-- [ ] Complete `docs/release-plan.md` (test → staging → prod gates)
-- [ ] Draft `docs/release-checklist.md` go/no-go items
-- [ ] Write `docs/rollback-runbook.md` naming known-good digest
-- [ ] Sketch CD workflow TODOs in `.github/workflows/cd.yml`
+- [ ] Fill `../starter/artifact-manifest.json` with commit + SHA-256 / image digest (no secrets)
+- [ ] Complete `../starter/docs/release-plan.md` (test → staging → prod gates)
+- [ ] Draft `../starter/docs/release-checklist.md` go/no-go items
+- [ ] Write `../starter/docs/rollback-runbook.md` naming known-good digest
+- [ ] Sketch CD workflow TODOs in `../starter/.github/workflows/cd.yml`
 
 ## Smoke test
 

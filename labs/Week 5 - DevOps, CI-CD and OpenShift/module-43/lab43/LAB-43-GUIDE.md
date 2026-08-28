@@ -45,7 +45,7 @@ Checksum artifact empty after package job — what failed upstream?
 
 In class, use the starter templates so the **core** objectives fit **~45 minutes**. The full Steps below remain for homework / extended depth.
 
-1. Open [`starter/README.md`](starter/README.md).
+1. Open [`lab43-crm/README.md`](lab43-crm/README.md).
 2. Copy `starter/` into your `java-bootcamp/examples/…` target (see starter README).
 3. Fill every `// TODO` / `TODO` — do **not** wait on a perfect prior lab; the starter includes a baseline.
 4. Run the starter smoke test; evidence under `notes/screenshots/lab-43/`.

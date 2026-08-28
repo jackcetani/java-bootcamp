@@ -1,0 +1,20 @@
+# Activated by SPRING_PROFILES_ACTIVE=docker
+# Maps Lab 42-style CRM_DB_* keys. Real container: lab39-postgres, user crm / change-me.
+spring:
+  datasource:
+    url: jdbc:postgresql://${CRM_DB_HOST:lab39-postgres}:${CRM_DB_PORT:5432}/${CRM_DB_NAME:crm_lab41}
+    username: ${CRM_DB_USER:crm}
+    password: ${CRM_DB_PASSWORD}
+  lifecycle:
+    timeout-per-shutdown-phase: 20s
+server:
+  shutdown: graceful
+management:
+  endpoint:
+    health:
+      probes:
+        enabled: true
+  endpoints:
+    web:
+      exposure:
+        include: health,info

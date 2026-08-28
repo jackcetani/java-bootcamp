@@ -1,0 +1,15 @@
+{
+  "application": "crm-api",
+  "version": "1.4.0",
+  "gitCommit": "<paste your real `git rev-parse HEAD` output>",
+  "jarSha256": "<paste the real sha256sum output from above>",
+  "imageRepository": "crm-api",
+  "imageDigest": "<paste real docker images --digests output, or local image ID with a note it's not a registry digest>",
+  "builtBy": "lab43-ci (JAR only) + one-time local image build (Lab 44 — see release-plan.md known limitation)",
+  "environments": {
+    "test": { "promoted": true, "smoke": "mvn -B clean verify — CustomerRepositoryIT green" },
+    "staging": { "promoted": false, "smoke": "CUS-1001 / lab-request-001 — pending Step 6" },
+    "production": { "promoted": false, "approval": "pending Step 8 GO/NO-GO" }
+  },
+  "notes": "Never put passwords, tokens, or kubeconfig here."
+}

@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: crm-api-config
+  labels:
+    app: crm-api
+data:
+  # Lab 41 image only loads CRM_DB_* + actuator probes when profile is docker.
+  SPRING_PROFILES_ACTIVE: "docker"
+  SERVER_PORT: "8080"
+  # Adapted: real environment's crm/change-me user lives on lab39-postgres (5433),
+  # not the guide's assumed crm-postgres:5432 (that container uses crm_app here).
+  CRM_DB_HOST: "host.k3d.internal"
+  CRM_DB_PORT: "5433"
+  CRM_DB_NAME: "crm_lab42"
+  CRM_DB_USER: "crm"
