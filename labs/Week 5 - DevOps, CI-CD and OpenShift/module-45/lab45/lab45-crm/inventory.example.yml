@@ -5,6 +5,7 @@ all:
       hosts:
         crm-dev-01:
           ansible_host: 127.0.0.1
-          # TODO(lab45): ansible_user, become method
+          ansible_user: crm-lab
+          ansible_become_method: sudo
       vars:
         environment: dev

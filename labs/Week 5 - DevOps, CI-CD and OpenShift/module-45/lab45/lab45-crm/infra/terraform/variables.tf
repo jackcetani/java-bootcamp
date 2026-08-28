@@ -1,13 +1,16 @@
 variable "environment" {
   type        = string
   description = "dev | staging | prod"
-  # TODO(lab45): Add validation block for allowed values
+  validation {
+    condition     = contains(["dev", "staging", "prod"], var.environment)
+    error_message = "Use an approved environment name: dev, staging, or prod."
+  }
 }
 
 variable "region" {
   type        = string
   description = "Cloud region"
-  default     = "TODO(lab45)-region"
+  default     = "us-east-1"
 }
 
 variable "db_password" {
@@ -15,5 +18,6 @@ variable "db_password" {
   description = "Sensitive — supply via tfvars locally or secret store; never commit"
   sensitive   = true
   default     = ""
-  # TODO(lab45): Remove default in real stacks; require input from secret manager
+  # No default in a real stack — this default exists only so `validate` succeeds
+  # without a real secret in this training exercise.
 }

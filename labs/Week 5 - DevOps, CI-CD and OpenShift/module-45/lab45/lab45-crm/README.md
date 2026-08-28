@@ -12,7 +12,7 @@
 
 ## Copy into your workspace
 
-Do **not** grade work only inside the course `labs/` clone. Copy this `starter/` into your bootcamp examples tree as `lab45-crm`.
+Do **not** grade work only inside the course `labs/` clone. Copy this `/` into your bootcamp examples tree as `lab45-crm`.
 
 **Windows (PowerShell)** — from this lab folder:
 

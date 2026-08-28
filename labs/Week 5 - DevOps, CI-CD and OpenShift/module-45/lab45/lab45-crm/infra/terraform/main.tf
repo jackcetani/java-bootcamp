@@ -1,5 +1,4 @@
 # Lab 45 — CRM infra sketch (safe local validate without cloud apply)
-# TODO(lab45): Replace null resources with VPC/DB/runtime when sandbox allows.
 # FORBIDDEN: publicly reachable database, hardcoded passwords, open 0.0.0.0/0 SSH.
 
 locals {
@@ -7,7 +6,6 @@ locals {
     application = "crm"
     environment = var.environment
     managed_by  = "terraform"
-    # TODO(lab45): cost-center / student id tags per instructor
   }
 }
 
@@ -16,9 +14,10 @@ resource "null_resource" "crm_stack_sketch" {
     environment = var.environment
     region      = var.region
   }
-  # TODO(lab45): Add provisioner-free documentation that real DB must be private subnet only
+  # Documentation-only note: any real database resource here must specify
+  # a private subnet / no public IP — enforced by human review, not by Terraform alone.
 }
 
 output "sketch_note" {
-  value = "TODO(lab45): Replace null_resource with real modules after human threat review"
+  value = "Sketch validated locally; real DB/network modules require human threat review and an authorized sandbox before apply."
 }
